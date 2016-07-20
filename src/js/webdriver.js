@@ -7,35 +7,40 @@ fluid.registerNamespace("gpii.webdriver");
 
 var webdriver = require("selenium-webdriver");
 
-gpii.webdriver.by    = webdriver.By;
+gpii.webdriver.By    = webdriver.By;
 gpii.webdriver.until = webdriver.until;
 
 gpii.webdriver.init = function (that) {
-    new webdriver.Builder()
+    that.builderPromise = new webdriver.Builder()
         .forBrowser(that.options.browser)
-        .usingServer("http://localhost:4444/wd/hub/")
-        .buildAsync().then(function (result) {
-            that.driver = result;
-            that.events.onDriverReady.fire();
-        })["catch"](that.events.onError.fire);
+        .buildAsync();
+
+    that.builderPromise.then(function (result) {
+        that.driver = result;
+        that.events.onDriverReady.fire();
+    })["catch"](that.events.onError.fire);
 };
 
 gpii.webdriver.execute = function (that, fnName, eventName, fnArgs) {
     if (that.driver) {
-        that.driver[fnName].apply(that.driver, fnArgs).then(function (result) {
-            that.events[eventName].fire(result);
-        })["catch"](that.events.onError.fire);
+        var promise = that.driver[fnName].apply(that.driver, fnArgs);
+        promise.then(that.events[eventName].fire)["catch"](that.events.onError.fire);
+        return promise;
     }
     else {
         fluid.fail("Cannot call function `" + fnName + "` because no driver exists...");
     }
 };
 
+gpii.webdriver.logError = function (error) {
+    fluid.log("BROWSER ERROR:", error.name, error.message, error.stack);
+};
+
 fluid.defaults("gpii.webdriver", {
     gradeNames: ["fluid.component"],
-    browser: "chrome",
+    browser: "chrome", // "chrome" and "firefox" appear to work, "chrome" is preferred because it already supports native keyboard events on all platforms.
     events: {
-        // Actions associated with our own setup and teardown
+        // Our own unique actions
         onDriverReady: null,
         onError: null,
 
@@ -179,16 +184,19 @@ fluid.defaults("gpii.webdriver", {
             funcName: "gpii.webdriver.init",
             args:     ["{that}"]
         },
-        "onError.log": {
-            funcName: "fluid.log",
-            args:     ["BROWSER ERROR:", "{arguments}.0"]
-        },
         "onDriverReady.log": {
             funcName: "fluid.log",
             args: ["Browser started..."]
-        },
-        "onDestroy.quitDriver": {
-            func: "{that}.quit"
+        }
+    }
+});
+
+fluid.defaults("gpii.webdriver.debug", {
+    gradeNames: ["gpii.webdriver"],
+    listeners: {
+        "onError.log": {
+            funcName: "gpii.webdriver.logError",
+            args:     ["{arguments}.0"]
         }
     }
 });

@@ -4,9 +4,6 @@
   "description": "A series of Fluid components that help write tests using the WebDriver API.",
   "main": "index.js",
   "scripts": {
-    "postinstall": "npm run selenium:update",
-    "selenium:update": "node node_modules/webdriver-manager/bin/webdriver-manager update",
-    "selenium:start": "node node_modules/webdriver-manager/bin/webdriver-manager start",
     "test": "node tests/all-tests.js"
   },
   "repository": {
@@ -21,15 +18,16 @@
   "homepage": "https://github.com/the-t-in-rtf/gpii-webdriver#readme",
   "dependencies": {
     "infusion": "2.0.0-dev.20160519T222603Z.754d2c6",
-    "selenium-webdriver": "2.53.3",
-    "webdriver-manager": "10.2.1"
+    "selenium-webdriver": "2.53.3"
   },
   "devDependencies": {
     "eslint": "3.1.1",
+    "gpii-express": "git://github.com/the-t-in-rtf/gpii-express#52b1701d46868eeb3943d6d85bba09eba47938ce",
     "grunt": "1.0.1",
     "grunt-eslint": "18.1.0",
     "grunt-jsonlint": "1.0.4",
     "jsonlint": "1.6.0",
+    "kettle": "git://github.com/the-t-in-rtf/kettle.git#0e40aecf6363e9da33af208022b039d3e0c0cff3",
     "node-jqunit": "1.1.4"
   }
 }

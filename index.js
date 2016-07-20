@@ -11,6 +11,8 @@ fluid.module.register("gpii-webdriver", __dirname, require);
 fluid.registerNamespace("gpii.webdriver");
 gpii.webdriver.loadTestingSupport = function () {
     require("./src/tests/resolve-file-url");
+    require("./src/tests/fixtures");
+    require("./src/tests/helper-functions");
 };
 
 module.exports = gpii.webdriver;
