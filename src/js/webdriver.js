@@ -33,6 +33,8 @@ gpii.webdriver.execute = function (that, fnName, eventName, fnArgs) {
     }
 };
 
+// TODO:  The shutdown cycle for Windows does not appear to actually "quit" the window at least in IE.  Research.
+// TODO:  Add a harness for browser settings and versions
 gpii.webdriver.logError = function (error) {
     fluid.log("BROWSER ERROR:", error.name, error.message, error.stack);
 };
@@ -68,7 +70,7 @@ gpii.webdriver.actions = function (that, actionMap) {
 
 fluid.defaults("gpii.webdriver", {
     gradeNames: ["fluid.component"],
-    browser: "firefox", // "chrome" and "firefox" have been tested informally.
+    browser: "chrome", // "chrome", "firefox", and "ie" have been tested informally.  You must have the respective drivers installed and in your path.
     events: {
         // Our own unique actions
         onDriverReady: null,
