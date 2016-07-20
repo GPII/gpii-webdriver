@@ -9,6 +9,7 @@ var webdriver = require("selenium-webdriver");
 
 gpii.webdriver.By    = webdriver.By;
 gpii.webdriver.until = webdriver.until;
+gpii.webdriver.Key   = webdriver.Key;
 
 gpii.webdriver.init = function (that) {
     that.builderPromise = new webdriver.Builder()
@@ -36,9 +37,38 @@ gpii.webdriver.logError = function (error) {
     fluid.log("BROWSER ERROR:", error.name, error.message, error.stack);
 };
 
+gpii.webdriver.navigate = function (that, args) {
+    var navFnName = args[0];
+    var navFnArgs = fluid.makeArray(args).slice(1);
+    var navigate = that.driver.navigate();
+
+    if (navigate[navFnName]) {
+        var promise = navigate[navFnName].apply(navigate, navFnArgs);
+        promise.then(that.events.onNavigateComplete.fire)["catch"](that.events.onError.fire);
+        return promise;
+    }
+    else {
+        fluid.fail("Navigation function `" + navFnName + "` does not exist...");
+    }
+};
+
+// TODO: When we document this, describe the syntax in full and the fact that `perform` is implicit
+gpii.webdriver.actions = function (that, actionMap) {
+    var actions = that.driver.actions();
+    fluid.each(actionMap, function (actionArgs, actionFnName) {
+        if (actions[actionFnName]) {
+            actions[actionFnName].apply(actions, actionArgs);
+        }
+        else {
+            fluid.fail("Cannot perform unknown action '" + actionFnName + "'...");
+        }
+    });
+    actions.perform().then(that.events.onActionsComplete.fire)["catch"](that.events.onError.fire);
+};
+
 fluid.defaults("gpii.webdriver", {
     gradeNames: ["fluid.component"],
-    browser: "chrome", // "chrome" and "firefox" appear to work, "chrome" is preferred because it already supports native keyboard events on all platforms.
+    browser: "firefox", // "chrome" and "firefox" have been tested informally.
     events: {
         // Our own unique actions
         onDriverReady: null,
@@ -75,8 +105,8 @@ fluid.defaults("gpii.webdriver", {
     invokers: {
         // Invokers to wrap the underlying driver functions
         actions: {
-            funcName: "gpii.webdriver.execute",
-            args:     ["{that}", "actions", "onActionsComplete", "{arguments}"]
+            funcName: "gpii.webdriver.actions",
+            args:     ["{that}", "{arguments}.0"] // actionArray
         },
         call: {
             funcName: "gpii.webdriver.execute",
@@ -143,8 +173,8 @@ fluid.defaults("gpii.webdriver", {
             args:     ["{that}", "manage", "onManageComplete", "{arguments}"]
         },
         navigate: {
-            funcName: "gpii.webdriver.execute",
-            args:     ["{that}", "navigate", "onNavigateComplete", "{arguments}"]
+            funcName: "gpii.webdriver.navigate",
+            args:     ["{that}", "{arguments}"]
         },
         quit: {
             funcName: "gpii.webdriver.execute",

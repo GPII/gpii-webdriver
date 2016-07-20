@@ -14,6 +14,18 @@ gpii.webdriver.test.inspectElement = function (message, element, elementFn, expe
     });
 };
 
+gpii.webdriver.test.testElementValue = function (message, element, expectedValue, jqUnitFn) {
+    jqUnitFn = jqUnitFn || "assertEquals";
+    element.getAttribute("value").then(function (result) {
+        jqUnit[jqUnitFn](message, expectedValue, result);
+    });
+};
+
+gpii.webdriver.test.testElementSelected = function (message, element, selected) {
+    var jqUnitFn = selected ? "assertTrue" : "assertFalse";
+    jqUnit[jqUnitFn](message, element.isSelected());
+};
+
 gpii.webdriver.test.inspectElements = function (message, elements, elementFn, expectedValues) {
     var promises = [];
     fluid.each(elements, function (element) {
