@@ -13,7 +13,7 @@ jqUnit.module("Testing static URL resolution function...");
 
 // If we had more than three of these, I would write a quick "runner".  Forgive the very small duplication here.
 jqUnit.test("Package-relative paths should be resolved", function () {
-    jqUnit.assertEquals("A package-relative path should be resolved correctly...", url.resolve("file://", __dirname), gpii.test.webdriver.resolveFileUrl("%gpii-webdriver/tests/js/resolve-file-url"));
+    jqUnit.assertEquals("A package-relative path should be resolved correctly...", url.resolve("file://", __filename), gpii.test.webdriver.resolveFileUrl("%gpii-webdriver/tests/js/resolve-file-url.js"));
 });
 
 jqUnit.test("Static strings should be preserved...", function () {
