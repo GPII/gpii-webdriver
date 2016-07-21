@@ -101,7 +101,7 @@ fluid.defaults("gpii.webdriver", {
         onSetFileDetectorComplete: null,
         onSleepComplete: null,
         onSwitchToComplete: null,
-        onScreenshotComplete: null,
+        onTakeScreenshotComplete: null,
         onTouchActionsComplete: null,
         onWaitComplete: null
     },
@@ -209,14 +209,13 @@ fluid.defaults("gpii.webdriver", {
         // TODO:  Test this ASAP
         takeScreenshot: {
             funcName: "gpii.webdriver.execute",
-            args:     ["{that}", "takeScreenshot", "onScreenshotComplete", "{arguments}"]
+            args:     ["{that}", "takeScreenshot", "onTakeScreenshotComplete", "{arguments}"]
         },
         // TODO:  Test this once we have at least one mobile platform available.
         touchActions: {
             funcName: "gpii.webdriver.execute",
             args:     ["{that}", "touchActions", "onTouchActionsComplete", "{arguments}"]
         },
-        // TODO:  Test this ASAP
         wait: {
             funcName: "gpii.webdriver.execute",
             args:     ["{that}", "wait", "onWaitComplete", "{arguments}"]

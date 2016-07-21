@@ -15,5 +15,7 @@ require("./js/isElementPresent");
 require("./js/qunit/");
 require("./js/resolve-file-url");
 require("./js/sleep");
+require("./js/takeScreenshot");
+require("./js/wait");
 
 // TODO: Ensure that the tests run on a range of browsers.
