@@ -19,7 +19,7 @@ fluid.defaults("gpii.tests.webdriver.sleep.caseHolder", {
         name: "Testing the driver's `sleep` function...",
         tests: [
             {
-                name: "Get a value from an asynchronous call on the client side...",
+                name: "Go to sleep and confirm that the browser wakes correctly...",
                 type: "test",
                 sequence: [
                     {

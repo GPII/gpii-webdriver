@@ -1,6 +1,6 @@
 /*
 
-    Test the "isElementPresent" function with elements that are present.
+    Test the "isElementPresent" function with all functions provided by `gpii.webdriver.By`.
 
  */
 /* eslint-env node */
