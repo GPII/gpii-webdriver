@@ -20,7 +20,7 @@ fluid.defaults("gpii.tests.webdriver.executeScript.simple.caseHolder", {
     gradeNames: ["gpii.test.webdriver.caseHolder"],
     fileUrl: "%gpii-webdriver/tests/js/executeScript/html/executeScript.html",
     rawModules: [{
-        name: "Testing the driver's `findElement` function (single)...",
+        name: "Testing the driver's `executeScript` function...",
         tests: [
             {
                 name: "Retrieve a single element...",

@@ -111,6 +111,7 @@ fluid.defaults("gpii.webdriver", {
             funcName: "gpii.webdriver.actions",
             args:     ["{that}", "{arguments}.0"] // actionArray
         },
+        // TODO:  Test this once we have a use case for it in our own tests.
         call: {
             funcName: "gpii.webdriver.execute",
             args:     ["{that}", "call", "onCallComplete", "{arguments}"]
@@ -139,10 +140,12 @@ fluid.defaults("gpii.webdriver", {
             funcName: "gpii.webdriver.execute",
             args:     ["{that}", "get", "onGetComplete", "{arguments}"]
         },
+        // TODO:  Test this once we have a use case for it in our own tests.
         getAllWindowHandles: {
             funcName: "gpii.webdriver.execute",
             args:     ["{that}", "getAllWindowHandles", "onGetAllWindowHandlesComplete", "{arguments}"]
         },
+        // TODO:  Test this once we have a use case for it in our own tests.
         getCapabilities: {
             funcName: "gpii.webdriver.execute",
             args:     ["{that}", "getCapabilities", "onGetCapabilitiesComplete", "{arguments}"]
@@ -163,6 +166,7 @@ fluid.defaults("gpii.webdriver", {
             funcName: "gpii.webdriver.execute",
             args:     ["{that}", "getTitle", "onGetTitleComplete", "{arguments}"]
         },
+        // TODO:  Test this once we have a use case for it in our own tests.
         getWindowHandle: {
             funcName: "gpii.webdriver.execute",
             args:     ["{that}", "getWindowHandle", "onGetWindowHandleComplete", "{arguments}"]
@@ -171,6 +175,7 @@ fluid.defaults("gpii.webdriver", {
             funcName: "gpii.webdriver.execute",
             args:     ["{that}", "isElementPresent", "onIsElementPresentComplete", "{arguments}"]
         },
+        // TODO:  Test this once we have a use case for it in our own tests.
         manage: {
             funcName: "gpii.webdriver.execute",
             args:     ["{that}", "manage", "onManageComplete", "{arguments}"]
@@ -183,10 +188,12 @@ fluid.defaults("gpii.webdriver", {
             funcName: "gpii.webdriver.execute",
             args:     ["{that}", "quit", "onQuitComplete", "{arguments}"]
         },
+        // TODO:  Test this once we have a use case for it in our own tests.
         schedule: {
             funcName: "gpii.webdriver.execute",
             args:     ["{that}", "schedule", "onScheduleComplete", "{arguments}"]
         },
+        // TODO:  Test this once we have a use case for it in our own tests.
         setFileDetector: {
             funcName: "gpii.webdriver.execute",
             args:     ["{that}", "setFileDetector", "onSetFileDetectorComplete", "{arguments}"]
@@ -199,14 +206,17 @@ fluid.defaults("gpii.webdriver", {
             funcName: "gpii.webdriver.execute",
             args:     ["{that}", "switchTo", "onSwitchToComplete", "{arguments}"]
         },
+        // TODO:  Test this ASAP
         takeScreenshot: {
             funcName: "gpii.webdriver.execute",
             args:     ["{that}", "takeScreenshot", "onScreenshotComplete", "{arguments}"]
         },
+        // TODO:  Test this once we have at least one mobile platform available.
         touchActions: {
             funcName: "gpii.webdriver.execute",
             args:     ["{that}", "touchActions", "onTouchActionsComplete", "{arguments}"]
         },
+        // TODO:  Test this ASAP
         wait: {
             funcName: "gpii.webdriver.execute",
             args:     ["{that}", "wait", "onWaitComplete", "{arguments}"]
