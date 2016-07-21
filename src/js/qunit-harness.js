@@ -4,22 +4,28 @@
 "use strict";
 var fluid = fluid || require("infusion");
 var gpii = fluid.registerNamespace("gpii");
-fluid.registerNamespace("gpii.webdriver.client.QUnitHarness");
 
-fluid.registerNamespace("gpii.webdriver.client.QUnitHarness.transforms");
-gpii.webdriver.client.QUnitHarness.transforms.stringValue = function (value) {
+var QUnit = QUnit || false;
+if (!QUnit) {
+    require("node-jqunit");
+}
+
+fluid.registerNamespace("gpii.webdriver.QUnitHarness");
+
+fluid.registerNamespace("gpii.webdriver.QUnitHarness.transforms");
+gpii.webdriver.QUnitHarness.transforms.stringValue = function (value) {
     return typeof value === "object" ? JSON.stringify(value) : value.toString();
 };
 
-fluid.defaults("gpii.webdriver.client.QUnitHarness.transforms.stringValue", {
+fluid.defaults("gpii.webdriver.QUnitHarness.transforms.stringValue", {
     gradeNames: ["fluid.standardTransformFunction"]
 });
 
-gpii.webdriver.client.QUnitHarness.captureTestResults = function (that, type, obj) {
+gpii.webdriver.QUnitHarness.captureTestResults = function (that, type, obj) {
     that.results.push({ type: type, data: obj});
 };
 
-gpii.webdriver.client.QUnitHarness.outputResults = function (that, outputFormat) {
+gpii.webdriver.QUnitHarness.outputResults = function (that, outputFormat) {
     outputFormat = outputFormat || that.options.defaultOutputFormat;
     var lines = [];
 
@@ -47,7 +53,7 @@ gpii.webdriver.client.QUnitHarness.outputResults = function (that, outputFormat)
     return lines.join("\n");
 };
 
-fluid.defaults("gpii.webdriver.client.QUnitHarness", {
+fluid.defaults("gpii.webdriver.QUnitHarness", {
     gradeNames: ["fluid.component"],
     members: {
         results: []
@@ -96,14 +102,14 @@ fluid.defaults("gpii.webdriver.client.QUnitHarness", {
             result: "result",
             actual: {
                 transform: {
-                    type: "gpii.webdriver.client.QUnitHarness.transforms.stringValue",
+                    type: "gpii.webdriver.QUnitHarness.transforms.stringValue",
                     inputPath: "actual",
                     input: "-"
                 }
             },
             expected: {
                 transform: {
-                    type: "gpii.webdriver.client.QUnitHarness.transforms.stringValue",
+                    type: "gpii.webdriver.QUnitHarness.transforms.stringValue",
                     inputPath: "expected",
                     input: "-"
                 }
@@ -158,36 +164,36 @@ fluid.defaults("gpii.webdriver.client.QUnitHarness", {
     },
     invokers: {
         outputResults: {
-            funcName: "gpii.webdriver.client.QUnitHarness.outputResults",
+            funcName: "gpii.webdriver.QUnitHarness.outputResults",
             args:     ["{that}", "{arguments}.0"]
         },
         // Functions to capture output from QUnit.
         begin: {
-            funcName: "gpii.webdriver.client.QUnitHarness.captureTestResults",
+            funcName: "gpii.webdriver.QUnitHarness.captureTestResults",
             args:     ["{that}", "begin", "{arguments}.0"]
         },
         done: {
-            funcName: "gpii.webdriver.client.QUnitHarness.captureTestResults",
+            funcName: "gpii.webdriver.QUnitHarness.captureTestResults",
             args:     ["{that}", "done", "{arguments}.0"]
         },
         log: {
-            funcName: "gpii.webdriver.client.QUnitHarness.captureTestResults",
+            funcName: "gpii.webdriver.QUnitHarness.captureTestResults",
             args:     ["{that}", "log", "{arguments}.0"]
         },
         moduleStart: {
-            funcName: "gpii.webdriver.client.QUnitHarness.captureTestResults",
+            funcName: "gpii.webdriver.QUnitHarness.captureTestResults",
             args:     ["{that}", "moduleStart", "{arguments}.0"]
         },
         moduleDone: {
-            funcName: "gpii.webdriver.client.QUnitHarness.captureTestResults",
+            funcName: "gpii.webdriver.QUnitHarness.captureTestResults",
             args:     ["{that}", "moduleDone", "{arguments}.0"]
         },
         testStart: {
-            funcName: "gpii.webdriver.client.QUnitHarness.captureTestResults",
+            funcName: "gpii.webdriver.QUnitHarness.captureTestResults",
             args:     ["{that}", "testStart", "{arguments}.0"]
         },
         testDone: {
-            funcName: "gpii.webdriver.client.QUnitHarness.captureTestResults",
+            funcName: "gpii.webdriver.QUnitHarness.captureTestResults",
             args:     ["{that}", "testDone", "{arguments}.0"]
         }
     },
@@ -223,4 +229,4 @@ fluid.defaults("gpii.webdriver.client.QUnitHarness", {
     }
 });
 
-gpii.webdriver.client.QUnitHarness.instance = gpii.webdriver.client.QUnitHarness();
+gpii.webdriver.QUnitHarness.instance = gpii.webdriver.QUnitHarness();
