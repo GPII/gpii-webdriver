@@ -25,9 +25,10 @@
     "gpii-express": "git://github.com/the-t-in-rtf/gpii-express#52b1701d46868eeb3943d6d85bba09eba47938ce",
     "grunt": "1.0.1",
     "grunt-eslint": "18.1.0",
-    "grunt-jsonlint": "1.0.4",
+    "grunt-jsonlint": "1.1.0",
     "jsonlint": "1.6.0",
-    "kettle": "git://github.com/the-t-in-rtf/kettle.git#0e40aecf6363e9da33af208022b039d3e0c0cff3",
-    "node-jqunit": "1.1.4"
+    "kettle": "1.1.0",
+    "node-jqunit": "1.1.4",
+    "webdriver-manager": "^10.2.1"
   }
 }

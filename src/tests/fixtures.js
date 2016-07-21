@@ -6,8 +6,6 @@ fluid.loadTestingSupport();
 
 var gpii  = fluid.registerNamespace("gpii");
 
-require("kettle");
-
 require("gpii-express");
 gpii.express.loadTestingSupport();
 

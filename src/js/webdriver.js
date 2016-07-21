@@ -13,6 +13,7 @@ gpii.webdriver.Key   = webdriver.Key;
 
 gpii.webdriver.init = function (that) {
     that.builderPromise = new webdriver.Builder()
+        // .usingServer("http://localhost:4444/wd/hub/")
         .forBrowser(that.options.browser)
         .buildAsync();
 

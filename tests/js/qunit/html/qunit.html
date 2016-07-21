@@ -1,0 +1,31 @@
+<html>
+    <head>
+        <title>Testing QUnit integration...</title>
+        <!-- Bring in jQuery and other dependencies -->
+        <script type="text/javascript" src="../../../../node_modules/infusion/src/lib/jquery/core/js/jquery.js"></script>
+
+        <!-- Bring in fluid dependencies -->
+        <script type="text/javascript" src="../../../../node_modules/infusion/src/framework/core/js/Fluid.js"></script>
+        <script type="text/javascript" src="../../../../node_modules/infusion/src/framework/core/js/FluidIoC.js"></script>
+        <script type="text/javascript" src="../../../../node_modules/infusion/src/framework/core/js/DataBinding.js"></script>
+        <script type="text/javascript" src="../../../../node_modules/infusion/src/framework/core/js/ModelTransformation.js"></script>
+        <script type="text/javascript" src="../../../../node_modules/infusion/src/framework/core/js/ModelTransformationTransforms.js"></script>
+
+        <!-- QUnit dependencies -->
+        <script type="text/javascript" src="../../../../node_modules/infusion/tests/lib/qunit/js/qunit.js"></script>
+        <link rel="stylesheet" href="../../../../node_modules/node-jqunit/node_modules/infusion/tests/lib/qunit/css/qunit.css"/>
+
+        <!-- QUnit reporting harness provided by this package -->
+        <script type="text/javascript" src="../../../../src/js/qunit-harness.js"></script>
+    </head>
+    <body>
+        <h1 id="qunit-header">QUnit Integration Tests</h1>
+        <h2 id="qunit-banner"></h2>
+        <div id="qunit-testrunner-toolbar"></div>
+        <h2 id="qunit-userAgent"></h2>
+        <ol id="qunit-tests"></ol>
+        <div id="qunit-fixture"></div>
+
+        <script type="text/javascript" src="../js/qunit-sample-tests.js"></script>
+    </body>
+</html>
