@@ -30,7 +30,7 @@ gpii.webdriver.execute = function (that, fnName, eventName, fnArgs) {
         return promise;
     }
     else {
-        fluid.fail("Cannot call function `" + fnName + "` because no driver exists...");
+        fluid.fail("Can't execute function because the driver isn't ready yet...");
     }
 };
 
