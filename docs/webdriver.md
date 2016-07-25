@@ -1,12 +1,7 @@
 # `gpii.webdriver`
 
-This is a component which wraps a [WebDriver driver](http://seleniumhq.github.io/selenium/docs/api/javascript/module/selenium-webdriver/lib/webdriver_exports_WebDriver.html).
+This component wraps a [WebDriver driver](http://seleniumhq.github.io/selenium/docs/api/javascript/module/selenium-webdriver/lib/webdriver_exports_WebDriver.html).
 A driver can be used to control a browser installed on the system.
-
-By default, the Selenium server we use provides support for Firefox and Chrome.  You can add support for additional
-browsers.
-
-TODO:  Details on configuring the use of various browsers.
 
 
 // TODO:  Document that SELENIUM_REMOTE_URL can be used to use a remote selenium.
