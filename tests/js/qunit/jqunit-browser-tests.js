@@ -13,6 +13,8 @@ gpii.webdriver.loadTestingSupport();
 
 require("./helper-functions");
 
+// TODO: Work with Antranig on the IPC bridge so that we can get the test results once the tests fire the `done` event.
+
 fluid.defaults("gpii.tests.webdriver.qunit.jqUnit.caseHolder", {
     gradeNames: ["gpii.test.webdriver.caseHolder"],
     fileUrl: "%gpii-webdriver/tests/js/qunit/html/qunit.html",
