@@ -22,6 +22,7 @@ fluid.defaults("gpii.webdriver.QUnitHarness.transforms.stringValue", {
 });
 
 gpii.webdriver.QUnitHarness.captureTestResults = function (that, type, obj) {
+    that.events[type].fire();
     that.results.push({ type: type, data: obj});
 };
 
@@ -161,6 +162,15 @@ fluid.defaults("gpii.webdriver.QUnitHarness", {
             testDone: "Test concluded - Module \"%module\" Test name \"%name\": %passed/%total passed - %pass",
             done: "***************\n All tests concluded: %passed/%total passed in %runtimems \n***************"
         }
+    },
+    events: {
+        begin:       null,
+        done:        null,
+        log:         null,
+        moduleStart: null,
+        moduleDone:  null,
+        testStart:   null,
+        testDone:    null
     },
     invokers: {
         outputResults: {
