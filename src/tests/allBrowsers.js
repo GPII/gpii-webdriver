@@ -8,6 +8,8 @@ var os    = require("os");
 
 fluid.registerNamespace("gpii.test.webdriver.allBrowsers");
 
+// TODO:  Add the ability to run various versions of IE
+
 // TODO:  Document the order of precedence for browser settings.
 gpii.test.webdriver.allBrowsers.runTests = function (that) {
     var browsers = that.options.browsers || gpii.test.webdriver.allBrowsers.getPlatformBrowsers(that);
@@ -17,10 +19,10 @@ gpii.test.webdriver.allBrowsers.runTests = function (that) {
     }
 
     fluid.each(browsers, function (browser) {
-        var gradeName = that.options.baseTestEnvironent + "." + browser;
+        var gradeName = that.options.baseTestEnvironment + "." + browser;
 
         fluid.defaults(gradeName, {
-            gradeNames: ["gpii.test.webdriver.allBrowsers.testEnvironment", that.options.baseTestEnvironent],
+            gradeNames: ["gpii.test.webdriver.allBrowsers.testEnvironment", that.options.baseTestEnvironment],
             browser: browser
         });
 
