@@ -12,15 +12,11 @@ gpii.webdriver.until = webdriver.until;
 gpii.webdriver.Key   = webdriver.Key;
 
 // TODO:  The shutdown cycle for Windows does not appear to actually "quit" the window at least in IE.  Research.
-// TODO:  Add a harness for browser settings and versions
-
-
 
 // The default initialization routine, which initializes the driver asynchronously and fires an event when it's ready.
 gpii.webdriver.initAsync = function (that) {
     // TODO: modularize this so that we can do things like optionally decide whether to use an external selenium instance.
     that.builderPromise = new webdriver.Builder()
-        // .usingServer("http://localhost:4444/wd/hub/")
         .forBrowser(that.options.browser)
         .buildAsync();
 
@@ -34,7 +30,6 @@ gpii.webdriver.initAsync = function (that) {
 gpii.webdriver.initSync = function (that) {
     // TODO: modularize this so that we can do things like optionally decide whether to use an external selenium instance.
     that.driver = new webdriver.Builder()
-    // .usingServer("http://localhost:4444/wd/hub/")
         .forBrowser(that.options.browser)
         .build();
 };
