@@ -41,46 +41,53 @@ gpii.webdriver.execute = function (that, fnName, eventName, fnArgs) {
         return promise;
     }
     else {
-        fluid.fail("Can't execute function because the underlying webdriver object is not available...");
+        var failurePromise = fluid.promise();
+        failurePromise.reject("Can't execute function because the underlying webdriver object is not available...");
+        return failurePromise;
     }
 };
 
-gpii.webdriver.navigate = function (that, args) {
+gpii.webdriver.navigateHelper = function (that, args) {
     var navFnName = args[0];
     var navFnArgs = fluid.makeArray(args).slice(1);
     var navigate = that.driver.navigate();
 
+    var promise = navigate[navFnName].apply(navigate, navFnArgs);
     if (navigate[navFnName]) {
-        var promise = navigate[navFnName].apply(navigate, navFnArgs);
-        promise.then(that.events.onNavigateComplete.fire)["catch"](that.events.onError.fire);
         return promise;
     }
     else {
-        fluid.fail("Navigation function `" + navFnName + "` does not exist...");
+        promise.reject("Navigation function `" + navFnName + "` does not exist...");
     }
+    promise.then(that.events.onNavigateHelperComplete.fire)["catch"](that.events.onError.fire);
 };
 
-// TODO: When we document this, describe the syntax in full and the fact that `perform` is implicit
-gpii.webdriver.actions = function (that, actionMap) {
+gpii.webdriver.actionsHelper = function (that, actionMap) {
     var actions = that.driver.actions();
     fluid.each(actionMap, function (actionArgs, actionFnName) {
         if (actions[actionFnName]) {
             actions[actionFnName].apply(actions, actionArgs);
         }
         else {
-            fluid.fail("Cannot perform unknown action '" + actionFnName + "'...");
+            var failurePromise = fluid.promise();
+            failurePromise.reject("Cannot perform unknown action '" + actionFnName + "'...");
+            return failurePromise;
         }
     });
-    actions.perform().then(that.events.onActionsComplete.fire)["catch"](that.events.onError.fire);
+    var promise = actions.perform();
+    promise.then(that.events.onActionsHelperComplete.fire)["catch"](that.events.onError.fire);
+    return promise;
 };
 
 // The base grade that does not attempt to initialize itself.
 fluid.defaults("gpii.webdriver.base", {
     gradeNames: ["fluid.component"],
-    browser: "chrome", // "chrome", "firefox", and "ie" have been tested informally.  You must have the respective drivers installed and in your path.
+    browser: "firefox", // The driver to use Firefox is available by default on all platforms, hence it is the default.
     events: {
         // Our own unique actions
+        onActionsHelperComplete: null,
         onError: null,
+        onNavigateHelperComplete: null,
 
         // Actions associated with wrapped functions completing their work
         onActionsComplete: null,
@@ -111,10 +118,20 @@ fluid.defaults("gpii.webdriver.base", {
         onWaitComplete: null
     },
     invokers: {
+        // "helpers" to simplify the use of key underlying driver functions
+        actionsHelper: {
+            funcName: "gpii.webdriver.actionsHelper",
+            args:     ["{that}", "{arguments}.0"] // actionArray
+        },
+        navigateHelper: {
+            funcName: "gpii.webdriver.navigateHelper",
+            args:     ["{that}", "{arguments}"]
+        },
+
         // Invokers to wrap the underlying driver functions
         actions: {
-            funcName: "gpii.webdriver.actions",
-            args:     ["{that}", "{arguments}.0"] // actionArray
+            funcName: "gpii.webdriver.execute",
+            args:     ["{that}", "actions", "onActionsComplete", "{arguments}"]
         },
         // TODO:  Test this once we have a use case for it in our own tests.
         call: {
@@ -186,8 +203,8 @@ fluid.defaults("gpii.webdriver.base", {
             args:     ["{that}", "manage", "onManageComplete", "{arguments}"]
         },
         navigate: {
-            funcName: "gpii.webdriver.navigate",
-            args:     ["{that}", "{arguments}"]
+            funcName: "gpii.webdriver.execute",
+            args:     ["{that}", "navigate", "onNavigateComplete", "{arguments}"]
         },
         quit: {
             funcName: "gpii.webdriver.execute",

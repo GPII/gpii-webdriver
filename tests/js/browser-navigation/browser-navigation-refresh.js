@@ -41,11 +41,11 @@ fluid.defaults("gpii.tests.webdriver.navigation.browser.refresh.caseHolder", {
                         args:     ["Our text should have been entered...", "{arguments}.0", "a simple string"] // message, element, expectedValue, jqUnitFn
                     },
                     {
-                        func: "{testEnvironment}.webdriver.navigate",
+                        func: "{testEnvironment}.webdriver.navigateHelper",
                         args: ["refresh"]
                     },
                     {
-                        event:    "{testEnvironment}.webdriver.events.onNavigateComplete",
+                        event:    "{testEnvironment}.webdriver.events.onNavigateHelperComplete",
                         listener: "{testEnvironment}.webdriver.findElement",
                         args:     [{ id: "text-field"}]
                     },

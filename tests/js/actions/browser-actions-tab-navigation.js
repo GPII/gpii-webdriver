@@ -27,11 +27,11 @@ fluid.defaults("gpii.tests.webdriver.actions.tabs.caseHolder", {
                     },
                     {
                         event:    "{testEnvironment}.webdriver.events.onGetComplete",
-                        listener: "{testEnvironment}.webdriver.actions",
+                        listener: "{testEnvironment}.webdriver.actionsHelper",
                         args:     [{ sendKeys: [gpii.webdriver.Key.TAB, gpii.webdriver.Key.TAB]}]
                     },
                     {
-                        event:    "{testEnvironment}.webdriver.events.onActionsComplete",
+                        event:    "{testEnvironment}.webdriver.events.onActionsHelperComplete",
                         listener: "{testEnvironment}.webdriver.findElement",
                         args:     [{ id: "text-field-2"}]
                     },

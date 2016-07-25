@@ -50,9 +50,7 @@ and to receive the results of the code's execution.  Among many other things, th
 # Running the Tests
 
 To run the tests locally, you will need to [install the drivers for each browser](http://www.seleniumhq.org/download/)
-you want to test.  Once you have done this, you can use the command `npm test` to run the tests.  By default, this
-package will work without a Selenium instance.  If you have your own Selenium server, you can configure this package to
-use it by setting the `SELENIUM_REMOTE_URL` environment variable to the URL of your server.
+you want to test.  Once you have done this, you can use the command `npm test` to run the tests.
 
 You can also use the command `vagrant up` to provision a linux box and run the Chrome and Firefox tests there.
 

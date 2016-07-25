@@ -28,16 +28,16 @@ fluid.defaults("gpii.tests.webdriver.navigation.browser.back.caseHolder", {
                     },
                     {
                         event:    "{testEnvironment}.webdriver.events.onGetComplete",
-                        listener: "{testEnvironment}.webdriver.navigate",
+                        listener: "{testEnvironment}.webdriver.navigateHelper",
                         args:     ["to", "@expand:gpii.test.webdriver.resolveFileUrl({that}.options.secondFileUrl)"]
                     },
                     {
-                        event:    "{testEnvironment}.webdriver.events.onNavigateComplete",
-                        listener: "{testEnvironment}.webdriver.navigate",
+                        event:    "{testEnvironment}.webdriver.events.onNavigateHelperComplete",
+                        listener: "{testEnvironment}.webdriver.navigateHelper",
                         args:     ["back"]
                     },
                     {
-                        event:    "{testEnvironment}.webdriver.events.onNavigateComplete",
+                        event:    "{testEnvironment}.webdriver.events.onNavigateHelperComplete",
                         listener: "{testEnvironment}.webdriver.findElement",
                         args:     [{ id: "first-body"}]
                     },

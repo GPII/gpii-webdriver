@@ -37,11 +37,11 @@ fluid.defaults("gpii.tests.webdriver.navigation.browser.to.caseHolder", {
                         args:     ["We should be on the first page...", "{arguments}.0", "getText", "This is the first page."] // message, element, elementFn, expectedValue, jqUnitFn
                     },
                     {
-                        func: "{testEnvironment}.webdriver.navigate",
+                        func: "{testEnvironment}.webdriver.navigateHelper",
                         args: ["to", "@expand:gpii.test.webdriver.resolveFileUrl({that}.options.secondFileUrl)"]
                     },
                     {
-                        event:    "{testEnvironment}.webdriver.events.onNavigateComplete",
+                        event:    "{testEnvironment}.webdriver.events.onNavigateHelperComplete",
                         listener: "{testEnvironment}.webdriver.findElement",
                         args:     [{ id: "second-body"}]
                     },
