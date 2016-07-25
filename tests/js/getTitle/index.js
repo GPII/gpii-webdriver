@@ -50,4 +50,4 @@ fluid.defaults("gpii.tests.webdriver.getTitle.environment", {
     }
 });
 
-fluid.test.runTests("gpii.tests.webdriver.getTitle.environment");
+gpii.test.webdriver.allBrowsers({ baseTestEnvironent: "gpii.tests.webdriver.getTitle.environment" });

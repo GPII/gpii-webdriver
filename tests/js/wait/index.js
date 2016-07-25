@@ -60,4 +60,4 @@ fluid.defaults("gpii.tests.webdriver.wait.environment", {
     }
 });
 
-fluid.test.runTests("gpii.tests.webdriver.wait.environment");
+gpii.test.webdriver.allBrowsers({ baseTestEnvironent: "gpii.tests.webdriver.wait.environment" });

@@ -9,6 +9,8 @@ browsers.
 TODO:  Details on configuring the use of various browsers.
 
 
+// TODO:  Document that SELENIUM_REMOTE_URL can be used to use a remote selenium.
+
 ## 404 and other errors
 
 The WebDriver API [does not provide any mechanism to trap HTTP response codes or errors[(https://github.com/seleniumhq/selenium-google-code-issue-archive/issues/141),

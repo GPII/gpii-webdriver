@@ -50,4 +50,4 @@ fluid.defaults("gpii.tests.webdriver.findElement.notFound.environment", {
     }
 });
 
-fluid.test.runTests("gpii.tests.webdriver.findElement.notFound.environment");
+gpii.test.webdriver.allBrowsers({ baseTestEnvironent: "gpii.tests.webdriver.findElement.notFound.environment" });

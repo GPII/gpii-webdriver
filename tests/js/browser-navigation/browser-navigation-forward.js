@@ -66,4 +66,4 @@ fluid.defaults("gpii.tests.webdriver.navigation.browser.forward.environment", {
     }
 });
 
-fluid.test.runTests("gpii.tests.webdriver.navigation.browser.forward.environment");
+gpii.test.webdriver.allBrowsers({ baseTestEnvironent: "gpii.tests.webdriver.navigation.browser.forward.environment" });

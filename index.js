@@ -10,9 +10,10 @@ fluid.module.register("gpii-webdriver", __dirname, require);
 // Provide a function to optionally load test support.
 fluid.registerNamespace("gpii.webdriver");
 gpii.webdriver.loadTestingSupport = function () {
-    require("./src/tests/resolve-file-url");
+    require("./src/tests/allBrowsers");
     require("./src/tests/fixtures");
     require("./src/tests/helper-functions");
+    require("./src/tests/resolve-file-url");
 };
 
 module.exports = gpii.webdriver;

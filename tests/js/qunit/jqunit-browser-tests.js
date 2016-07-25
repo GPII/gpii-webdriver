@@ -61,4 +61,4 @@ fluid.defaults("gpii.tests.webdriver.qunit.jqUnit.environment", {
     }
 });
 
-fluid.test.runTests("gpii.tests.webdriver.qunit.jqUnit.environment");
+gpii.test.webdriver.allBrowsers({ baseTestEnvironent: "gpii.tests.webdriver.qunit.jqUnit.environment" });

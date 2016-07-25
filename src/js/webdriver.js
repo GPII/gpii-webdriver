@@ -11,7 +11,14 @@ gpii.webdriver.By    = webdriver.By;
 gpii.webdriver.until = webdriver.until;
 gpii.webdriver.Key   = webdriver.Key;
 
-gpii.webdriver.init = function (that) {
+// TODO:  The shutdown cycle for Windows does not appear to actually "quit" the window at least in IE.  Research.
+// TODO:  Add a harness for browser settings and versions
+
+
+
+// The default initialization routine, which initializes the driver asynchronously and fires an event when it's ready.
+gpii.webdriver.initAsync = function (that) {
+    // TODO: modularize this so that we can do things like optionally decide whether to use an external selenium instance.
     that.builderPromise = new webdriver.Builder()
         // .usingServer("http://localhost:4444/wd/hub/")
         .forBrowser(that.options.browser)
@@ -23,6 +30,15 @@ gpii.webdriver.init = function (that) {
     })["catch"](that.events.onError.fire);
 };
 
+// The default initialization routine, which initializes the driver asynchronously and fires an event when it's ready.
+gpii.webdriver.initSync = function (that) {
+    // TODO: modularize this so that we can do things like optionally decide whether to use an external selenium instance.
+    that.driver = new webdriver.Builder()
+    // .usingServer("http://localhost:4444/wd/hub/")
+        .forBrowser(that.options.browser)
+        .build();
+};
+
 gpii.webdriver.execute = function (that, fnName, eventName, fnArgs) {
     if (that.driver) {
         var promise = that.driver[fnName].apply(that.driver, fnArgs);
@@ -30,14 +46,8 @@ gpii.webdriver.execute = function (that, fnName, eventName, fnArgs) {
         return promise;
     }
     else {
-        fluid.fail("Can't execute function because the driver isn't ready yet...");
+        fluid.fail("Can't execute function because the underlying webdriver object is not available...");
     }
-};
-
-// TODO:  The shutdown cycle for Windows does not appear to actually "quit" the window at least in IE.  Research.
-// TODO:  Add a harness for browser settings and versions
-gpii.webdriver.logError = function (error) {
-    fluid.log("BROWSER ERROR:", error.name, error.message, error.stack);
 };
 
 gpii.webdriver.navigate = function (that, args) {
@@ -69,12 +79,12 @@ gpii.webdriver.actions = function (that, actionMap) {
     actions.perform().then(that.events.onActionsComplete.fire)["catch"](that.events.onError.fire);
 };
 
-fluid.defaults("gpii.webdriver", {
+// The base grade that does not attempt to initialize itself.
+fluid.defaults("gpii.webdriver.base", {
     gradeNames: ["fluid.component"],
     browser: "chrome", // "chrome", "firefox", and "ie" have been tested informally.  You must have the respective drivers installed and in your path.
     events: {
         // Our own unique actions
-        onDriverReady: null,
         onError: null,
 
         // Actions associated with wrapped functions completing their work
@@ -206,7 +216,6 @@ fluid.defaults("gpii.webdriver", {
             funcName: "gpii.webdriver.execute",
             args:     ["{that}", "switchTo", "onSwitchToComplete", "{arguments}"]
         },
-        // TODO:  Test this ASAP
         takeScreenshot: {
             funcName: "gpii.webdriver.execute",
             args:     ["{that}", "takeScreenshot", "onTakeScreenshotComplete", "{arguments}"]
@@ -220,10 +229,18 @@ fluid.defaults("gpii.webdriver", {
             funcName: "gpii.webdriver.execute",
             args:     ["{that}", "wait", "onWaitComplete", "{arguments}"]
         }
+    }
+});
+
+// The default grade, which is initialized asynchronously and which fires an event when the driver is ready.
+fluid.defaults("gpii.webdriver", {
+    gradeNames: ["gpii.webdriver.base"],
+    events: {
+        onDriverReady: null
     },
     listeners: {
         "onCreate.init": {
-            funcName: "gpii.webdriver.init",
+            funcName: "gpii.webdriver.initAsync",
             args:     ["{that}"]
         },
         "onDriverReady.log": {
@@ -233,12 +250,12 @@ fluid.defaults("gpii.webdriver", {
     }
 });
 
-fluid.defaults("gpii.webdriver.debug", {
-    gradeNames: ["gpii.webdriver"],
+fluid.defaults("gpii.webdriver.syncInit", {
+    gradeNames: ["gpii.webdriver.base"],
     listeners: {
-        "onError.log": {
-            funcName: "gpii.webdriver.logError",
-            args:     ["{arguments}.0"]
+        "onCreate.init": {
+            funcName: "gpii.webdriver.initSync",
+            args:     ["{that}"]
         }
     }
 });

@@ -59,4 +59,4 @@ fluid.defaults("gpii.tests.webdriver.executeAsyncScript.environment", {
     }
 });
 
-fluid.test.runTests("gpii.tests.webdriver.executeAsyncScript.environment");
+gpii.test.webdriver.allBrowsers({ baseTestEnvironent: "gpii.tests.webdriver.executeAsyncScript.environment" });

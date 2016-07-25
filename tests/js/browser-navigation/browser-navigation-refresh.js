@@ -69,4 +69,4 @@ fluid.defaults("gpii.tests.webdriver.navigation.browser.refresh.environment", {
     }
 });
 
-fluid.test.runTests("gpii.tests.webdriver.navigation.browser.refresh.environment");
+gpii.test.webdriver.allBrowsers({ baseTestEnvironent: "gpii.tests.webdriver.navigation.browser.refresh.environment" });

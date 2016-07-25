@@ -11,11 +11,10 @@ var gpii = fluid.registerNamespace("gpii");
 require("../../../");
 gpii.webdriver.loadTestingSupport();
 
-/* globals $ */
-fluid.registerNamespace("gpii.tests.webdriver.isElementPresent.present");
-gpii.tests.webdriver.isElementPresent.present.getBodyUsingJquery = function () { return $("body"); };
+fluid.registerNamespace("gpii.tests.webdriver.isElementPresent");
+gpii.tests.webdriver.isElementPresent.getBody = function () { return document.body; };
 
-fluid.defaults("gpii.tests.webdriver.isElementPresent.present.caseHolder", {
+fluid.defaults("gpii.tests.webdriver.isElementPresent.caseHolder", {
     gradeNames: ["gpii.test.webdriver.caseHolder"],
     fileUrl: "%gpii-webdriver/tests/js/findElement/html/index.html",
     rawModules: [{
@@ -95,7 +94,7 @@ fluid.defaults("gpii.tests.webdriver.isElementPresent.present.caseHolder", {
                     },
                     {
                         func: "{testEnvironment}.webdriver.isElementPresent",
-                        args: [gpii.webdriver.By.js(gpii.tests.webdriver.isElementPresent.present.getBodyUsingJquery)]
+                        args: [gpii.webdriver.By.js(gpii.tests.webdriver.isElementPresent.getBody)]
                     },
                     {
                         event:    "{testEnvironment}.webdriver.events.onIsElementPresentComplete",
@@ -117,13 +116,15 @@ fluid.defaults("gpii.tests.webdriver.isElementPresent.present.caseHolder", {
     }]
 });
 
-fluid.defaults("gpii.tests.webdriver.isElementPresent.present.environment", {
+fluid.defaults("gpii.tests.webdriver.isElementPresent.environment", {
     gradeNames: ["gpii.test.webdriver.testEnvironment"],
     components: {
         caseHolder: {
-            type: "gpii.tests.webdriver.isElementPresent.present.caseHolder"
+            type: "gpii.tests.webdriver.isElementPresent.caseHolder"
         }
     }
 });
 
-fluid.test.runTests("gpii.tests.webdriver.isElementPresent.present.environment");
+gpii.test.webdriver.allBrowsers({
+    baseTestEnvironent: "gpii.tests.webdriver.isElementPresent.environment"
+});

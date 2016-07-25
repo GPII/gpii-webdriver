@@ -52,4 +52,4 @@ fluid.defaults("gpii.tests.webdriver.get.remote.environment", {
     }
 });
 
-fluid.test.runTests("gpii.tests.webdriver.get.remote.environment");
+gpii.test.webdriver.allBrowsers({ baseTestEnvironent: "gpii.tests.webdriver.get.remote.environment" });
