@@ -21,5 +21,10 @@ jqUnit.test("Static strings should be preserved...", function () {
 });
 
 jqUnit.test("Missing packages should be ignored...", function () {
-    jqUnit.assertEquals("A static path should be resolved correctly...", "file:///%bogus-package/path/to/file", gpii.test.webdriver.resolveFileUrl("%bogus-package/path/to/file"));
+    jqUnit.assertEquals("A bogus path should be resolved correctly...", "file:///%bogus-package/path/to/file", gpii.test.webdriver.resolveFileUrl("%bogus-package/path/to/file"));
+});
+
+jqUnit.test("Windows paths should resolve...", function () {
+    jqUnit.assertEquals("Forward slashes should be resolved correctly...", "file:///C:/path/to/file", gpii.test.webdriver.resolveFileUrl("c:/path/to/file"));
+    jqUnit.assertEquals("Backslashes should be resolved correctly...", "file:///C:/path/to/file", gpii.test.webdriver.resolveFileUrl("c:\\path\\to\\file"));
 });
