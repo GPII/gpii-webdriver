@@ -14,10 +14,12 @@ gpii.webdriver.loadTestingSupport();
 fluid.registerNamespace("gpii.tests.webdriver.executeAsyncScript");
 gpii.tests.webdriver.executeAsyncScript.getAsyncValue = function () {
     var callback = arguments[arguments.length - 1];
-    callback("Better late than never.");
+    callback("Not all that asynchronous.");
+};
 
-    // TODO:  Review this with Antranig to confirm why it doesn't work
-    // setTimeout(function () { callback("Better late than never."); }, 500);
+gpii.tests.webdriver.executeAsyncScript.getAsyncValueViaTimeout = function () {
+    var callback = arguments[arguments.length - 1];
+    setTimeout(function () { callback("Fairly asynchronous."); }, 4000);
 };
 
 fluid.defaults("gpii.tests.webdriver.executeAsyncScript.caseHolder", {
@@ -27,7 +29,7 @@ fluid.defaults("gpii.tests.webdriver.executeAsyncScript.caseHolder", {
         name: "Testing the driver's `executeAsyncScript` function...",
         tests: [
             {
-                name: "Get a value from an asynchronous call on the client side...",
+                name: "Get a value from an asynchronous call that immediately resolves...",
                 type: "test",
                 sequence: [
                     {
@@ -42,7 +44,31 @@ fluid.defaults("gpii.tests.webdriver.executeAsyncScript.caseHolder", {
                     {
                         event:    "{testEnvironment}.webdriver.events.onExecuteAsyncScriptComplete",
                         listener: "jqUnit.assertEquals",
-                        args:     ["The sample function should have returned the correct value...", "Better late than never.", "{arguments}.0"]
+                        args:     ["The sample function should have returned the correct value...", "Not all that asynchronous.", "{arguments}.0"]
+                    }
+                ]
+            },
+            // The docs are misleading, this test demonstrates how to use the `executeAsyncScriptHelper` to ensure the
+            // script actually has time to respond.
+            //
+            // see: https://github.com/SeleniumHQ/selenium/issues/2503
+            {
+                name: "Get a value from an asynchronous call that takes time to respond...",
+                type: "test",
+                sequence: [
+                    {
+                        func: "{testEnvironment}.webdriver.get",
+                        args: ["@expand:gpii.test.webdriver.resolveFileUrl({that}.options.fileUrl)"]
+                    },
+                    {
+                        event:    "{testEnvironment}.webdriver.events.onGetComplete",
+                        listener: "{testEnvironment}.webdriver.executeAsyncScript",
+                        args:     [gpii.tests.webdriver.executeAsyncScript.getAsyncValueViaTimeout]
+                    },
+                    {
+                        event:    "{testEnvironment}.webdriver.events.onExecuteAsyncScriptComplete",
+                        listener: "jqUnit.assertEquals",
+                        args:     ["The sample function should have returned the correct value...", "Fairly asynchronous.", "{arguments}.0"]
                     }
                 ]
             }
