@@ -1,4 +1,12 @@
+/*
+
+    A harness to run tests in a range of browsers.  See the documentation for details:
+
+    https://github.com/GPII/gpii-webdriver/blob/master/docs/allBrowsers.md
+
+ */
 /* eslint-env node */
+// TODO:  NEEDS JSDocs
 // Run the tests in a range of browsers based on the platform or the supplied options
 "use strict";
 var fluid = require("infusion");

@@ -1,5 +1,12 @@
-/* A caseholder that provides common startup sequence steps for all tests. */
+/*
+
+ Fluid IoC test fixtures for use with `gpii.webdriver`.  See the documentation for details:
+
+ https://github.com/GPII/gpii-webdriver/blob/master/docs/fixtures.md
+
+ */
 /* eslint-env node */
+// TODO:  NEEDS JSDocs
 "use strict";
 var fluid = require("infusion");
 fluid.loadTestingSupport();
@@ -29,6 +36,7 @@ gpii.test.webdriver.caseHolder.prepareModules = function (that) {
     return gpii.test.express.helpers.addRequiredSequences(preparedModules, that.options.sequenceStart, that.options.sequenceEnd);
 };
 
+/* A caseholder that provides common startup sequence steps for all tests. */
 fluid.defaults("gpii.test.webdriver.caseHolder.base", {
     gradeNames: ["gpii.test.express.caseHolder.base"],
     browser: "{testEnvironment}.options.browser",

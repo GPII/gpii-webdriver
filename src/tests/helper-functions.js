@@ -6,6 +6,9 @@ var gpii = fluid.registerNamespace("gpii");
 
 var jqUnit = require("node-jqunit");
 
+// TODO:  NEEDS JSDocs
+// TODO:  NEEDS docs
+
 fluid.registerNamespace("gpii.webdriver.test");
 gpii.webdriver.test.inspectElement = function (message, element, elementFn, expectedValue, jqUnitFn) {
     jqUnitFn = jqUnitFn || "assertEquals";

@@ -1,5 +1,10 @@
-// A harness to capture all QUnit output.  Should be instantiated after Fluid and QUnit are loaded, but before tests
-// are run.  You are expected to interrogate this from the node side using the `executeScript` function.
+/*
+
+    A harness to capture all QUnit output.  See the documentation for details:
+
+    https://github.com/GPII/gpii-webdriver/blob/master/docs/qunit-harness.md
+
+ */
 /* eslint-env node */
 "use strict";
 var fluid = fluid || require("infusion");
@@ -13,6 +18,15 @@ if (!QUnit) {
 fluid.registerNamespace("gpii.webdriver.QUnitHarness");
 
 fluid.registerNamespace("gpii.webdriver.QUnitHarness.transforms");
+
+/**
+ *
+ * A simple fluid transformation function to ensure cleaner output than Object.prototype.toString produces.
+ *
+ * @param value - The value to be transformed.
+ * @returns {String} - returns `JSON.stringify(value)` for objects, or `value.toString()` otherwise.
+ *
+ */
 gpii.webdriver.QUnitHarness.transforms.stringValue = function (value) {
     return typeof value === "object" ? JSON.stringify(value) : value.toString();
 };
@@ -21,11 +35,28 @@ fluid.defaults("gpii.webdriver.QUnitHarness.transforms.stringValue", {
     gradeNames: ["fluid.standardTransformFunction"]
 });
 
-gpii.webdriver.QUnitHarness.captureTestResults = function (that, type, obj) {
+/**
+ *
+ * A function to intercept all QUnit events and store the information in the `results` member array.
+ *
+ * @param that - The component itself.
+ * @param type {String} - The QUnit event we are handling ("start", "done", "log", etc., see below for full details).
+ * @param data - The event data to be preserved.
+ */
+gpii.webdriver.QUnitHarness.captureTestResults = function (that, type, data) {
     that.events[type].fire();
-    that.results.push({ type: type, data: obj});
+    that.results.push({ type: type, data: data});
 };
 
+/**
+ *
+ * A function to convert `that.results` into textual output.  See the documentation for full details.
+ *
+ * @param that - The component itself.
+ * @param outputFormat {String} - The output format.  Currently "tap" and "text" are supported.
+ * @returns {String} - A string representing the test results.
+ *
+ */
 gpii.webdriver.QUnitHarness.outputResults = function (that, outputFormat) {
     outputFormat = outputFormat || that.options.defaultOutputFormat;
     var lines = [];

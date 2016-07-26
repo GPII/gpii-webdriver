@@ -1,3 +1,10 @@
+/*
+
+    A wrapper around the `selenium-webdriver` package.  See the documentation for details:
+
+    https://github.com/GPII/gpii-webdriver/blob/master/docs/webdriver.md
+
+ */
 /* eslint-env node */
 "use strict";
 var fluid = require("infusion");
@@ -13,11 +20,30 @@ gpii.webdriver.Key   = webdriver.Key;
 
 // TODO:  The shutdown cycle for Windows does not appear to actually "quit" the window at least in IE.  Research.
 
+/**
+ *
+ * A function that configures the driver to ensure that asynchronous scripts are given enough time to execute by
+ * default.  Also ensures that `onDriverReady` is fired regardless of whether `that.driver` is initialized
+ * synchronously or asynchronously.
+ *
+ * @param that - The component itself.
+ *
+ */
 gpii.webdriver.configureDriver = function (that) {
     that.driver.manage().timeouts().setScriptTimeout(that.options.asyncScriptTimeout).then(that.events.onDriverReady.fire);
 };
 
-// The default initialization routine, which initializes the driver asynchronously and fires an event when it's ready.
+/**
+ *
+ * The initialization routine called when the component is created.  This starts the process of building the driver,
+ * and ensures that:
+ *
+ * 1. The driver is configured properly once it's available.
+ * 2. The `onDriverReady` event is fired once the driver is available.
+ *
+ * @param that - The component itself
+ *
+ */
 gpii.webdriver.init = function (that) {
     var builder = new webdriver.Builder()
         .forBrowser(that.options.browser);
@@ -36,6 +62,21 @@ gpii.webdriver.init = function (that) {
     }
 };
 
+/**
+ *
+ * A function that passes information to the individual driver functions, and which ensures that:
+ *
+ * 1. The event `eventName` is fired with the results if execution succeeds.
+ * 2. The event `onError` is fired if execution fails.
+ * 3. A promise is returned that will be resolved when execution finishes, or rejected on failure.
+ *
+ * @param that - The component itself.
+ * @param fnName {String} - The driver function to execute.
+ * @param eventName {String} - The event to fire on successful completion.
+ * @param fnArgs {Array} - The arguments (if any) to pass to `fnName`.
+ * @returns a Promise that will be resolved when execution is complete, or rejected if there is an error.
+ *
+ */
 gpii.webdriver.execute = function (that, fnName, eventName, fnArgs) {
     if (that.driver) {
         var promise = that.driver[fnName].apply(that.driver, fnArgs);
@@ -49,6 +90,15 @@ gpii.webdriver.execute = function (that, fnName, eventName, fnArgs) {
     }
 };
 
+/**
+ *
+ * A helper function to assist in navigating from a single Fluid IoC test sequence step.  See the docs for details.
+ *
+ * @param that - The component itself
+ * @param args {Array} - An array representing a series of function names and arguments.  Each array's first element is a function name. The remaining arguments are passed to the function.
+ * @returns a Promise that will be resolved when navigation is complete, or rejected if there is an error.
+ *
+ */
 gpii.webdriver.navigateHelper = function (that, args) {
     var navFnName = args[0];
     var navFnArgs = fluid.makeArray(args).slice(1);
@@ -66,6 +116,16 @@ gpii.webdriver.navigateHelper = function (that, args) {
     }
 };
 
+/**
+ *
+ * A helper function to assist in performing a sequence of actions from a single Fluid IoC test sequence step.  See the
+ * docs for details.
+ *
+ * @param that - The component itself
+ * @param actionMap {Object} - A map of arrays, keyed by function name.  Each array represents the function arguments.
+ * @returns a Promise that will be resolved when the actions are complete, or rejected if there is an error.
+ *
+ */
 gpii.webdriver.actionsHelper = function (that, actionMap) {
     var actions = that.driver.actions();
     fluid.each(actionMap, function (actionArgs, actionFnName) {
@@ -260,6 +320,8 @@ fluid.defaults("gpii.webdriver", {
     }
 });
 
+// A convenience grade that sets `options.async` to false, to allow for use cases where synchronous initialization is
+// preferred.
 fluid.defaults("gpii.webdriver.syncInit", {
     gradeNames: ["gpii.webdriver"],
     async: false
