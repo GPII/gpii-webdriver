@@ -4,7 +4,7 @@
   "description": "A series of Fluid components that help write tests using the WebDriver API.",
   "main": "index.js",
   "scripts": {
-    "test": "node tests/all-tests.js"
+    "test": "node node_modules/istanbul/lib/cli.js cover tests/all-tests.js"
   },
   "repository": {
     "type": "git",
@@ -26,6 +26,7 @@
     "grunt": "1.0.1",
     "grunt-eslint": "18.1.0",
     "grunt-jsonlint": "1.1.0",
+    "istanbul": "0.4.4",
     "jsonlint": "1.6.0",
     "kettle": "1.1.0",
     "node-jqunit": "1.1.4",
