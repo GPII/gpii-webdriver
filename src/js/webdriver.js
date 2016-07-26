@@ -14,22 +14,21 @@ gpii.webdriver.Key   = webdriver.Key;
 // TODO:  The shutdown cycle for Windows does not appear to actually "quit" the window at least in IE.  Research.
 
 // The default initialization routine, which initializes the driver asynchronously and fires an event when it's ready.
-gpii.webdriver.initAsync = function (that) {
-    that.builderPromise = new webdriver.Builder()
-        .forBrowser(that.options.browser)
-        .buildAsync();
+gpii.webdriver.init = function (that) {
+    var builder = new webdriver.Builder()
+        .forBrowser(that.options.browser);
 
-    that.builderPromise.then(function (result) {
-        that.driver = result;
-        that.events.onDriverReady.fire();
-    })["catch"](that.events.onError.fire);
-};
+    if (that.options.async) {
+        that.builderPromise = builder.buildAsync();
 
-// The default initialization routine, which initializes the driver asynchronously and fires an event when it's ready.
-gpii.webdriver.initSync = function (that) {
-    that.driver = new webdriver.Builder()
-        .forBrowser(that.options.browser)
-        .build();
+        that.builderPromise.then(function (result) {
+            that.driver = result;
+            that.events.onDriverReady.fire();
+        })["catch"](that.events.onError.fire);
+    }
+    else {
+        that.driver = builder.build();
+    }
 };
 
 gpii.webdriver.execute = function (that, fnName, eventName, fnArgs) {
@@ -79,13 +78,24 @@ gpii.webdriver.actionsHelper = function (that, actionMap) {
     return promise;
 };
 
-// The base grade that does not attempt to initialize itself.
-fluid.defaults("gpii.webdriver.base", {
+fluid.defaults("gpii.webdriver", {
     gradeNames: ["fluid.component"],
     browser: "firefox", // The driver to use Firefox is available by default on all platforms, hence it is the default.
+    async: true,
+    listeners: {
+        "onCreate.init": {
+            funcName: "gpii.webdriver.init",
+            args:     ["{that}"]
+        },
+        "onDriverReady.log": {
+            funcName: "fluid.log",
+            args: ["Browser started..."]
+        }
+    },
     events: {
         // Our own unique actions
         onActionsHelperComplete: null,
+        onDriverReady: null,
         onError: null,
         onNavigateHelperComplete: null,
 
@@ -244,30 +254,7 @@ fluid.defaults("gpii.webdriver.base", {
     }
 });
 
-// The default grade, which is initialized asynchronously and which fires an event when the driver is ready.
-fluid.defaults("gpii.webdriver", {
-    gradeNames: ["gpii.webdriver.base"],
-    events: {
-        onDriverReady: null
-    },
-    listeners: {
-        "onCreate.init": {
-            funcName: "gpii.webdriver.initAsync",
-            args:     ["{that}"]
-        },
-        "onDriverReady.log": {
-            funcName: "fluid.log",
-            args: ["Browser started..."]
-        }
-    }
-});
-
 fluid.defaults("gpii.webdriver.syncInit", {
-    gradeNames: ["gpii.webdriver.base"],
-    listeners: {
-        "onCreate.init": {
-            funcName: "gpii.webdriver.initSync",
-            args:     ["{that}"]
-        }
-    }
+    gradeNames: ["gpii.webdriver"],
+    async: false
 });
