@@ -50,4 +50,4 @@ fluid.defaults("gpii.tests.webdriver.get.local.environment", {
     }
 });
 
-gpii.test.webdriver.allBrowsers({ baseTestEnvironent: "gpii.tests.webdriver.get.local.environment" });
+gpii.test.webdriver.allBrowsers({ baseTestEnvironment: "gpii.tests.webdriver.get.local.environment" });

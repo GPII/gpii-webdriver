@@ -27,11 +27,11 @@ fluid.defaults("gpii.tests.webdriver.navigation.browser.refresh.caseHolder", {
                     },
                     {
                         event:    "{testEnvironment}.webdriver.events.onGetComplete",
-                        listener: "{testEnvironment}.webdriver.actions",
+                        listener: "{testEnvironment}.webdriver.actionsHelper",
                         args:     [{ sendKeys: ["a simple string"]}]
                     },
                     {
-                        event:    "{testEnvironment}.webdriver.events.onActionsComplete",
+                        event:    "{testEnvironment}.webdriver.events.onActionsHelperComplete",
                         listener: "{testEnvironment}.webdriver.findElement",
                         args:     [{ id: "text-field"}]
                     },
@@ -69,4 +69,4 @@ fluid.defaults("gpii.tests.webdriver.navigation.browser.refresh.environment", {
     }
 });
 
-gpii.test.webdriver.allBrowsers({ baseTestEnvironent: "gpii.tests.webdriver.navigation.browser.refresh.environment" });
+gpii.test.webdriver.allBrowsers({ baseTestEnvironment: "gpii.tests.webdriver.navigation.browser.refresh.environment" });

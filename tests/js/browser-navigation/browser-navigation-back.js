@@ -61,4 +61,4 @@ fluid.defaults("gpii.tests.webdriver.navigation.browser.back.environment", {
     }
 });
 
-gpii.test.webdriver.allBrowsers({ baseTestEnvironent: "gpii.tests.webdriver.navigation.browser.back.environment" });
+gpii.test.webdriver.allBrowsers({ baseTestEnvironment: "gpii.tests.webdriver.navigation.browser.back.environment" });

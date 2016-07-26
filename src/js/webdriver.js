@@ -15,7 +15,6 @@ gpii.webdriver.Key   = webdriver.Key;
 
 // The default initialization routine, which initializes the driver asynchronously and fires an event when it's ready.
 gpii.webdriver.initAsync = function (that) {
-    // TODO: modularize this so that we can do things like optionally decide whether to use an external selenium instance.
     that.builderPromise = new webdriver.Builder()
         .forBrowser(that.options.browser)
         .buildAsync();
@@ -28,7 +27,6 @@ gpii.webdriver.initAsync = function (that) {
 
 // The default initialization routine, which initializes the driver asynchronously and fires an event when it's ready.
 gpii.webdriver.initSync = function (that) {
-    // TODO: modularize this so that we can do things like optionally decide whether to use an external selenium instance.
     that.driver = new webdriver.Builder()
         .forBrowser(that.options.browser)
         .build();
@@ -52,14 +50,16 @@ gpii.webdriver.navigateHelper = function (that, args) {
     var navFnArgs = fluid.makeArray(args).slice(1);
     var navigate = that.driver.navigate();
 
-    var promise = navigate[navFnName].apply(navigate, navFnArgs);
     if (navigate[navFnName]) {
+        var promise = navigate[navFnName].apply(navigate, navFnArgs);
+        promise.then(that.events.onNavigateHelperComplete.fire)["catch"](that.events.onError.fire);
         return promise;
     }
     else {
-        promise.reject("Navigation function `" + navFnName + "` does not exist...");
+        var failurePromise = fluid.promise();
+        failurePromise.reject("Navigation function `" + navFnName + "` does not exist...");
+        return failurePromise;
     }
-    promise.then(that.events.onNavigateHelperComplete.fire)["catch"](that.events.onError.fire);
 };
 
 gpii.webdriver.actionsHelper = function (that, actionMap) {

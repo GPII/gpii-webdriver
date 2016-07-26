@@ -55,4 +55,4 @@ fluid.defaults("gpii.tests.webdriver.executeScript.args.environment", {
     }
 });
 
-gpii.test.webdriver.allBrowsers({ baseTestEnvironent: "gpii.tests.webdriver.executeScript.args.environment" });
+gpii.test.webdriver.allBrowsers({ baseTestEnvironment: "gpii.tests.webdriver.executeScript.args.environment" });

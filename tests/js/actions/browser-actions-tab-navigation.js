@@ -15,7 +15,7 @@ fluid.defaults("gpii.tests.webdriver.actions.tabs.caseHolder", {
     gradeNames: ["gpii.test.webdriver.caseHolder"],
     fileUrl: "%gpii-webdriver/tests/js/actions/html/tabs.html",
     rawModules: [{
-        name: "Testing the browser's `refresh` function...",
+        name: "Testing keyboard navigation...",
         tests: [
             {
                 name: "Use the tab key to navigate to a particular field...",
@@ -55,4 +55,4 @@ fluid.defaults("gpii.tests.webdriver.actions.tabs.environment", {
     }
 });
 
-gpii.test.webdriver.allBrowsers({ baseTestEnvironent: "gpii.tests.webdriver.actions.tabs.environment" });
+gpii.test.webdriver.allBrowsers({ baseTestEnvironment: "gpii.tests.webdriver.actions.tabs.environment" });
