@@ -33,7 +33,7 @@ Each element in `actionsArray` is expected to be keyed by the function name to b
 arguments to be passed to the function.  For example:
 
 ```
-var driver = gpii.webdriver.initSync();
+var driver = gpii.webdriver.syncInit();
 driver.actions([{ sendKeys: [gpii.webdriver.Key.TAB, gpii.webdriver.Key.TAB]}]);
 ```
 
@@ -281,12 +281,11 @@ whenever any of the promises created by a "wrapped" function encounter an error.
 
 # `gpii.webdriver.syncInit`
 
-An alternate version of the grade that is built synchronously, and which does not fire an `onDriverReady` event.  This
-is meant for use when promises are preferred over the event-driven IoC method.  Note that although the synchronous
-version does not fire an event to indicate that it is ready, it does fire all of the other events inherited from the
-base grade (see above).
+An alternate version of the grade that is built synchronously, and which is meant for use when promises are preferred
+over the event-driven IoC method.  The key distinction is that the driver can start queueing future requests
+immediately rather than having to wait for the driver to finish starting up.
 
-One advantage of this grade is that it can be used almost verbatim with examples from the
+As a result, this grade can be used almost verbatim with examples from the
 [WebDriver documentation](http://seleniumhq.github.io/selenium/docs/api/javascript/index.html).  Here's an example taken
 from the WebDriver API that demonstrates using the library directly:
 
@@ -306,10 +305,10 @@ driver.wait(until.titleIs("webdriver - Google Search"), 1000);
 driver.quit();
 ```
 
-Here's the same example using the `gpii.webdriver.initSync` grade:
+Here's the same example using the `gpii.webdriver.syncInit` grade:
 
 ```
-var driver = gpii.webdriver.initSync({ browser: "firefox"});
+var driver = gpii.webdriver.syncInit({ browser: "firefox"});
 
 driver.get("http://www.google.com/ncr");
 driver.findElement(gpii.webdriver.By.name("q")).sendKeys("webdriver");
@@ -317,6 +316,8 @@ driver.findElement(gpii.webdriver.By.name("btnG")).click();
 driver.wait(gpii.webdriver.until.titleIs("webdriver - Google Search"), 1000);
 driver.quit();
 ```
+
+This grade fires all of the normal events, so you can use it in IoC tests (although there is no benefit to doing so).
 
 # `gpii.webdriver.By`
 
