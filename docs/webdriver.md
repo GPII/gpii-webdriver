@@ -6,9 +6,11 @@ driver is ready, the `onDriverReady` event is fired.
 
 ## Component Options
 
-| Option          | Type       | Description |
-| --------------- | ---------- | ----------- |
-| `browser`       | `{String}` | A lowercase string identifying which [supported browser](http://seleniumhq.github.io/selenium/docs/api/javascript/module/selenium-webdriver/lib/capabilities_exports_Browser.html) to use.  The `SELENIUM_BROWSER` environment variable will always take precedence over this value. Defaults to "firefox". |
+| Option               | Type        | Description |
+| -------------------- | ----------- | ----------- |
+| `browser`            | `{String}`  | A lowercase string identifying which [supported browser](http://seleniumhq.github.io/selenium/docs/api/javascript/module/selenium-webdriver/lib/capabilities_exports_Browser.html) to use.  The `SELENIUM_BROWSER` environment variable will always take precedence over this value. Defaults to `"firefox"`. |
+| `async`              | `{Boolean}` | Whether to initialize the underlying webdriver asynchronously.  Defaults to `true`. See `gpii.webdriver.syncInit` below for details about the implications of setting this to `false`. |
+| `asyncScriptTimeout` | `{Integer}` | The number of milliseconds to wait before timing out calls to `executeAsyncScript` (see below).  Defaults to `10000` (10 seconds). |
 
 ## Component Invokers
 
