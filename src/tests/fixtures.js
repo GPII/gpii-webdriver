@@ -6,7 +6,6 @@
 
  */
 /* eslint-env node */
-// TODO:  NEEDS JSDocs
 "use strict";
 var fluid = require("infusion");
 fluid.loadTestingSupport();
@@ -18,6 +17,16 @@ gpii.express.loadTestingSupport();
 
 fluid.registerNamespace("gpii.test.webdriver.caseHolder");
 
+/**
+ *
+ * A function to prepend the value of `that.options.browser` to each module and test name.  Helps to distinguish tests
+ * run using `allBrowsers` from one another.
+ *
+ * @param that - The caseHolder component
+ * @param module - The individual test module.
+ * @returns A copy of the original module with updated `name` values for all modules and tests.
+ *
+ */
 gpii.test.webdriver.caseHolder.prepareModule = function (that, module) {
     var processedModule = fluid.copy(module);
     processedModule.name = that.options.browser + ": " + module.name;
@@ -31,12 +40,28 @@ gpii.test.webdriver.caseHolder.prepareModule = function (that, module) {
     return processedModule;
 };
 
+/**
+ *
+ * A function that transforms each module using `that.prepareModule` and then prepends and appends standard sequences
+ * using the static function `gpii.test.express.helpers.addRequiredSequences` from the `gpii-express` package.
+ *
+ * @param that (The caseHolder component).
+ * @returns {Object} A copy of the original modules, updated with the standard start and end sequences and transformed using `that.prepareModule`
+ */
 gpii.test.webdriver.caseHolder.prepareModules = function (that) {
-    var preparedModules = fluid.transform(that.options.rawModules, that.prepareModule);
-    return gpii.test.express.helpers.addRequiredSequences(preparedModules, that.options.sequenceStart, that.options.sequenceEnd);
+    var modulesWithStartAndEnd = gpii.test.express.helpers.addRequiredSequences(that.options.rawModules, that.options.sequenceStart, that.options.sequenceEnd);
+    return fluid.transform(modulesWithStartAndEnd, that.prepareModule);
 };
 
-/* A caseholder that provides common startup sequence steps for all tests. */
+/*
+ A caseHolder that makes use of the above functions to generate its final module content based on:
+
+ 1. that.options.rawModules
+ 2. that.options.startSequence (goes at the start of each set of test sequences.
+ 3. that.options.endSequence (goes at the end of each set of test sequences.
+ 4. that.options.browser (Prepended to the name of each module and test, including those added in steps 2 and 3).
+
+ */
 fluid.defaults("gpii.test.webdriver.caseHolder.base", {
     gradeNames: ["gpii.test.express.caseHolder.base"],
     browser: "{testEnvironment}.options.browser",
@@ -52,6 +77,7 @@ fluid.defaults("gpii.test.webdriver.caseHolder.base", {
     }
 });
 
+/* same as the above, but with the standard start and end sequences use in most of the tests in this package. */
 fluid.defaults("gpii.test.webdriver.caseHolder", {
     gradeNames: ["gpii.test.webdriver.caseHolder.base"],
     sequenceStart: gpii.test.express.standardSequenceStart,
@@ -61,6 +87,7 @@ fluid.defaults("gpii.test.webdriver.caseHolder", {
     ]
 });
 
+/* A testEnvironment designed for use with the standard start and end steps above. */
 fluid.defaults("gpii.test.webdriver.testEnvironment", {
     gradeNames: ["fluid.test.testEnvironment"],
     events: {
