@@ -15,5 +15,6 @@ require("./js/isElementPresent");
 require("./js/qunit/");
 require("./js/resolve-file-url");
 require("./js/sleep");
+require("./js/syncInit");
 require("./js/takeScreenshot");
 require("./js/wait");

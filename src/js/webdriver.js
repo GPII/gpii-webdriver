@@ -13,6 +13,10 @@ gpii.webdriver.Key   = webdriver.Key;
 
 // TODO:  The shutdown cycle for Windows does not appear to actually "quit" the window at least in IE.  Research.
 
+gpii.webdriver.configureDriver = function (that) {
+    that.driver.manage().timeouts().setScriptTimeout(that.options.asyncScriptTimeout).then(that.events.onDriverReady.fire);
+};
+
 // The default initialization routine, which initializes the driver asynchronously and fires an event when it's ready.
 gpii.webdriver.init = function (that) {
     var builder = new webdriver.Builder()
@@ -23,11 +27,12 @@ gpii.webdriver.init = function (that) {
 
         that.builderPromise.then(function (result) {
             that.driver = result;
-            that.events.onDriverReady.fire();
+            gpii.webdriver.configureDriver(that);
         })["catch"](that.events.onError.fire);
     }
     else {
         that.driver = builder.build();
+        gpii.webdriver.configureDriver(that);
     }
 };
 
@@ -82,6 +87,7 @@ fluid.defaults("gpii.webdriver", {
     gradeNames: ["fluid.component"],
     browser: "firefox", // The driver to use Firefox is available by default on all platforms, hence it is the default.
     async: true,
+    asyncScriptTimeout: 10000,
     listeners: {
         "onCreate.init": {
             funcName: "gpii.webdriver.init",

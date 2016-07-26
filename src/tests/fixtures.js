@@ -29,14 +29,9 @@ gpii.test.webdriver.caseHolder.prepareModules = function (that) {
     return gpii.test.express.helpers.addRequiredSequences(preparedModules, that.options.sequenceStart, that.options.sequenceEnd);
 };
 
-fluid.defaults("gpii.test.webdriver.caseHolder", {
+fluid.defaults("gpii.test.webdriver.caseHolder.base", {
     gradeNames: ["gpii.test.express.caseHolder.base"],
     browser: "{testEnvironment}.options.browser",
-    sequenceStart: gpii.test.express.standardSequenceStart,
-    sequenceEnd: [
-        { func: "{testEnvironment}.webdriver.quit", args: [] },
-        { listener: "fluid.identity", event: "{testEnvironment}.events.onFixturesStopped"}
-    ],
     moduleSource: {
         funcName: "gpii.test.webdriver.caseHolder.prepareModules",
         args:     ["{that}"]
@@ -47,6 +42,15 @@ fluid.defaults("gpii.test.webdriver.caseHolder", {
             args:     ["{that}", "{arguments}.0"]
         }
     }
+});
+
+fluid.defaults("gpii.test.webdriver.caseHolder", {
+    gradeNames: ["gpii.test.webdriver.caseHolder.base"],
+    sequenceStart: gpii.test.express.standardSequenceStart,
+    sequenceEnd: [
+        { func: "{testEnvironment}.webdriver.quit", args: [] },
+        { listener: "fluid.identity", event: "{testEnvironment}.events.onFixturesStopped"}
+    ]
 });
 
 fluid.defaults("gpii.test.webdriver.testEnvironment", {
