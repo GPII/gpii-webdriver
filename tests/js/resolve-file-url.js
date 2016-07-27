@@ -4,6 +4,7 @@ var fluid = require("infusion");
 var gpii = fluid.registerNamespace("gpii");
 
 var url = require("url");
+var os = require("os");
 
 require("../../src/tests/resolve-file-url");
 
@@ -13,7 +14,12 @@ jqUnit.module("Testing static URL resolution function...");
 
 // If we had more than three of these, I would write a quick "runner".  Forgive the very small duplication here.
 jqUnit.test("Package-relative paths should be resolved", function () {
-    jqUnit.assertEquals("A package-relative path should be resolved correctly...", url.resolve("file://", __filename), gpii.test.webdriver.resolveFileUrl("%gpii-webdriver/tests/js/resolve-file-url.js"));
+    var expectedUrl = url.resolve("file://", __filename);
+    // url.resolve does not properly construct file URLS on windows, so we have to fake it.
+    if (os.platform === "win32") {
+        expectedUrl = "file:///" + expectedUrl;
+    }
+    jqUnit.assertEquals("A package-relative path should be resolved correctly...", expectedUrl, gpii.test.webdriver.resolveFileUrl("%gpii-webdriver/tests/js/resolve-file-url.js"));
 });
 
 jqUnit.test("Static strings should be preserved...", function () {
