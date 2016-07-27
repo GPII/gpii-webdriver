@@ -8,9 +8,10 @@ driver is ready, the `onDriverReady` event is fired.
 
 | Option               | Type        | Description |
 | -------------------- | ----------- | ----------- |
-| `browser`            | `{String}`  | A lowercase string identifying which [supported browser](http://seleniumhq.github.io/selenium/docs/api/javascript/module/selenium-webdriver/lib/capabilities_exports_Browser.html) to use.  The `SELENIUM_BROWSER` environment variable will always take precedence over this value. Defaults to `"firefox"`. |
 | `async`              | `{Boolean}` | Whether to initialize the underlying webdriver asynchronously.  Defaults to `true`. See `gpii.webdriver.syncInit` below for details about the implications of setting this to `false`. |
 | `asyncScriptTimeout` | `{Integer}` | The number of milliseconds to wait before timing out calls to `executeAsyncScript` (see below).  Defaults to `10000` (10 seconds). |
+| `browser`            | `{String}`  | A lowercase string identifying which [supported browser](http://seleniumhq.github.io/selenium/docs/api/javascript/module/selenium-webdriver/lib/capabilities_exports_Browser.html) to use.  The `SELENIUM_BROWSER` environment variable will always take precedence over this value. Defaults to `"firefox"`. |
+| `logOnQuit`          | `{Boolean}` | Whether to dump the webdriver log output to console.log when the browser is quit. Defaults to `false`. |
 
 ## Component Invokers
 
@@ -54,6 +55,11 @@ Close the current window.
 
 View the WebDriver API documentation for more [details on the underlying `close` function.](http://seleniumhq.github.io/selenium/docs/api/javascript/module/selenium-webdriver/lib/webdriver_exports_WebDriver.html#close)
 
+# `{that}.dumpLogs(type)`
+
+Dump all WebDriver logs that have accumulated since the last call to this function.  The required `type` variable
+filters the results by [type](http://seleniumhq.github.io/selenium/docs/api/javascript/module/selenium-webdriver/lib/logging_exports_Type.html).
+Based on informal testing, it appears that only "browser" and "driver" are supported by the underlying function.
 
 # `{that}.executeAsyncScript(script, var_args)`
 

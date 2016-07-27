@@ -51,6 +51,16 @@ fluid.defaults("gpii.tests.webdriver.actions.tabs.environment", {
     components: {
         caseHolder: {
             type: "gpii.tests.webdriver.actions.tabs.caseHolder"
+        },
+        webdriver: {
+            options: {
+                listeners: {
+                    "onError.dumpLogs": {
+                        func: "{that}.dumpLogs",
+                        args: ["driver"]
+                    }
+                }
+            }
         }
     }
 });

@@ -45,6 +45,15 @@ gpii.webdriver.configureDriver = function (that) {
  *
  */
 gpii.webdriver.init = function (that) {
+    // We may eventually need to add support for browser-specific options, as in:
+    // setChromeOptions(options)
+    // setEdgeOptions(options)
+    // setEnableNativeEvents(enabled)
+    // setFirefoxOptions(options)
+    // setIeOptions(options)
+    // setOperaOptions(options)
+    // setSafariOptions(options)
+
     var builder = new webdriver.Builder()
         .forBrowser(that.options.browser);
 
@@ -147,6 +156,27 @@ gpii.webdriver.actionsHelper = function (that, actionMap) {
     return promise;
 };
 
+/**
+ *
+ * Dump the webdriver logs that have accumulated since the last dump, optionally filtered by `type`. See
+ * http://seleniumhq.github.io/selenium/docs/api/javascript/module/selenium-webdriver/lib/logging_exports_Type.html
+ * for the list of valid string values, although apparently only "browser" and "driver" are supported.
+ *
+ * @param that - The Component itself.
+ * @param type {String} - The type of log entries to return, i.e. "browser" or "driver".
+ */
+gpii.webdriver.dumpLogs = function (that, type) {
+    type = type || "browser";
+
+    that.driver.manage().logs().get(type)
+        .then(function (logEntries) {
+            fluid.each(logEntries, function (logEntry) {
+                console.log(new Date(logEntry.timestamp) + " " + logEntry.level + ": " + logEntry.message);
+            });
+        })
+        ["catch"](function (error) { console.log("Error retrieving logs...", error);});
+};
+
 fluid.defaults("gpii.webdriver", {
     gradeNames: ["fluid.component"],
     browser: "firefox", // The driver to use Firefox is available by default on all platforms, hence it is the default.
@@ -156,10 +186,6 @@ fluid.defaults("gpii.webdriver", {
         "onCreate.init": {
             funcName: "gpii.webdriver.init",
             args:     ["{that}"]
-        },
-        "onDriverReady.log": {
-            funcName: "fluid.log",
-            args: ["Browser started..."]
         }
     },
     events: {
@@ -202,6 +228,10 @@ fluid.defaults("gpii.webdriver", {
         actionsHelper: {
             funcName: "gpii.webdriver.actionsHelper",
             args:     ["{that}", "{arguments}.0"] // actionArray
+        },
+        dumpLogs: {
+            funcName: "gpii.webdriver.dumpLogs",
+            args:     ["{that}", "{arguments}.0"] // type
         },
         navigateHelper: {
             funcName: "gpii.webdriver.navigateHelper",
