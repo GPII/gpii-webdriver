@@ -45,17 +45,16 @@ gpii.webdriver.configureDriver = function (that) {
  *
  */
 gpii.webdriver.init = function (that) {
-    // We may eventually need to add support for browser-specific options, as in:
-    // setChromeOptions(options)
-    // setEdgeOptions(options)
-    // setEnableNativeEvents(enabled)
-    // setFirefoxOptions(options)
-    // setIeOptions(options)
-    // setOperaOptions(options)
-    // setSafariOptions(options)
+
 
     var builder = new webdriver.Builder()
         .forBrowser(that.options.browser);
+
+    // Add browser-specific options if needed.
+    var browserCapabilities = that.options.browserOptions[that.options.browser];
+    if (browserCapabilities) {
+        builder = builder.withCapabilities(browserCapabilities)
+    }
 
     if (that.options.async) {
         that.builderPromise = builder.buildAsync();
@@ -186,6 +185,14 @@ fluid.defaults("gpii.webdriver", {
         "onCreate.init": {
             funcName: "gpii.webdriver.init",
             args:     ["{that}"]
+        }
+    },
+    browserOptions: {
+        ie: {
+            enableNativeEvents: false
+        },
+        firefox: {
+            enableNativeEvents: true
         }
     },
     events: {
