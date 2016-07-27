@@ -45,17 +45,9 @@ gpii.webdriver.configureDriver = function (that) {
  *
  */
 gpii.webdriver.init = function (that) {
-
-
-    var builder = new webdriver.Builder()
-        .forBrowser(that.options.browser);
-
-    // Add browser-specific options if needed.
-    var browserCapabilities = that.options.browserOptions[that.options.browser];
-    if (browserCapabilities) {
-        builder = builder.withCapabilities(browserCapabilities)
-    }
-
+    var capabilities = new webdriver.Capabilities(that.options.browserOptions[that.options.browser]);
+    // var builder = new webdriver.Builder().setEnableNativeEvents(true).withCapabilities(capabilities);
+    var builder = new webdriver.Builder().withCapabilities(capabilities);
     if (that.options.async) {
         that.builderPromise = builder.buildAsync();
 
@@ -189,10 +181,19 @@ fluid.defaults("gpii.webdriver", {
     },
     browserOptions: {
         ie: {
-            enableNativeEvents: false
+            browserName: "ie",
+            nativeEvents: false
         },
         firefox: {
-            enableNativeEvents: true
+            browserName: "firefox",
+            nativeEvents: true
+        },
+        chrome: {
+            browserName: "chrome",
+            nativeEvents: false
+        },
+        opera: {
+            browserName: "opera"
         }
     },
     events: {

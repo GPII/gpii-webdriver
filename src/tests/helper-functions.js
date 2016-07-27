@@ -77,3 +77,21 @@ gpii.webdriver.test.inspectElements = function (message, elements, elementFn, ex
         jqUnit.assertDeepEq(message, expectedValues, results);
     });
 };
+
+
+/**
+ *
+ * Some things, like Capabilities, are Map objects that we would like to be able to inspect as plain old Javascript objects.
+ *
+ * @param map {Map} A map to be converted.
+ * @returns {Object} The map in JSON form.
+ *
+ */
+gpii.webdriver.test.mapToObject = function (map) {
+    var object = {};
+    map.forEach(function (value, key) {
+        object[key] = value;
+    });
+
+    return object;
+};

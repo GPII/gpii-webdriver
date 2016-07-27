@@ -119,7 +119,8 @@ View the WebDriver API documentation for more [details on the underlying `getAll
 
 # `{that}.getCapabilities()`
 
-This function is not used or tested in this module, but is exposed for future developers to explore and extend as desired.
+Retrieve the current capabilities of the browser window.  The event `onGetCapabilitiesComplete` is fired with the value.
+Returns a promise that will be resolved with the current capabilties.
 
 View the WebDriver API documentation for more [details on the underlying `getCapabilities` function.](http://seleniumhq.github.io/selenium/docs/api/javascript/module/selenium-webdriver/lib/webdriver_exports_WebDriver.html#getCapabilities)
 
