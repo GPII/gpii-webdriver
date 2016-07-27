@@ -5,6 +5,7 @@ require("./js/actions");
 require("./js/browser-navigation");
 require("./js/executeAsyncScript");
 require("./js/executeScript");
+require("./js/failure");
 require("./js/findElement");
 require("./js/findElements");
 require("./js/get");

@@ -84,8 +84,9 @@ gpii.webdriver.execute = function (that, fnName, eventName, fnArgs) {
         return promise;
     }
     else {
-        var failurePromise = fluid.promise();
-        failurePromise.reject("Can't execute function because the underlying webdriver object is not available...");
+        var failurePromise = new webdriver.promise.Promise();
+        failurePromise["catch"](that.events.onError.fire);
+        failurePromise.cancel("Can't execute function because the underlying webdriver object is not available...");
         return failurePromise;
     }
 };
@@ -100,8 +101,9 @@ gpii.webdriver.execute = function (that, fnName, eventName, fnArgs) {
  *
  */
 gpii.webdriver.navigateHelper = function (that, args) {
-    var navFnName = args[0];
-    var navFnArgs = fluid.makeArray(args).slice(1);
+    var argsArray = fluid.makeArray(args);
+    var navFnName = argsArray[0];
+    var navFnArgs = argsArray.slice(1);
     var navigate = that.driver.navigate();
 
     if (navigate[navFnName]) {
@@ -110,8 +112,9 @@ gpii.webdriver.navigateHelper = function (that, args) {
         return promise;
     }
     else {
-        var failurePromise = fluid.promise();
-        failurePromise.reject("Navigation function `" + navFnName + "` does not exist...");
+        var failurePromise = new webdriver.promise.Promise();
+        failurePromise["catch"](that.events.onError.fire);
+        failurePromise.cancel("Navigation function `" + navFnName + "` does not exist...");
         return failurePromise;
     }
 };
@@ -133,8 +136,9 @@ gpii.webdriver.actionsHelper = function (that, actionMap) {
             actions[actionFnName].apply(actions, actionArgs);
         }
         else {
-            var failurePromise = fluid.promise();
-            failurePromise.reject("Cannot perform unknown action '" + actionFnName + "'...");
+            var failurePromise = new webdriver.promise.Promise();
+            failurePromise["catch"](that.events.onError.fire);
+            failurePromise.cancel("Cannot perform unknown action '" + actionFnName + "'...");
             return failurePromise;
         }
     });

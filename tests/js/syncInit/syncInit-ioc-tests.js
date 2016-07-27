@@ -33,6 +33,9 @@ fluid.defaults("gpii.tests.webdriver.syncInit.caseHolder", {
                         event:    "{testEnvironment}.events.onFixturesConstructed",
                         listener: "jqUnit.assert",
                         args:     ["A startup event should have been fired..."]
+                    },
+                    {
+                        func: "{testEnvironment}.webdriver.quit"
                     }
                 ]
             }
