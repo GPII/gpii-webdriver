@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/the-t-in-rtf/gpii-webdriver#readme",
   "dependencies": {
+    "axe-core": "2.0.5",
     "infusion": "2.0.0-dev.20160519T222603Z.754d2c6",
     "selenium-webdriver": "2.53.3"
   },

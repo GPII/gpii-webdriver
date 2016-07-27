@@ -2,6 +2,7 @@
 "use strict";
 
 require("./js/actions");
+require("./js/axe");
 require("./js/browser-navigation");
 require("./js/dumpLogs");
 require("./js/executeAsyncScript");
