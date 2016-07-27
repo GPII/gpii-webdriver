@@ -58,7 +58,7 @@ View the WebDriver API documentation for more [details on the underlying `close`
 
 # `{that}.dumpLogs(type)`
 
-Dump all WebDriver logs that have accumulated since the last call to this function.  The required `type` variable
+Return all WebDriver logs that have accumulated since the last call to this function.  The required `type` variable
 filters the results by [type](http://seleniumhq.github.io/selenium/docs/api/javascript/module/selenium-webdriver/lib/logging_exports_Type.html).
 Based on informal testing, it appears that only "browser" and "driver" are supported by the underlying function.
 
