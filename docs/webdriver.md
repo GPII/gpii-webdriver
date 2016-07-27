@@ -11,6 +11,7 @@ driver is ready, the `onDriverReady` event is fired.
 | `async`              | `{Boolean}` | Whether to initialize the underlying webdriver asynchronously.  Defaults to `true`. See `gpii.webdriver.syncInit` below for details about the implications of setting this to `false`. |
 | `asyncScriptTimeout` | `{Integer}` | The number of milliseconds to wait before timing out calls to `executeAsyncScript` (see below).  Defaults to `10000` (10 seconds). |
 | `browser`            | `{String}`  | A lowercase string identifying which [supported browser](http://seleniumhq.github.io/selenium/docs/api/javascript/module/selenium-webdriver/lib/capabilities_exports_Browser.html) to use.  The `SELENIUM_BROWSER` environment variable will always take precedence over this value. Defaults to `"firefox"`. |
+| `browserOptions`     | `{Object}`  | A map of [browser options](http://seleniumhq.github.io/selenium/docs/api/javascript/module/selenium-webdriver/lib/capabilities_exports_Capabilities.html), keyed at the top level by the browser name ("chrome", "ie", etc.).  If options exist for `that.options.browser`, they will be passed to the builder before the driver is created. |
 | `logOnQuit`          | `{Boolean}` | Whether to dump the webdriver log output to console.log when the browser is quit. Defaults to `false`. |
 
 ## Component Invokers
