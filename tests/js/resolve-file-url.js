@@ -17,7 +17,7 @@ jqUnit.test("Package-relative paths should be resolved", function () {
     var expectedUrl = url.resolve("file://", __filename);
     // url.resolve does not properly construct file URLS on windows, so we have to fake it.
     if (os.platform() === "win32") {
-        expectedUrl = "file:///" + expectedUrl;
+        expectedUrl = "file:///" + expectedUrl[0].toUpperCase() + expectedUrl.substring(1);
     }
     jqUnit.assertEquals("A package-relative path should be resolved correctly...", expectedUrl, gpii.test.webdriver.resolveFileUrl("%gpii-webdriver/tests/js/resolve-file-url.js"));
 });
