@@ -28,7 +28,7 @@ fluid.defaults("gpii.tests.webdriver.actions.tabs.caseHolder", {
                     {
                         event:    "{testEnvironment}.webdriver.events.onGetComplete",
                         listener: "{testEnvironment}.webdriver.actionsHelper",
-                        args:     [{ sendKeys: [gpii.webdriver.Key.TAB, gpii.webdriver.Key.TAB]}]
+                        args:     [{ fnName: "sendKeys", args: [gpii.webdriver.Key.TAB, gpii.webdriver.Key.TAB]}]
                     },
                     {
                         event:    "{testEnvironment}.webdriver.events.onActionsHelperComplete",

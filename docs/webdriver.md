@@ -33,12 +33,19 @@ A helper which constructs an entire sequence of actions and executes them in ord
 step to indicate that the sequence is complete).  Fires `onActionsHelperComplete` when all actions have been performed.
 Returns a promise that is resolved when all actions have been performed.
 
-Each element in `actionsArray` is expected to be keyed by the function name to be executed.  The map values are the
-arguments to be passed to the function.  For example:
+Each element in `actionsArray` is expected to be an object whose `fn` value represents the function name to be executed,
+and whose `args` value represents the arguments to be passed to the function.  For example:
 
 ```
 var driver = gpii.webdriver.syncInit();
-driver.actions([{ sendKeys: [gpii.webdriver.Key.TAB, gpii.webdriver.Key.TAB]}]);
+driver.actions({ fn: "sendKeys", args: [gpii.webdriver.Key.TAB, gpii.webdriver.Key.TAB]});
+```
+
+Note that if you wish to pass multiple actions, you will need to pass an array as the first argument, as in:
+
+```
+var driver = gpii.webdriver.syncInit();
+driver.actions([{ fn: "sendKeys", args: [gpii.webdriver.Key.TAB]}, { fn: "sendKeys", args: [gpii.webdriver.Key.TAB]}]);
 ```
 
 The range of supported actions and options can be found in [the WebDriver documentation](http://seleniumhq.github.io/selenium/docs/api/javascript/module/selenium-webdriver/lib/actions_exports_ActionSequence.html).

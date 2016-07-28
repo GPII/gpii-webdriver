@@ -28,7 +28,7 @@ fluid.defaults("gpii.tests.webdriver.actions.text.caseHolder", {
                     {
                         event:    "{testEnvironment}.webdriver.events.onGetComplete",
                         listener: "{testEnvironment}.webdriver.actionsHelper",
-                        args:     [{ sendKeys: ["This is really something"] }]
+                        args:     [{ fn: "sendKeys", args: ["This is really something"] }]
                     },
                     {
                         event:    "{testEnvironment}.webdriver.events.onActionsHelperComplete",
@@ -43,7 +43,7 @@ fluid.defaults("gpii.tests.webdriver.actions.text.caseHolder", {
                 ]
             },
             {
-                name: "Type in an array of strings...",
+                name: "Type in an array of strings in a single call to sendKeys...",
                 type: "test",
                 sequence: [
                     {
@@ -53,7 +53,7 @@ fluid.defaults("gpii.tests.webdriver.actions.text.caseHolder", {
                     {
                         event:    "{testEnvironment}.webdriver.events.onGetComplete",
                         listener: "{testEnvironment}.webdriver.actionsHelper",
-                        args:     [{ sendKeys: ["This ", "is ", "really ", "something"]}]
+                        args:     [{ fn: "sendKeys", args: ["This ", "is ", "really ", "something"]}]
                     },
                     {
                         event:    "{testEnvironment}.webdriver.events.onActionsHelperComplete",
@@ -68,7 +68,7 @@ fluid.defaults("gpii.tests.webdriver.actions.text.caseHolder", {
                 ]
             },
             {
-                name: "Type in unicode...",
+                name: "Type in an array of strings in a multiple calls to sendKeys...",
                 type: "test",
                 sequence: [
                     {
@@ -78,8 +78,7 @@ fluid.defaults("gpii.tests.webdriver.actions.text.caseHolder", {
                     {
                         event:    "{testEnvironment}.webdriver.events.onGetComplete",
                         listener: "{testEnvironment}.webdriver.actionsHelper",
-                        // "I can eat glass, it doesn't hurt me.", in Armenian. Taken from http://www.columbia.edu/~fdc/utf8/
-                        args:     [{ sendKeys: ["Կրնամ ապակի ուտել և ինծի անհանգիստ չըներ։"]}]
+                        args:     [[{ fn: "sendKeys", args: ["This ", "is "]}, { fn: "sendKeys", args: ["really ", "something"]}]]
                     },
                     {
                         event:    "{testEnvironment}.webdriver.events.onActionsHelperComplete",
@@ -89,10 +88,36 @@ fluid.defaults("gpii.tests.webdriver.actions.text.caseHolder", {
                     {
                         event:    "{testEnvironment}.webdriver.events.onFindElementComplete",
                         listener: "gpii.webdriver.test.testElementValue",
-                        args:     ["The text should be as entered...", "{arguments}.0", "Կրնամ ապակի ուտել և ինծի անհանգիստ չըներ։"] // message, element, expectedValue, jqUnitFn
+                        args:     ["The text should be as entered...", "{arguments}.0", "This is really something"] // message, element, expectedValue, jqUnitFn
                     }
                 ]
-            }
+            },
+            // {
+            //     name: "Type in unicode...",
+            //     type: "test",
+            //     sequence: [
+            //         {
+            //             func: "{testEnvironment}.webdriver.get",
+            //             args: ["@expand:gpii.test.webdriver.resolveFileUrl({that}.options.fileUrl)"]
+            //         },
+            //         {
+            //             event:    "{testEnvironment}.webdriver.events.onGetComplete",
+            //             listener: "{testEnvironment}.webdriver.actionsHelper",
+            //             // "I can eat glass, it doesn't hurt me.", in Armenian. Taken from http://www.columbia.edu/~fdc/utf8/
+            //             args:     [{ fn: "sendKeys", args: ["Կրնամ ապակի ուտել և ինծի անհանգիստ չըներ։"]}]
+            //         },
+            //         {
+            //             event:    "{testEnvironment}.webdriver.events.onActionsHelperComplete",
+            //             listener: "{testEnvironment}.webdriver.findElement",
+            //             args:     [{ id: "text-field"}]
+            //         },
+            //         {
+            //             event:    "{testEnvironment}.webdriver.events.onFindElementComplete",
+            //             listener: "gpii.webdriver.test.testElementValue",
+            //             args:     ["The text should be as entered...", "{arguments}.0", "Կրնամ ապակի ուտել և ինծի անհանգիստ չըներ։"] // message, element, expectedValue, jqUnitFn
+            //         }
+            //     ]
+            // }
         ]
     }]
 });

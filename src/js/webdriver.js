@@ -125,13 +125,16 @@ gpii.webdriver.navigateHelper = function (that, args) {
  * docs for details.
  *
  * @param that - The component itself
- * @param actionMap {Object} - A map of arrays, keyed by function name.  Each array represents the function arguments.
+ * @param actions {Object} - An array of action definitions.  Each element is an object with a `functionName` and `args` element.
  * @returns a Promise that will be resolved when the actions are complete, or rejected if there is an error.
  *
  */
-gpii.webdriver.actionsHelper = function (that, actionMap) {
+gpii.webdriver.actionsHelper = function (that, actionDefs) {
     var actions = that.driver.actions();
-    fluid.each(actionMap, function (actionArgs, actionFnName) {
+    fluid.each(fluid.makeArray(actionDefs), function (actionDef) {
+        var actionFnName = actionDef.fn;
+        var actionArgs   = actionDef.args;
+
         if (actions[actionFnName]) {
             actions[actionFnName].apply(actions, actionArgs);
         }
