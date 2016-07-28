@@ -20,17 +20,39 @@ gpii.tests.webdriver.dumpLogs.checkLogOutput = function (message, logOutput, exp
 
 fluid.defaults("gpii.tests.webdriver.dumpLogs.caseHolder", {
     gradeNames: ["gpii.test.webdriver.caseHolder"],
-    fileUrl: "%gpii-webdriver/tests/js/dumpLogs/html/index.html",
+    fileWithBrowserError: "%gpii-webdriver/tests/js/dumpLogs/html/index.html",
+    fileWithNoError: "%gpii-webdriver/tests/js/get/html/index.html",
     rawModules: [{
         name: "Testing the driver's `dumpLogs` function within the IoC test framework...",
         tests: [
+            // Chrome does not produce any "driver" logs.  TODO:  Revisit this test when the WebDriver logging API is formalized.
+            // {
+            //     name: "Dump the driver logs...",
+            //     type: "test",
+            //     sequence: [
+            //         {
+            //             func: "{testEnvironment}.webdriver.get",
+            //             args: ["@expand:gpii.test.webdriver.resolveFileUrl({that}.options.fileWithNoError)"]
+            //         },
+            //         {
+            //             event:    "{testEnvironment}.webdriver.events.onGetComplete",
+            //             listener: "{testEnvironment}.webdriver.dumpLogs",
+            //             args:     ["driver"]
+            //         },
+            //         {
+            //             event:    "{testEnvironment}.webdriver.events.onDumpLogsComplete",
+            //             listener: "gpii.tests.webdriver.dumpLogs.checkLogOutput",
+            //             args:     ["The log output should indicate that we have been asked to do work...", "{arguments}.0", "Received command: getLog"]
+            //         }
+            //     ]
+            // },
             {
                 name: "Dump the browser logs...",
                 type: "test",
                 sequence: [
                     {
                         func: "{testEnvironment}.webdriver.get",
-                        args: ["@expand:gpii.test.webdriver.resolveFileUrl({that}.options.fileUrl)"]
+                        args: ["@expand:gpii.test.webdriver.resolveFileUrl({that}.options.fileWithBrowserError)"]
                     },
                     {
                         event:    "{testEnvironment}.webdriver.events.onGetComplete",
@@ -40,27 +62,7 @@ fluid.defaults("gpii.tests.webdriver.dumpLogs.caseHolder", {
                     {
                         event:    "{testEnvironment}.webdriver.events.onDumpLogsComplete",
                         listener: "gpii.tests.webdriver.dumpLogs.checkLogOutput",
-                        args:     ["The log output should contain a known browser error...", "{arguments}.0", "window.bogus"]
-                    }
-                ]
-            },
-            {
-                name: "Dump the driver logs...",
-                type: "test",
-                sequence: [
-                    {
-                        func: "{testEnvironment}.webdriver.get",
-                        args: ["@expand:gpii.test.webdriver.resolveFileUrl({that}.options.fileUrl)"]
-                    },
-                    {
-                        event:    "{testEnvironment}.webdriver.events.onGetComplete",
-                        listener: "{testEnvironment}.webdriver.dumpLogs",
-                        args:     ["driver"]
-                    },
-                    {
-                        event:    "{testEnvironment}.webdriver.events.onDumpLogsComplete",
-                        listener: "gpii.tests.webdriver.dumpLogs.checkLogOutput",
-                        args:     ["The log output should contain a known browser error...", "{arguments}.0", "Received command: getLog"]
+                        args:     ["The log output should contain a browser error...", "{arguments}.0", "TypeError"] // The messages are different in chrome and firefox, but "TypeError" is found in both.
                     }
                 ]
             }
