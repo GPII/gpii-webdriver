@@ -14,9 +14,10 @@ software_stack_version: 4.3.1
 
 setup:
   - sudo dnf -y install java-1.8.0-openjdk-devel.x86_64
-  - sudo npm install -g webdriver-manager
-  - sudo webdriver-manager --chrome
   - npm install
 
 commands:
-  - npm test
+  - export PATH=$PATH:/home/vagrant/sync/node_modules/chromedriver/bin/chromedriver/
+  - xhost +
+  - export DISPLAY=:0
+  - BROWSERS=chrome npm test
