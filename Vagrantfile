@@ -40,7 +40,7 @@ end
 Vagrant.configure(2) do |config|
 
   if app_env_runtime == "linux-desktop"
-    config.vm.box = "inclusivedesign/fedora22"
+    config.vm.box = "inclusivedesign/fedora24"
   else
     config.vm.box = "inclusivedesign/centos7"
   end
@@ -63,7 +63,9 @@ Vagrant.configure(2) do |config|
   config.vm.provider :virtualbox do |vm|
     vm.customize ["modifyvm", :id, "--memory", ram]
     vm.customize ["modifyvm", :id, "--cpus", cpus]
-  end
+    vm.customize ["modifyvm", :id, "--vram", "256"]
+    vm.customize ["modifyvm", :id, "--accelerate3d", "off"]
+   end
 
   config.vm.provision "shell", inline: <<-SHELL
 cat <<-'EOF' >/home/vagrant/requirements.yml
