@@ -27,8 +27,14 @@ fluid.defaults("gpii.tests.webdriver.navigation.browser.refresh.caseHolder", {
                     },
                     {
                         event:    "{testEnvironment}.webdriver.events.onGetComplete",
+                        listener: "{testEnvironment}.webdriver.findElement",
+                        args:     [gpii.webdriver.By.id("text-field")]
+                    },
+                    {
+                        event:    "{testEnvironment}.webdriver.events.onFindElementComplete",
                         listener: "{testEnvironment}.webdriver.actionsHelper",
-                        args:     [{ fn: "sendKeys", args: ["a simple string"]}]
+                        // We must call "click" with a specific element located in the previous call, i.e. {arguments}.0
+                        args:     [[{fn: "click", args: ["{arguments}.0"]}, { fn: "sendKeys", args: ["a simple string"]}]]
                     },
                     {
                         event:    "{testEnvironment}.webdriver.events.onActionsHelperComplete",
