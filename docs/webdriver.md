@@ -360,14 +360,14 @@ By default, this grade uses Firefox to run tests (as the driver required is incl
 this by passing `options.browser` in your component options (see below), or you can set the `SELENIUM_BROWSER`
 environment variable to one of [the supported browsers](http://seleniumhq.github.io/selenium/docs/api/javascript/module/selenium-webdriver/lib/capabilities_exports_Browser.html)
 (in lowercase form).  Note that this option is not compatible with the use of the [multi-browser harness](allBrowsers.md),
-if you are using that, you should use the `BROWSERS` option instead.
+if you are using that, you should use the `BROWSERS` environment variable instead.
 
 By default, this package will work without a Selenium instance.  If you have your own Selenium server, you can use it
 by setting the `SELENIUM_REMOTE_URL` environment variable to the URL of your server.
 
 # 404 and other errors
 
-The WebDriver API [does not provide any mechanism to trap HTTP response codes or errors[(https://github.com/seleniumhq/selenium-google-code-issue-archive/issues/141),
+The WebDriver API [does not provide any mechanism to trap HTTP response codes or errors](https://github.com/seleniumhq/selenium-google-code-issue-archive/issues/141),
 for example that result when trying to open a page that doesn't exist.  However, it also does not interfere with the
 browser's continued operation following an error.  So, you can (for example) confirm that your site provides an
 error message when a page isn't found, but you couldn't confirm that it sends the correct status code.
