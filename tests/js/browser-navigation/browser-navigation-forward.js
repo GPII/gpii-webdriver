@@ -48,7 +48,7 @@ fluid.defaults("gpii.tests.webdriver.navigation.browser.forward.caseHolder", {
                     },
                     {
                         event:    "{testEnvironment}.webdriver.events.onFindElementComplete",
-                        listener: "gpii.webdriver.test.inspectElement",
+                        listener: "gpii.test.webdriver.inspectElement",
                         args:     ["We should be on the second page again...", "{arguments}.0", "getText", "This is the second page."] // message, element, elementFn, expectedValue, jqUnitFn
                     }
                 ]

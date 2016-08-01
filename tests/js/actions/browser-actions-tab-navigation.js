@@ -37,7 +37,7 @@ fluid.defaults("gpii.tests.webdriver.actions.tabs.caseHolder", {
                     },
                     {
                         event:    "{testEnvironment}.webdriver.events.onFindElementComplete",
-                        listener: "gpii.webdriver.test.testElementSelected",
+                        listener: "gpii.test.webdriver.testElementSelected",
                         args:     ["The second form input should be selected...", "{arguments}.0", true] // message, element, selected
                     }
                 ]

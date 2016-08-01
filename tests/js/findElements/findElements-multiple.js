@@ -32,7 +32,7 @@ fluid.defaults("gpii.tests.webdriver.findElements.multiple.caseHolder", {
                     },
                     {
                         event:    "{testEnvironment}.webdriver.events.onFindElementsComplete",
-                        listener: "gpii.webdriver.test.inspectElements",
+                        listener: "gpii.test.webdriver.inspectElements",
                         args:     ["We should receive an array of values...", "{arguments}.0", "getText", ["One of many.", "Yet another."]] // message, element, elementFn, expectedValue, jqUnitFn
                     }
                 ]

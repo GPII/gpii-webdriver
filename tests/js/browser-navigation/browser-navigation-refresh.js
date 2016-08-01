@@ -28,7 +28,7 @@ fluid.defaults("gpii.tests.webdriver.navigation.browser.refresh.caseHolder", {
                     {
                         event:    "{testEnvironment}.webdriver.events.onGetComplete",
                         listener: "{testEnvironment}.webdriver.actionsHelper",
-                        args:     [{ sendKeys: ["a simple string"]}]
+                        args:     [{ fn: "sendKeys", args: ["a simple string"]}]
                     },
                     {
                         event:    "{testEnvironment}.webdriver.events.onActionsHelperComplete",
@@ -37,7 +37,7 @@ fluid.defaults("gpii.tests.webdriver.navigation.browser.refresh.caseHolder", {
                     },
                     {
                         event:    "{testEnvironment}.webdriver.events.onFindElementComplete",
-                        listener: "gpii.webdriver.test.testElementValue",
+                        listener: "gpii.test.webdriver.testElementValue",
                         args:     ["Our text should have been entered...", "{arguments}.0", "a simple string"] // message, element, expectedValue, jqUnitFn
                     },
                     {
@@ -51,7 +51,7 @@ fluid.defaults("gpii.tests.webdriver.navigation.browser.refresh.caseHolder", {
                     },
                     {
                         event:    "{testEnvironment}.webdriver.events.onFindElementComplete",
-                        listener: "gpii.webdriver.test.testElementValue",
+                        listener: "gpii.test.webdriver.testElementValue",
                         args:     ["Our text should have been entered...", "{arguments}.0", ""] // message, element, expectedValue, jqUnitFn
                     }
                 ]

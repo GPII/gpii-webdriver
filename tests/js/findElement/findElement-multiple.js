@@ -32,7 +32,7 @@ fluid.defaults("gpii.tests.webdriver.findElement.multiple.caseHolder", {
                     },
                     {
                         event:    "{testEnvironment}.webdriver.events.onFindElementComplete",
-                        listener: "gpii.webdriver.test.inspectElement",
+                        listener: "gpii.test.webdriver.inspectElement",
                         args:     ["We should only receive the first matching elemente...", "{arguments}.0", "getText", "One of many."] // message, element, elementFn, expectedValue, jqUnitFn
                     }
                 ]

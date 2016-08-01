@@ -33,7 +33,7 @@ fluid.defaults("gpii.tests.webdriver.navigation.browser.to.caseHolder", {
                     },
                     {
                         event:    "{testEnvironment}.webdriver.events.onFindElementComplete",
-                        listener: "gpii.webdriver.test.inspectElement",
+                        listener: "gpii.test.webdriver.inspectElement",
                         args:     ["We should be on the first page...", "{arguments}.0", "getText", "This is the first page."] // message, element, elementFn, expectedValue, jqUnitFn
                     },
                     {
@@ -47,7 +47,7 @@ fluid.defaults("gpii.tests.webdriver.navigation.browser.to.caseHolder", {
                     },
                     {
                         event:    "{testEnvironment}.webdriver.events.onFindElementComplete",
-                        listener: "gpii.webdriver.test.inspectElement",
+                        listener: "gpii.test.webdriver.inspectElement",
                         args:     ["We should now be on the second page...", "{arguments}.0", "getText", "This is the second page."] // message, element, elementFn, expectedValue, jqUnitFn
                     }
                 ]

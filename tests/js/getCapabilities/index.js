@@ -28,7 +28,7 @@ fluid.defaults("gpii.tests.webdriver.getCapabilties.caseHolder", {
                     {
                         event:    "{testEnvironment}.webdriver.events.onGetCapabilitiesComplete",
                         listener: "jqUnit.assertLeftHand",
-                        args:     ["The capabilities should at least indicate that javascript is enabled....", { javascriptEnabled: true }, "@expand:gpii.webdriver.test.mapToObject({arguments}.0)"]
+                        args:     ["The capabilities should at least indicate that javascript is enabled....", { javascriptEnabled: true }, "@expand:gpii.test.webdriver.mapToObject({arguments}.0)"]
                     }
                 ]
             }

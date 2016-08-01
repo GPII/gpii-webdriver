@@ -43,7 +43,7 @@ fluid.defaults("gpii.tests.webdriver.navigation.browser.back.caseHolder", {
                     },
                     {
                         event:    "{testEnvironment}.webdriver.events.onFindElementComplete",
-                        listener: "gpii.webdriver.test.inspectElement",
+                        listener: "gpii.test.webdriver.inspectElement",
                         args:     ["We should be back on the first page...", "{arguments}.0", "getText", "This is the first page."] // message, element, elementFn, expectedValue, jqUnitFn
                     }
                 ]

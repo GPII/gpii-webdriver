@@ -37,7 +37,7 @@ fluid.defaults("gpii.tests.webdriver.actions.text.caseHolder", {
                     },
                     {
                         event:    "{testEnvironment}.webdriver.events.onFindElementComplete",
-                        listener: "gpii.webdriver.test.testElementValue",
+                        listener: "gpii.test.webdriver.testElementValue",
                         args:     ["The text should be as entered...", "{arguments}.0", "This is really something"] // message, element, expectedValue, jqUnitFn
                     }
                 ]
@@ -62,7 +62,7 @@ fluid.defaults("gpii.tests.webdriver.actions.text.caseHolder", {
                     },
                     {
                         event:    "{testEnvironment}.webdriver.events.onFindElementComplete",
-                        listener: "gpii.webdriver.test.testElementValue",
+                        listener: "gpii.test.webdriver.testElementValue",
                         args:     ["The text should be as entered...", "{arguments}.0", "This is really something"] // message, element, expectedValue, jqUnitFn
                     }
                 ]
@@ -87,7 +87,7 @@ fluid.defaults("gpii.tests.webdriver.actions.text.caseHolder", {
                     },
                     {
                         event:    "{testEnvironment}.webdriver.events.onFindElementComplete",
-                        listener: "gpii.webdriver.test.testElementValue",
+                        listener: "gpii.test.webdriver.testElementValue",
                         args:     ["The text should be as entered...", "{arguments}.0", "This is really something"] // message, element, expectedValue, jqUnitFn
                     }
                 ]
@@ -113,7 +113,7 @@ fluid.defaults("gpii.tests.webdriver.actions.text.caseHolder", {
             //         },
             //         {
             //             event:    "{testEnvironment}.webdriver.events.onFindElementComplete",
-            //             listener: "gpii.webdriver.test.testElementValue",
+            //             listener: "gpii.test.webdriver.testElementValue",
             //             args:     ["The text should be as entered...", "{arguments}.0", "Կրնամ ապակի ուտել և ինծի անհանգիստ չըներ։"] // message, element, expectedValue, jqUnitFn
             //         }
             //     ]
