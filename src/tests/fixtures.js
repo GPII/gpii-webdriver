@@ -12,6 +12,8 @@ fluid.loadTestingSupport();
 
 var gpii  = fluid.registerNamespace("gpii");
 
+var fs = require("fs");
+
 require("gpii-express");
 gpii.express.loadTestingSupport();
 
@@ -53,6 +55,35 @@ gpii.test.webdriver.caseHolder.prepareModules = function (that) {
     return fluid.transform(modulesWithStartAndEnd, that.prepareModule);
 };
 
+// A mix-in grade that adds aXe script content available at `{that}.options.axeContent` that can be injected into a
+// page using `executeScript`.
+fluid.defaults("gpii.test.webdriver.hasAxeContent", {
+    gradeNames: ["fluid.component"],
+    rawAxePath: "%gpii-webdriver/node_modules/axe-core/axe.js",
+    resolvedAxePath: "@expand:fluid.module.resolvePath({that}.options.rawAxePath)",
+    axeContent: {
+        expander: {
+            func: fs.readFileSync,
+            args: ["{that}.options.resolvedAxePath", "utf8"]
+        }
+    }
+});
+
+// A mix-in grade that adds accessibility developer toolkit script content available at `{that}.options.axsContent` that
+// can be injected into a page using `executeScript`.
+fluid.defaults("gpii.test.webdriver.hasAxsContent", {
+    gradeNames: ["fluid.component"],
+    rawAxsPath: "%gpii-webdriver/node_modules/accessibility-developer-tools/dist/js/axs_testing.js",
+    resolvedAxsPath: "@expand:fluid.module.resolvePath({that}.options.rawAxsPath)",
+    AxsContent: {
+        expander: {
+            func: fs.readFileSync,
+            args: ["{that}.options.resolvedAxsPath", "utf8"]
+        }
+    }
+});
+
+
 /*
  A caseHolder that makes use of the above functions to generate its final module content based on:
 
@@ -60,6 +91,8 @@ gpii.test.webdriver.caseHolder.prepareModules = function (that) {
  2. that.options.startSequence (goes at the start of each set of test sequences.
  3. that.options.endSequence (goes at the end of each set of test sequences.
  4. that.options.browser (Prepended to the name of each module and test, including those added in steps 2 and 3).
+
+The caseHolder also resolves and stores copies of the aXe and Accessibility Developer Toolkits, for use in tests.
 
  */
 fluid.defaults("gpii.test.webdriver.caseHolder.base", {

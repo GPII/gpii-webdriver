@@ -1,6 +1,8 @@
 /*
 
-    Test the aXe accessibility checker against a page: https://github.com/dequelabs/axe-core
+    Test the Accessibility Developer Tools in combination with this package:
+
+    https://github.com/GoogleChrome/accessibility-developer-tools
 
  */
 /* eslint-env node */
@@ -11,16 +13,16 @@ var gpii = fluid.registerNamespace("gpii");
 require("../../../");
 gpii.webdriver.loadTestingSupport();
 
-fluid.defaults("gpii.tests.webdriver.axe.caseHolder", {
-    gradeNames: ["gpii.test.webdriver.caseHolder", "gpii.test.webdriver.hasAxeContent"],
-    goodUrl: "%gpii-webdriver/tests/js/axe/html/good.html",
-    badUrl: "%gpii-webdriver/tests/js/axe/html/bad.html",
-    injectUrl: "%gpii-webdriver/tests/js/axe/html/injection.html",
+fluid.defaults("gpii.tests.webdriver.axs.caseHolder", {
+    gradeNames: ["gpii.test.webdriver.caseHolder", "gpii.test.webdriver.hasAxsContent"],
+    goodUrl: "%gpii-webdriver/tests/js/axs/html/good.html",
+    badUrl: "%gpii-webdriver/tests/js/axs/html/bad.html",
+    injectUrl: "%gpii-webdriver/tests/js/axs/html/injection.html",
     rawModules: [{
-        name: "Testing aXe reporting...",
+        name: "Testing accessibility developer tools...",
         tests: [
             {
-                name: "Run the report on a good page...",
+                name: "Run the accessibilty developer tools on a good page...",
                 type: "test",
                 sequence: [
                     {
@@ -29,18 +31,18 @@ fluid.defaults("gpii.tests.webdriver.axe.caseHolder", {
                     },
                     {
                         event:    "{testEnvironment}.webdriver.events.onGetComplete",
-                        listener: "{testEnvironment}.webdriver.executeAsyncScript",
-                        args:     [gpii.test.webdriver.axe.runAxe]
+                        listener: "{testEnvironment}.webdriver.executeScript",
+                        args:     [gpii.test.webdriver.axs.runAxs]
                     },
                     {
-                        event:    "{testEnvironment}.webdriver.events.onExecuteAsyncScriptComplete",
-                        listener: "gpii.test.webdriver.axe.checkResults",
+                        event:    "{testEnvironment}.webdriver.events.onExecuteScriptComplete",
+                        listener: "gpii.test.webdriver.axs.checkResults",
                         args:     ["{arguments}.0"]
                     }
                 ]
             },
             {
-                name: "Run the report on a bad page...",
+                name: "Run the accessibilty developer tools on a bad page...",
                 type: "test",
                 sequence: [
                     {
@@ -49,18 +51,18 @@ fluid.defaults("gpii.tests.webdriver.axe.caseHolder", {
                     },
                     {
                         event:    "{testEnvironment}.webdriver.events.onGetComplete",
-                        listener: "{testEnvironment}.webdriver.executeAsyncScript",
-                        args:     [gpii.test.webdriver.axe.runAxe]
+                        listener: "{testEnvironment}.webdriver.executeScript",
+                        args:     [gpii.test.webdriver.axs.runAxs]
                     },
                     {
-                        event:    "{testEnvironment}.webdriver.events.onExecuteAsyncScriptComplete",
-                        listener: "gpii.test.webdriver.axe.checkResults",
+                        event:    "{testEnvironment}.webdriver.events.onExecuteScriptComplete",
+                        listener: "gpii.test.webdriver.axs.checkResults",
                         args:     ["{arguments}.0", true]
                     }
                 ]
             },
             {
-                name: "Inject aXe into a page and run the tests...",
+                name: "Inject Axs into a page and run the accessibilty developer tools...",
                 type: "test",
                 sequence: [
                     {
@@ -70,16 +72,16 @@ fluid.defaults("gpii.tests.webdriver.axe.caseHolder", {
                     {
                         event:    "{testEnvironment}.webdriver.events.onGetComplete",
                         listener: "{testEnvironment}.webdriver.executeScript",
-                        args:     ["{that}.options.axeContent"]
+                        args:     ["{that}.options.AxsContent"]
                     },
                     {
                         event:    "{testEnvironment}.webdriver.events.onExecuteScriptComplete",
-                        listener: "{testEnvironment}.webdriver.executeAsyncScript",
-                        args:     [gpii.test.webdriver.axe.runAxe]
+                        listener: "{testEnvironment}.webdriver.executeScript",
+                        args:     [gpii.test.webdriver.axs.runAxs]
                     },
                     {
-                        event:    "{testEnvironment}.webdriver.events.onExecuteAsyncScriptComplete",
-                        listener: "gpii.test.webdriver.axe.checkResults",
+                        event:    "{testEnvironment}.webdriver.events.onExecuteScriptComplete",
+                        listener: "gpii.test.webdriver.axs.checkResults",
                         args:     ["{arguments}.0"]
                     }
                 ]
@@ -88,13 +90,13 @@ fluid.defaults("gpii.tests.webdriver.axe.caseHolder", {
     }]
 });
 
-fluid.defaults("gpii.tests.webdriver.axe.environment", {
+fluid.defaults("gpii.tests.webdriver.axs.environment", {
     gradeNames: ["gpii.test.webdriver.testEnvironment"],
     components: {
         caseHolder: {
-            type: "gpii.tests.webdriver.axe.caseHolder"
+            type: "gpii.tests.webdriver.axs.caseHolder"
         }
     }
 });
 
-gpii.test.webdriver.allBrowsers({ baseTestEnvironment: "gpii.tests.webdriver.axe.environment" });
+gpii.test.webdriver.allBrowsers({ baseTestEnvironment: "gpii.tests.webdriver.axs.environment" });
