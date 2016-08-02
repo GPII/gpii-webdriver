@@ -55,44 +55,61 @@ gpii.test.webdriver.caseHolder.prepareModules = function (that) {
     return fluid.transform(modulesWithStartAndEnd, that.prepareModule);
 };
 
-// A mix-in grade that adds aXe script content available at `{that}.options.axeContent` that can be injected into a
+fluid.registerNamespace("gpii.tests.webDriver.hasScriptContent");
+
+gpii.tests.webDriver.hasScriptContent.cacheContent = function (scriptPaths) {
+    var scriptContent = {};
+    fluid.each(scriptPaths, function (scriptPath, key) {
+        var resolvedPath = fluid.module.resolvePath(scriptPath);
+        scriptContent[key] = fs.readFileSync(resolvedPath, "utf8");
+    });
+    return scriptContent;
+};
+
+// A mix-in grade that caches script content so that it can be injected into a page using `executeScript`.
+fluid.defaults("gpii.tests.webDriver.hasScriptContent", {
+    gradeNames: ["fluid.component"],
+    scriptContent: "@expand:gpii.tests.webDriver.hasScriptContent.cacheContent({that}.options.scriptPaths)"
+});
+
+// A mix-in grade that adds aXe script content available at `{that}.scriptContent.axe` that can be injected into a
 // page using `executeScript`.
 fluid.defaults("gpii.test.webdriver.hasAxeContent", {
-    gradeNames: ["fluid.component"],
-    rawAxePath: "%gpii-webdriver/node_modules/axe-core/axe.js",
-    resolvedAxePath: "@expand:fluid.module.resolvePath({that}.options.rawAxePath)",
-    axeContent: {
-        expander: {
-            func: fs.readFileSync,
-            args: ["{that}.options.resolvedAxePath", "utf8"]
-        }
+    gradeNames: ["gpii.tests.webDriver.hasScriptContent"],
+    scriptPaths: {
+        axe: "%gpii-webdriver/node_modules/axe-core/axe.js"
     }
 });
 
-// A mix-in grade that adds accessibility developer toolkit script content available at `{that}.options.axsContent` that
+// A mix-in grade that adds accessibility developer toolkit script content available at `{that}.scriptContent.axs` that
 // can be injected into a page using `executeScript`.
 fluid.defaults("gpii.test.webdriver.hasAxsContent", {
-    gradeNames: ["fluid.component"],
-    rawAxsPath: "%gpii-webdriver/node_modules/accessibility-developer-tools/dist/js/axs_testing.js",
-    resolvedAxsPath: "@expand:fluid.module.resolvePath({that}.options.rawAxsPath)",
-    AxsContent: {
-        expander: {
-            func: fs.readFileSync,
-            args: ["{that}.options.resolvedAxsPath", "utf8"]
-        }
+    gradeNames: ["gpii.tests.webDriver.hasScriptContent"],
+    scriptPaths: {
+        axs: "%gpii-webdriver/node_modules/accessibility-developer-tools/dist/js/axs_testing.js"
     }
 });
 
+// A mix-in grade that caches Fluid itself at `{that}.scriptContent.fluid` so that it can be injected into a page
+// using `executeScript`.
+fluid.defaults("gpii.test.webdriver.hasFluidContent", {
+    gradeNames: ["gpii.tests.webDriver.hasScriptContent"],
+    scriptPaths: {
+        fluid:  "%infusion/src/framework/core/js/Fluid.js",
+        jQuery: "%infusion/src/lib/jquery/core/js/jquery.js"
+    }
+});
 
 /*
- A caseHolder that makes use of the above functions to generate its final module content based on:
 
- 1. that.options.rawModules
- 2. that.options.startSequence (goes at the start of each set of test sequences.
- 3. that.options.endSequence (goes at the end of each set of test sequences.
- 4. that.options.browser (Prepended to the name of each module and test, including those added in steps 2 and 3).
+    A caseHolder that makes use of the above functions to generate its final module content based on:
 
-The caseHolder also resolves and stores copies of the aXe and Accessibility Developer Toolkits, for use in tests.
+        1. that.options.rawModules
+        2. that.options.startSequence (goes at the start of each set of test sequences.
+        3. that.options.endSequence (goes at the end of each set of test sequences.
+        4. that.options.browser (Prepended to the name of each module and test, including those added in steps 2 and 3).
+
+    The caseHolder also resolves and stores copies of the aXe and Accessibility Developer Toolkits, for use in tests.
 
  */
 fluid.defaults("gpii.test.webdriver.caseHolder.base", {

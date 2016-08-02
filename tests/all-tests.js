@@ -11,6 +11,7 @@ require("./js/executeScript");
 require("./js/failure");
 require("./js/findElement");
 require("./js/findElements");
+require("./js/fluid");
 require("./js/get");
 require("./js/getCapabilities");
 require("./js/getCurrentUrl");

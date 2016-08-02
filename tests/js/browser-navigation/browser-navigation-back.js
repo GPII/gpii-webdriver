@@ -13,8 +13,8 @@ gpii.webdriver.loadTestingSupport();
 
 fluid.defaults("gpii.tests.webdriver.navigation.browser.back.caseHolder", {
     gradeNames: ["gpii.test.webdriver.caseHolder"],
-    fileUrl: "%gpii-webdriver/tests/js/browser-navigation/html/first.html",
-    secondFileUrl: "%gpii-webdriver/tests/js/browser-navigation/html/second.html",
+    startUrl: "%gpii-webdriver/tests/js/browser-navigation/html/first.html",
+    secondUrl: "%gpii-webdriver/tests/js/browser-navigation/html/second.html",
     rawModules: [{
         name: "Testing the browser's `back` button...",
         tests: [
@@ -24,12 +24,12 @@ fluid.defaults("gpii.tests.webdriver.navigation.browser.back.caseHolder", {
                 sequence: [
                     {
                         func: "{testEnvironment}.webdriver.get",
-                        args: ["@expand:gpii.test.webdriver.resolveFileUrl({that}.options.fileUrl)"]
+                        args: ["@expand:gpii.test.webdriver.resolveFileUrl({that}.options.startUrl)"]
                     },
                     {
                         event:    "{testEnvironment}.webdriver.events.onGetComplete",
                         listener: "{testEnvironment}.webdriver.navigateHelper",
-                        args:     ["to", "@expand:gpii.test.webdriver.resolveFileUrl({that}.options.secondFileUrl)"]
+                        args:     ["to", "@expand:gpii.test.webdriver.resolveFileUrl({that}.options.secondUrl)"]
                     },
                     {
                         event:    "{testEnvironment}.webdriver.events.onNavigateHelperComplete",

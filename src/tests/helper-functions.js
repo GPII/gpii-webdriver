@@ -110,9 +110,19 @@ gpii.test.webdriver.checkAccessibilityScanResults = function (failures, shouldHa
     else {
         jqUnit.assertTrue("There should be no accessibility check failures...", failures.length === 0);
         fluid.each(failures, function (failure) {
-            jqUnit.assertUndefined("An AxS accessibility check failed...", JSON.stringify(failure, null, 2));
+            jqUnit.fail("An accessibility check failed:\n" + JSON.stringify(failure, null, 2));
         });
     }
+};
+
+/**
+ *
+ * A function that can invoke any function on the client side with the given arguments.  Both jQuery and Fluid must be
+ * loaded on the target page before you can use this function.
+ *
+ */
+gpii.test.webdriver.invokeGlobal = function (functionPath, fnArgs, environment) {
+    return fluid.invokeGlobalFunction(functionPath, fnArgs, environment);
 };
 
 fluid.registerNamespace("gpii.test.webdriver.axe");
@@ -128,17 +138,9 @@ fluid.registerNamespace("gpii.test.webdriver.axe");
  */
 gpii.test.webdriver.axe.runAxe = function (callback) {
     /* globals axe */
+    // TODO: We cannot use fluid.invokeGlobal here because we need to use the browser's `document` variable.  Discuss with Antranig.
     axe.a11yCheck(document, callback);
 };
-
-/*
-
- // TODO: Inject fluid as in initial step in the standard startSequence and create a component on the client side that can handle this pattern, namely:
- // 1. executing a named function/invoker
- // 2. passing the given args to the function
- // We should be calling `fluid.invokeGlobalFunction`
-
- */
 
 /**
  *

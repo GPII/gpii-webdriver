@@ -70,7 +70,7 @@ fluid.defaults("gpii.tests.webdriver.axe.caseHolder", {
                     {
                         event:    "{testEnvironment}.webdriver.events.onGetComplete",
                         listener: "{testEnvironment}.webdriver.executeScript",
-                        args:     ["{that}.options.axeContent"]
+                        args:     ["{that}.options.scriptContent.axe"]
                     },
                     {
                         event:    "{testEnvironment}.webdriver.events.onExecuteScriptComplete",
