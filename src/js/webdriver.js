@@ -47,10 +47,6 @@ gpii.webdriver.configureDriver = function (that) {
 gpii.webdriver.init = function (that) {
     var capabilities = new webdriver.Capabilities(that.options.browserOptions[that.options.browser]);
 
-    if (that.options.browser === "ie") {
-        capabilities.introduceFlakinessByIgnoringProtectedModeSettings(true);
-    }
-    
     var builder = new webdriver.Builder().withCapabilities(capabilities);
     if (that.options.async) {
         that.builderPromise = builder.buildAsync();
@@ -203,8 +199,7 @@ fluid.defaults("gpii.webdriver", {
     browserOptions: {
         ie: {
             browserName: "ie",
-            nativeEvents: false,
-            IntroduceInstabilityByIgnoringProtectedModeSettings: true // Required for "dumpLogs" support
+            nativeEvents: false
         },
         firefox: {
             browserName: "firefox",
