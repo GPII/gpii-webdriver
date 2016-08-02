@@ -46,7 +46,11 @@ gpii.webdriver.configureDriver = function (that) {
  */
 gpii.webdriver.init = function (that) {
     var capabilities = new webdriver.Capabilities(that.options.browserOptions[that.options.browser]);
-    // var builder = new webdriver.Builder().setEnableNativeEvents(true).withCapabilities(capabilities);
+
+    if (that.options.browser === "ie") {
+        capabilities.introduceFlakinessByIgnoringProtectedModeSettings(true);
+    }
+    
     var builder = new webdriver.Builder().withCapabilities(capabilities);
     if (that.options.async) {
         that.builderPromise = builder.buildAsync();
