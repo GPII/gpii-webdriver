@@ -17,7 +17,9 @@ fluid.registerNamespace("gpii.tests.dumpLogs.promises");
 
 gpii.tests.dumpLogs.promises.runTests = function (browser) {
     if (browser === "ie") {
-        jqUnit.assert("We know dumpLog doesn't work with IE.")
+        jqUnit.test("Ignore the broken test in IE...", function (){
+            jqUnit.assert("We know dumpLog doesn't work with IE.")
+        });
     }
     else {
         jqUnit.module("(" + browser + ") Testing the `dumpLogs` function...");
