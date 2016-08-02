@@ -121,7 +121,7 @@ gpii.test.webdriver.allBrowsers.defaultPlatformBrowsers = {
     linux:   ["firefox", "chrome"],
     openbsd: [],
     sunos:   [],
-    win32:   ["chrome"] //
+    win32:   ["firefox", "chrome"] // See the README (or the comment above) for details regarding "ie".
 };
 
 // A grade that gets the list of browsers and then calls its `runTestsInSingleBrowser` invoker.
