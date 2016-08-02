@@ -68,6 +68,27 @@ gpii.webdriver.loadTestingSupport();
 Note that although the last line is not required to simply use the webdriver itself, you'll need it if you want to use
 the caseHolder, testEnvironment or cross-browser test runner including with this package.
 
+# Running Under Windows
+
+# Internet Explorer
+
+There is a known problem with [very slow text input](https://github.com/seleniumhq/selenium-google-code-issue-archive/issues/5116)
+when using the 64-bit IEDriverServer.  If you are on a 64-bit Windows machine and seeing extreme
+slowness in tests that supply text input, you should:
+
+1. [Download the 32-bit version of IEDriverServer](http://www.seleniumhq.org/download/).
+2. Unzip and launch the server.
+3. Configure your `SELENIUM_REMOTE_URL` environment variable to point to `http://localhost:5555`
+4. Configure your `BROWSERS` environment variable and set it to `ie`
+
+Note that once you do this, the `BROWSERS` and `SELENIUM_BROWSER` variables will no longer be meaningful, and tests will
+only run in Internet Explorer.  The fourth step above simply avoids running the IE tests multiple times (once expecting
+to run using Chrome, once expecting to run using Internet Explorer, etc.).
+
+# Edge
+
+
+
 # More Information
 
 For more information, check out the individual docs for:
