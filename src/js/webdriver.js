@@ -199,7 +199,8 @@ fluid.defaults("gpii.webdriver", {
     browserOptions: {
         ie: {
             browserName: "ie",
-            nativeEvents: false
+            nativeEvents: false,
+            IntroduceInstabilityByIgnoringProtectedModeSettings: true // Required for "dumpLogs" support
         },
         firefox: {
             browserName: "firefox",
