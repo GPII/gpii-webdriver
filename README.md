@@ -78,8 +78,8 @@ slowness in tests that supply text input, you should:
 
 1. [Download the 32-bit version of IEDriverServer](http://www.seleniumhq.org/download/).
 2. Unzip and launch the server.
-3. Configure your `SELENIUM_REMOTE_URL` environment variable to point to `http://localhost:5555`
-4. Configure your `BROWSERS` environment variable and set it to `ie`
+3. Set your `SELENIUM_REMOTE_URL` environment variable to `http://localhost:5555`.
+4. Set your `BROWSERS` environment to `ie`.
 
 Note that once you do this, the `BROWSERS` and `SELENIUM_BROWSER` variables will no longer be meaningful, and tests will
 only run in Internet Explorer.  The fourth step above simply avoids running the IE tests multiple times (once expecting
@@ -87,7 +87,15 @@ to run using Chrome, once expecting to run using Internet Explorer, etc.).
 
 # Edge
 
+Edge is currently not verified working with any combination of Selenium and the WebDriver server, but it should be
+possible to use it with instructions like the following:
 
+1. [Download and install the Microsoft WebDriver package](https://developer.microsoft.com/en-us/microsoft-edge/tools/webdriver/).
+2. Launch the server.
+3. Set your `SELENIUM_REMOTE_URL` environment to `http://localhost:17556/`.
+4. Set your `BROWSERS` environment variable to `edge`.
+
+This will cause the tests to only be run in the Edge browser.  See above for more details.
 
 # More Information
 
