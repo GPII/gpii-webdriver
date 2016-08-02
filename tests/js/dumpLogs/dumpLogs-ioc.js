@@ -18,6 +18,15 @@ gpii.tests.webdriver.dumpLogs.checkLogOutput = function (message, logOutput, exp
     jqUnit.assertTrue(message, logOutput.indexOf(expectedToContain) !== -1);
 };
 
+gpii.tests.webdriver.dumpLogs.runTestsInSingleBrowser = function (that, browser) {
+    if (that.browser === "ie") {
+        jqUnit.assert("We intentionally skip IE tests as the Logging API doesn't work there.");
+    }
+    else {
+        gpii.test.webdriver.allBrowsers.generateAndRunTestEnvironment(that, browser);
+    }
+};
+
 fluid.defaults("gpii.tests.webdriver.dumpLogs.caseHolder", {
     gradeNames: ["gpii.test.webdriver.caseHolder"],
     fileWithBrowserError: "%gpii-webdriver/tests/js/dumpLogs/html/index.html",
@@ -79,4 +88,12 @@ fluid.defaults("gpii.tests.webdriver.dumpLogs.environment", {
     }
 });
 
-gpii.test.webdriver.allBrowsers({ baseTestEnvironment: "gpii.tests.webdriver.dumpLogs.environment" });
+gpii.test.webdriver.allBrowsers({
+    baseTestEnvironment: "gpii.tests.webdriver.dumpLogs.environment",
+    invokers: {
+        runTestsInSingleBrowser: {
+            funcName: "gpii.tests.webdriver.dumpLogs.runTestsInSingleBrowser",
+            args:     ["{that}", "{arguments}.0"] // browser
+        }
+    }
+});
