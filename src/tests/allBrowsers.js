@@ -15,8 +15,6 @@ var os    = require("os");
 
 fluid.registerNamespace("gpii.test.webdriver.allBrowsers");
 
-// TODO:  Add the ability to run various versions of browsers, particularly IE
-
 /**
  *
  * A function that:

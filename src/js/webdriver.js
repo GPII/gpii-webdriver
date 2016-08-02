@@ -18,8 +18,6 @@ gpii.webdriver.By    = webdriver.By;
 gpii.webdriver.until = webdriver.until;
 gpii.webdriver.Key   = webdriver.Key;
 
-// TODO:  The shutdown cycle for Windows does not appear to actually "quit" the window at least in IE.  Research.
-
 /**
  *
  * A function that configures the driver to ensure that asynchronous scripts are given enough time to execute by
