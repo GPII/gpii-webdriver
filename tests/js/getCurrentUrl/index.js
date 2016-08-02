@@ -18,7 +18,7 @@ fluid.defaults("gpii.tests.webdriver.getCurrentUrl.caseHolder", {
     //  * `file://C:/something`
     //  * `file:///C:/something`
     //  * `C:/something`.
-    urlToLoad: "http://localhost:9989/",
+    urlToLoad: "http://caniuse.com/",
     rawModules: [{
         name: "Testing the driver's `getCurrentUrl` function...",
         tests: [
