@@ -23,14 +23,14 @@
     "selenium-webdriver": "2.53.3"
   },
   "devDependencies": {
-    "chromedriver": "2.21.2",
-    "eslint": "3.1.1",
-    "gpii-express": "git://github.com/the-t-in-rtf/gpii-express#b243288fc85bd414562eb751b3a32967aee8f885",
+    "chromedriver": "2.22.1",
+    "eslint": "3.2.2",
+    "gpii-express": "git://github.com/the-t-in-rtf/gpii-express#2f224862730bca57fa1f036f24f26e1d43748419",
     "grunt": "1.0.1",
-    "grunt-eslint": "18.1.0",
+    "grunt-eslint": "19.0.0",
     "grunt-jsonlint": "1.1.0",
     "istanbul": "0.4.4",
-    "jsonlint": "1.6.0",
+    "jsonlint": "1.6.2",
     "kettle": "1.1.0",
     "node-jqunit": "1.1.4"
   }
