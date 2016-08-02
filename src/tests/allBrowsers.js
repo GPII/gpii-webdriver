@@ -28,36 +28,56 @@ fluid.registerNamespace("gpii.test.webdriver.allBrowsers");
  *
  * @param that - The component itself.
  */
-gpii.test.webdriver.allBrowsers.runTests = function (that) {
-    var browsers = that.options.browsers || gpii.test.webdriver.allBrowsers.getPlatformBrowsers(that);
-
-    if (process.env.BROWSERS) {
-        browsers = process.env.BROWSERS.split(/[, ]/)
-    }
+gpii.test.webdriver.allBrowsers.runAllTests = function (that) {
+    var browsers = gpii.test.webdriver.allBrowsers.getBrowsers(that);
 
     fluid.each(browsers, function (browser) {
-        var gradeName = that.options.baseTestEnvironment + "." + browser;
-
-        fluid.defaults(gradeName, {
-            gradeNames: ["gpii.test.webdriver.allBrowsers.testEnvironment", that.options.baseTestEnvironment],
-            browser: browser
-        });
-
-        fluid.test.runTests(gradeName);
+        that.runTestsInSingleBrowser(browser);
     });
+};
+
+gpii.test.webdriver.allBrowsers.generateAndRunTestEnvironment = function (that, browser) {
+    var gradeName = that.options.baseTestEnvironment + "." + browser;
+
+    fluid.defaults(gradeName, {
+        gradeNames: ["gpii.test.webdriver.allBrowsers.testEnvironment", that.options.baseTestEnvironment],
+        browser: browser
+    });
+
+    fluid.test.runTests(gradeName);
 };
 
 /**
  *
- * A function to get the list of platform browsers based on that.options.defaultPlatformBrowsers (see below) and os.platform().
+ * A function to get the list of browsers we want to test.  In order of precedence, this looks at:
+ *
+ * 1. The `BROWSERS` environment variable.
+ * 2. `that.options.browsers`
+ * 3. The default list of browsers for the current platform.
  *
  * @param that
+ * @returns {*}
+ */
+gpii.test.webdriver.allBrowsers.getBrowsers = function (that) {
+    if (process.env.BROWSERS) {
+        return process.env.BROWSERS.split(/[, ]/)
+    }
+    else {
+        return that.options.browsers || gpii.test.webdriver.allBrowsers.getPlatformBrowsers();
+    }
+};
+
+/**
+ *
+ * A function to get the list of platform browsers based on `gpii.test.webdriver.allBrowsers.defaultPlatformBrowsers`
+ * (see below) and `os.platform()`.
+ *
  * @returns An {Array} of {String} values, each representing a browser.
  *
  */
-gpii.test.webdriver.allBrowsers.getPlatformBrowsers = function (that) {
+gpii.test.webdriver.allBrowsers.getPlatformBrowsers = function () {
     var platform = os.platform();
-    return that.options.defaultPlatformBrowsers[platform];
+    return gpii.test.webdriver.allBrowsers.defaultPlatformBrowsers[platform];
 };
 
 fluid.registerNamespace("gpii.test.webdriver.allBrowsers");
@@ -83,21 +103,40 @@ fluid.defaults("gpii.test.webdriver.allBrowsers.testEnvironment", {
     }
 });
 
+/*
+
+    A static list of the default (confirmed working) browsers, by platform.  The "firefox" and "edge" browsers are not 
+    yet confirmed working on Windows.  See the README for details on running the tests with "ie", which works, but not
+    in combination with any other browser.
+
+    Only OS X, Windows, and Linux have any browsers at all, as the other platforms are not supported by Selenium itself:
+
+    http://www.seleniumhq.org/about/platforms.jsp
+
+ */
+gpii.test.webdriver.allBrowsers.defaultPlatformBrowsers = {
+    aix:     [],
+    darwin:  ["firefox", "chrome"],
+    freebsd: [],
+    linux:   ["firefox", "chrome"],
+    openbsd: [],
+    sunos:   [],
+    win32:   ["chrome"] //
+};
+
+// A grade that gets the list of browsers and then calls its `runTestsInSingleBrowser` invoker.
 fluid.defaults("gpii.test.webdriver.allBrowsers", {
     gradeNames: ["fluid.component"],
-    defaultPlatformBrowsers: {
-        aix:     ["firefox"],
-        darwin:  ["firefox", "chrome"],
-        freebsd: ["firefox"],
-        linux:   ["firefox", "chrome"],
-        openbsd: ["firefox"],
-        sunos:   ["firefox"],
-        win32:   ["firefox", "chrome", "ie", "edge"]
-    },
     listeners: {
-        "onCreate.runTests": {
-            funcName: "gpii.test.webdriver.allBrowsers.runTests",
+        "onCreate.runAllTests": {
+            funcName: "gpii.test.webdriver.allBrowsers.runAllTests",
             args:     ["{that}"]
+        }
+    },
+    invokers: {
+        runTestsInSingleBrowser: {
+            funcName: "gpii.test.webdriver.allBrowsers.generateAndRunTestEnvironment",
+            args:     ["{that}", "{arguments}.0"] // browser
         }
     }
 });

@@ -131,6 +131,15 @@ gpii.test.webdriver.axe.runAxe = function (callback) {
     axe.a11yCheck(document, callback);
 };
 
+/*
+
+ // TODO: Inject fluid as in initial step in the standard startSequence and create a component on the client side that can handle this pattern, namely:
+ // 1. executing a named function/invoker
+ // 2. passing the given args to the function
+ // We should be calling `fluid.invokeGlobalFunction`
+
+ */
+
 /**
  *
  * Trigger test failure(s) if there are any violations reported by aXe.
@@ -154,6 +163,8 @@ fluid.registerNamespace("gpii.test.webdriver.axs");
  * using `executeScript` to pass its source to the browser.
  *
  */
+
+
 gpii.test.webdriver.axs.runAxs = function () {
     /* globals axs */
     return axs.Audit.run();
