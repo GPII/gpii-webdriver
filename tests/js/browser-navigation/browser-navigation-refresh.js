@@ -11,6 +11,17 @@ var gpii = fluid.registerNamespace("gpii");
 require("../../../");
 gpii.webdriver.loadTestingSupport();
 
+var jqUnit = require("node-jqunit");
+
+fluid.registerNamespace("gpii.tests.webdriver.navigation.browser.refresh");
+gpii.tests.webdriver.navigation.browser.refresh.isHidden = function (message, element, shouldBeDisplayed) {
+    jqUnit.stop();
+    element.isDisplayed().then(function (result) {
+        jqUnit.start();
+        jqUnit.assertEquals(message, shouldBeDisplayed, result);
+    });
+};
+
 fluid.defaults("gpii.tests.webdriver.navigation.browser.refresh.caseHolder", {
     gradeNames: ["gpii.test.webdriver.caseHolder"],
     fileUrl: "%gpii-webdriver/tests/js/browser-navigation/html/refresh.html",
@@ -28,23 +39,31 @@ fluid.defaults("gpii.tests.webdriver.navigation.browser.refresh.caseHolder", {
                     {
                         event:    "{testEnvironment}.webdriver.events.onGetComplete",
                         listener: "{testEnvironment}.webdriver.findElement",
-                        args:     [gpii.webdriver.By.id("text-field")]
+                        args:     [{ id: "message"}]
+                    },
+                    {
+                        event:    "{testEnvironment}.webdriver.events.onFindElementComplete",
+                        listener: "gpii.tests.webdriver.navigation.browser.refresh.isHidden",
+                        args:     ["The message should be visible...", "{arguments}.0", true] // message, element, shouldBeDisplayed
+                    },
+                    {
+                        func: "{testEnvironment}.webdriver.findElement",
+                        args: [{ id: "message-toggle"}]
                     },
                     {
                         event:    "{testEnvironment}.webdriver.events.onFindElementComplete",
                         listener: "{testEnvironment}.webdriver.actionsHelper",
-                        // We must call "click" with a specific element located in the previous call, i.e. {arguments}.0
-                        args:     [[{fn: "click", args: ["{arguments}.0"]}, { fn: "sendKeys", args: ["a simple string"]}]]
+                        args:     [{fn: "click", args: ["{arguments}.0"]}]
                     },
                     {
                         event:    "{testEnvironment}.webdriver.events.onActionsHelperComplete",
                         listener: "{testEnvironment}.webdriver.findElement",
-                        args:     [{ id: "text-field"}]
+                        args:     [{ id: "message"}]
                     },
                     {
                         event:    "{testEnvironment}.webdriver.events.onFindElementComplete",
-                        listener: "gpii.test.webdriver.testElementValue",
-                        args:     ["Our text should have been entered...", "{arguments}.0", "a simple string"] // message, element, expectedValue, jqUnitFn
+                        listener: "gpii.tests.webdriver.navigation.browser.refresh.isHidden",
+                        args:     ["The message should no longer be visible...", "{arguments}.0", false] // message, element, shouldBeDisplayed
                     },
                     {
                         func: "{testEnvironment}.webdriver.navigateHelper",
@@ -53,12 +72,12 @@ fluid.defaults("gpii.tests.webdriver.navigation.browser.refresh.caseHolder", {
                     {
                         event:    "{testEnvironment}.webdriver.events.onNavigateHelperComplete",
                         listener: "{testEnvironment}.webdriver.findElement",
-                        args:     [{ id: "text-field"}]
+                        args:     [{ id: "message"}]
                     },
                     {
                         event:    "{testEnvironment}.webdriver.events.onFindElementComplete",
-                        listener: "gpii.test.webdriver.testElementValue",
-                        args:     ["Our text should have been entered...", "{arguments}.0", ""] // message, element, expectedValue, jqUnitFn
+                        listener: "gpii.tests.webdriver.navigation.browser.refresh.isHidden",
+                        args:     ["The message should be visible again...", "{arguments}.0", true] // message, element, shouldBeDisplayed
                     }
                 ]
             }
