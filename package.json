@@ -25,7 +25,7 @@
   "devDependencies": {
     "chromedriver": "2.21.2",
     "eslint": "3.1.1",
-    "gpii-express": "git://github.com/the-t-in-rtf/gpii-express#52b1701d46868eeb3943d6d85bba09eba47938ce",
+    "gpii-express": "git://github.com/the-t-in-rtf/gpii-express#b243288fc85bd414562eb751b3a32967aee8f885",
     "grunt": "1.0.1",
     "grunt-eslint": "18.1.0",
     "grunt-jsonlint": "1.1.0",
