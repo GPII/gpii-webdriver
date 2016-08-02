@@ -19,7 +19,7 @@ gpii.tests.webdriver.dumpLogs.checkLogOutput = function (message, logOutput, exp
 };
 
 gpii.tests.webdriver.dumpLogs.runTestsInSingleBrowser = function (that, browser) {
-    if (that.options.browser === "ie") {
+    if (browser === "ie") {
         jqUnit.test("Skip the broken IE test...", function () {
             jqUnit.assert("We intentionally skip IE tests as the Logging API doesn't work there.");
         });
