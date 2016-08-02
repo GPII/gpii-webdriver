@@ -13,7 +13,12 @@ gpii.webdriver.loadTestingSupport();
 
 fluid.defaults("gpii.tests.webdriver.getCurrentUrl.caseHolder", {
     gradeNames: ["gpii.test.webdriver.caseHolder"],
-    fileUrl: "%gpii-webdriver/tests/js/executeScript/html/executeScript.html",
+    // We have to use a non-file URL because file URLs are problematic on Windows, with browser responses like:
+    //
+    //  * `file://C:/something`
+    //  * `file:///C:/something`
+    //  * `C:/something`.
+    urlToLoad: "http://localhost:9989/",
     rawModules: [{
         name: "Testing the driver's `getCurrentUrl` function...",
         tests: [
@@ -23,7 +28,7 @@ fluid.defaults("gpii.tests.webdriver.getCurrentUrl.caseHolder", {
                 sequence: [
                     {
                         func: "{testEnvironment}.webdriver.get",
-                        args: ["@expand:gpii.test.webdriver.resolveFileUrl({that}.options.fileUrl)"]
+                        args: ["{that}.options.urlToLoad"]
                     },
                     {
                         event:    "{testEnvironment}.webdriver.events.onGetComplete",
@@ -33,7 +38,7 @@ fluid.defaults("gpii.tests.webdriver.getCurrentUrl.caseHolder", {
                     {
                         event:    "{testEnvironment}.webdriver.events.onGetCurrentUrlComplete",
                         listener: "jqUnit.assertEquals",
-                        args:     ["The URL should be as expected...", "@expand:gpii.test.webdriver.resolveFileUrl({that}.options.fileUrl)", "{arguments}.0"]
+                        args:     ["The URL should be as expected...", "{that}.options.urlToLoad", "{arguments}.0"]
                     }
                 ]
             }
