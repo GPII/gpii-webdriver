@@ -132,7 +132,7 @@ fluid.defaults("gpii.test.webdriver.caseHolder", {
     gradeNames: ["gpii.test.webdriver.caseHolder.base"],
     sequenceStart: gpii.test.express.standardSequenceStart,
     sequenceEnd: [
-        { func: "{testEnvironment}.webdriver.quit", args: [] },
+        { func: "{testEnvironment}.events.stopFixtures.fire", args: [] },
         { listener: "fluid.identity", event: "{testEnvironment}.events.onFixturesStopped"}
     ]
 });
@@ -153,7 +153,8 @@ fluid.defaults("gpii.test.webdriver.testEnvironment", {
             events: {
                 onDriverStopped: "onDriverStopped"
             }
-        }
+        },
+        stopFixtures: null
     },
     components: {
         webdriver: {
@@ -162,9 +163,75 @@ fluid.defaults("gpii.test.webdriver.testEnvironment", {
             options: {
                 events: {
                     onDriverReady: "{testEnvironment}.events.onDriverReady",
+                    stopFixtures:  "{testEnvironment}.events.stopFixtures"
                 },
                 listeners: {
-                    onQuitComplete: { func: "{testEnvironment}.events.onDriverStopped.fire" }
+                    onQuitComplete: { func: "{testEnvironment}.events.onDriverStopped.fire" },
+                    "stopFixtures.quit": { func: "{that}.quit" }
+                }
+            }
+        }
+    }
+});
+
+fluid.defaults("gpii.test.webdriver.testEnvironment.withExpress", {
+    gradeNames: ["gpii.test.webdriver.testEnvironment"],
+    port: 6984,
+    path: "",
+    url: {
+        expander: {
+            funcName: "fluid.stringTemplate",
+            args: ["http://localhost:%port/%path", { port: "{that}.options.port", path: "{that}.options.path"}]
+        }
+    },
+    events: {
+        onExpressDone:  null,
+        onExpressReady: null,
+
+        onFixturesConstructed: {
+            events: {
+                onDriverReady:  "onDriverReady",
+                onExpressReady: "onExpressReady"
+            }
+        },
+        onFixturesStopped: {
+            events: {
+                onDriverStopped: "onDriverStopped",
+                onExpressDone:    "onExpressDone"
+            }
+        }
+    },
+    components: {
+        express: {
+            type: "gpii.express",
+            createOnEvent: "constructFixtures",
+            options: {
+                events: {
+                    stopFixtures:  "{testEnvironment}.events.stopFixtures"
+                },
+                port: "{gpii.test.webdriver.testEnvironment.withExpress}.options.port",
+                baseUrl: {
+                    expander: {
+                        funcName: "fluid.stringTemplate",
+                        args: ["http://localhost:%port/", { port: "{that}.options.port"}]
+                    }
+                },
+                invokers: {
+                    "stopServer": {
+                        funcName: "gpii.express.stopServer",
+                        args:     ["{that}"]
+                    }
+                },
+                listeners: {
+                    "onStarted.notifyEnvironment": {
+                        func: "{gpii.test.webdriver.testEnvironment.withExpress}.events.onExpressReady.fire"
+                    },
+                    "onStopped.notifyEnvironment": {
+                        func: "{gpii.test.webdriver.testEnvironment.withExpress}.events.onExpressDone.fire"
+                    },
+                    "stopFixtures.stopServer": { func: "{that}.stopServer" },
+                    // Disable the onDestroy listener inherited from gpii.express, as it will not result in a notification when the server is finally stopped.
+                    "onDestroy.stopServer": { funcName: "fluid.identity" }
                 }
             }
         }
