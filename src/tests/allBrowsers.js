@@ -103,7 +103,7 @@ fluid.defaults("gpii.test.webdriver.allBrowsers.testEnvironment", {
 
 /*
 
-    A static list of the default (confirmed working) browsers, by platform.  The "firefox" and "edge" browsers are not 
+    A static list of the default (confirmed working) browsers, by platform.  The "firefox" and "edge" browsers are not
     yet confirmed working on Windows.  See the README for details on running the tests with "ie", which works, but not
     in combination with any other browser.
 

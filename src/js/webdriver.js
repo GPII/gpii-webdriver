@@ -17,7 +17,7 @@ var webdriver = require("selenium-webdriver");
 gpii.webdriver.By           = webdriver.By;
 gpii.webdriver.until        = webdriver.until;
 gpii.webdriver.Key          = webdriver.Key;
-gpii.webdriver.Capabilities = require('selenium-webdriver/lib/capabilities').Capabilities;
+gpii.webdriver.Capabilities = require("selenium-webdriver/lib/capabilities").Capabilities;
 
 /**
  *
@@ -44,7 +44,7 @@ gpii.webdriver.configureDriver = function (that) {
  *
  */
 gpii.webdriver.init = function (that) {
-     var capabilities = gpii.webdriver.Capabilities[that.options.browser]();
+    var capabilities = gpii.webdriver.Capabilities[that.options.browser]();
     fluid.each(that.options.browserOptions[that.options.browser], function (value, key) {
         capabilities.set(key, value);
     });

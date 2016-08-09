@@ -17,7 +17,7 @@ fluid.registerNamespace("gpii.tests.dumpLogs.promises");
 
 gpii.tests.dumpLogs.promises.runTests = function (browser) {
     if (browser === "ie") {
-        jqUnit.test("Ignore the broken test in IE...", function (){
+        jqUnit.test("Ignore the broken test in IE...", function () {
             jqUnit.assert("We know dumpLog doesn't work with IE.")
         });
     }
@@ -27,7 +27,7 @@ gpii.tests.dumpLogs.promises.runTests = function (browser) {
             jqUnit.stop();
 
             var driver = gpii.webdriver.syncInit();
-            driver.get(gpii.test.webdriver.resolveFileUrl("%gpii-webdriver/tests/js/dumpLogs/html/index.html")).then(function() {
+            driver.get(gpii.test.webdriver.resolveFileUrl("%gpii-webdriver/tests/js/dumpLogs/html/index.html")).then(function () {
                 // We cannot generate and then check for more detailed messages at the moment, so we generate an error on the client side that we can look for in the logs.
                 driver.dumpLogs().then(function (logOutput)  {
                     jqUnit.start();
