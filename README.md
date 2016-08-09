@@ -97,6 +97,11 @@ possible to use it with instructions like the following:
 
 This will cause the tests to only be run in the Edge browser.  See above for more details.
 
+# Firefox
+
+Firefox 47 and below will work with this package.  Firefox 48.0 and higher do not work for now.  For more information,
+see [GPII-
+
 # More Information
 
 For more information, check out the individual docs for:

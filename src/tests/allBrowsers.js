@@ -114,12 +114,14 @@ fluid.defaults("gpii.test.webdriver.allBrowsers.testEnvironment", {
  */
 gpii.test.webdriver.allBrowsers.defaultPlatformBrowsers = {
     aix:     [],
-    darwin:  ["firefox", "chrome"],
+    // Firefox is not supported on desktop platforms until https://issues.gpii.net/browse/GPII-1913 is resolved.
+    darwin:  ["chrome"],
     freebsd: [],
     linux:   ["firefox", "chrome"],
     openbsd: [],
     sunos:   [],
-    win32:   ["firefox", "chrome"] // See the README (or the comment above) for details regarding "ie".
+    // Firefox is not supported on desktop platforms until https://issues.gpii.net/browse/GPII-1913 is resolved.
+    win32:   ["chrome"] // See the README (or the comment above) for details regarding "ie".
 };
 
 // A grade that gets the list of browsers and then calls its `runTestsInSingleBrowser` invoker.
