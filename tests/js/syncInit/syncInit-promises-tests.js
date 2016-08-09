@@ -20,7 +20,7 @@ gpii.tests.syncInit.promises.runTests = function (browser) {
     jqUnit.module("(" + browser + ") Test `get` with plain old jqUnit and promises...");
 
     jqUnit.test("Test a local `get`...", function () {
-        var url = gpii.test.webdriver.resolveFileUrl("%gpii-webdriver/tests/js/get/html/index.html")
+        var url = gpii.test.webdriver.resolveFileUrl("%gpii-webdriver/tests/js/get/html/index.html");
         jqUnit.stop();
 
         var driver = gpii.webdriver.syncInit();
