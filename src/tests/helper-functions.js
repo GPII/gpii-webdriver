@@ -5,6 +5,9 @@ var fluid = require("infusion");
 var gpii = fluid.registerNamespace("gpii");
 
 var jqUnit = require("node-jqunit");
+var path = require("path");
+var fs = require("fs");
+var os = require("os");
 
 fluid.registerNamespace("gpii.test.webdriver");
 /**
@@ -192,3 +195,18 @@ gpii.test.webdriver.axs.checkResults = function (results, shouldHaveFailures) {
 
     gpii.test.webdriver.checkAccessibilityScanResults(failures, shouldHaveFailures);
 };
+
+
+/**
+ *
+ * Save a screenshot to a temporary file and let us know where it is.
+ *
+ * @param data The base64-encoded binary PNG data returned by `takeScreenshot`.
+ *
+ */
+gpii.test.webdriver.saveScreenshot = function (data) {
+    var filePath = path.resolve(os.tmpdir(), "screenshot-" + Date.now() + ".png");
+    fs.writeFileSync(filePath, new Buffer(data, "base64"));
+    console.log("Screenshot saved to '" + filePath + "'...");
+};
+

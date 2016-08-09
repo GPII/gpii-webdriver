@@ -8,10 +8,6 @@
 var fluid = require("infusion");
 var gpii = fluid.registerNamespace("gpii");
 
-var path = require("path");
-var fs = require("fs");
-var os = require("os");
-
 require("../../../");
 gpii.webdriver.loadTestingSupport();
 
@@ -21,10 +17,7 @@ fluid.registerNamespace("gpii.tests.webdriver.takeScreenshot");
 gpii.tests.webdriver.takeScreenshot.examineResults = function (data) {
     jqUnit.assertTrue("There should be image data...", data.length > 0);
 
-    // Save the image to a file so that we can manually examine it.
-    var filePath = path.resolve(os.tmpdir(), "screenshot-" + Date.now() + ".png");
-    fs.writeFileSync(filePath, new Buffer(data, "base64"));
-    console.log("Screenshot saved to '" + filePath + "'...");
+    gpii.test.webdriver.saveScreenshot(data);
 };
 
 
