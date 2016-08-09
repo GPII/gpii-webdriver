@@ -14,9 +14,10 @@ fluid.registerNamespace("gpii.webdriver");
 
 var webdriver = require("selenium-webdriver");
 
-gpii.webdriver.By    = webdriver.By;
-gpii.webdriver.until = webdriver.until;
-gpii.webdriver.Key   = webdriver.Key;
+gpii.webdriver.By           = webdriver.By;
+gpii.webdriver.until        = webdriver.until;
+gpii.webdriver.Key          = webdriver.Key;
+gpii.webdriver.Capabilities = require('selenium-webdriver/lib/capabilities').Capabilities;
 
 /**
  *
@@ -43,7 +44,10 @@ gpii.webdriver.configureDriver = function (that) {
  *
  */
 gpii.webdriver.init = function (that) {
-    var capabilities = new webdriver.Capabilities(that.options.browserOptions[that.options.browser]);
+     var capabilities = gpii.webdriver.Capabilities[that.options.browser]();
+    fluid.each(that.options.browserOptions[that.options.browser], function (value, key) {
+        capabilities.set(key, value);
+    });
 
     var builder = new webdriver.Builder().withCapabilities(capabilities);
     if (that.options.async) {
@@ -196,19 +200,18 @@ fluid.defaults("gpii.webdriver", {
     },
     browserOptions: {
         ie: {
-            browserName: "ie",
             nativeEvents: false
         },
         firefox: {
-            browserName: "firefox",
+            // You must upgrade selenium-webdriver to a 3.0 beta release and uncomment the next time to test in Firefox 48.0 or higher.
+            // marionette: true
             nativeEvents: true
         },
         chrome: {
-            browserName: "chrome",
-            nativeEvents: false
+            nativeEvents: true
         },
         opera: {
-            browserName: "opera"
+            nativeEvents: false
         }
     },
     events: {
