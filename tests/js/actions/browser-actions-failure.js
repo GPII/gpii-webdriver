@@ -28,7 +28,7 @@ fluid.defaults("gpii.tests.webdriver.actions.failure.caseHolder", {
                     {
                         event:    "{testEnvironment}.webdriver.events.onGetComplete",
                         listener: "{testEnvironment}.webdriver.actionsHelper",
-                        args:     [{ fnName: "bogus", args:[] }]
+                        args:     [{ fn: "bogus", args:[] }]
                     },
                     {
                         event:    "{testEnvironment}.webdriver.events.onError",
