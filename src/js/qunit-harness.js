@@ -125,7 +125,7 @@ fluid.defaults("gpii.webdriver.QUnitHarness", {
                 transform: {
                     type: "fluid.transforms.valueMapper",
                     inputPath: "result",
-                    options: {
+                    match: {
                         true: "ok",
                         false: "not ok"
                     }

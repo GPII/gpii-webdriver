@@ -6,10 +6,6 @@ var gpii  = fluid.registerNamespace("gpii");
 
 fluid.registerNamespace("gpii.tests.webdriver.qunit");
 
-gpii.tests.webdriver.qunit.getResults = function (outputFormat) {
-    return gpii.webdriver.QUnitHarness.instance.outputResults(outputFormat);
-};
-
 var jqUnit = require("node-jqunit");
 gpii.tests.webdriver.qunit.checkTapOutput = function (output) {
     jqUnit.assertTrue("There should be a TAP header...", output.indexOf("TAP version") !== -1);

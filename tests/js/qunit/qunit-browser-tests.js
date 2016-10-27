@@ -39,7 +39,7 @@ fluid.defaults("gpii.tests.webdriver.qunit.simple.caseHolder", {
                     },
                     {
                         func: "{testEnvironment}.webdriver.executeScript",
-                        args: [gpii.tests.webdriver.qunit.getResults, "text"]
+                        args: [gpii.test.webdriver.invokeGlobal, "gpii.webdriver.QUnitHarness.instance.outputResults", "text"]
                     },
                     {
                         event:    "{testEnvironment}.webdriver.events.onExecuteScriptComplete",

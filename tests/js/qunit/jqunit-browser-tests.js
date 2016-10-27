@@ -32,7 +32,7 @@ fluid.defaults("gpii.tests.webdriver.qunit.jqUnit.caseHolder", {
                     {
                         event:    "{testEnvironment}.webdriver.events.onGetComplete",
                         listener: "{testEnvironment}.webdriver.executeScript",
-                        args:     [gpii.tests.webdriver.qunit.getResults]
+                        args:     [gpii.test.webdriver.invokeGlobal, "gpii.webdriver.QUnitHarness.instance.outputResults"]
                     },
                     {
                         event:    "{testEnvironment}.webdriver.events.onExecuteScriptComplete",
@@ -41,7 +41,7 @@ fluid.defaults("gpii.tests.webdriver.qunit.jqUnit.caseHolder", {
                     },
                     {
                         func: "{testEnvironment}.webdriver.executeScript",
-                        args: [gpii.tests.webdriver.qunit.getResults, "text"]
+                        args: [gpii.test.webdriver.invokeGlobal, "gpii.webdriver.QUnitHarness.instance.outputResults", "text"]
                     },
                     {
                         event:    "{testEnvironment}.webdriver.events.onExecuteScriptComplete",
