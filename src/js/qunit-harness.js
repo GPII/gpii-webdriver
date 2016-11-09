@@ -61,6 +61,7 @@ gpii.webdriver.QUnitHarness.outputResults = function (that, outputFormat) {
     outputFormat = outputFormat || that.options.defaultOutputFormat;
     var lines = [];
 
+    // TODO:  This causes executeScript to never return when generating TAP output.  Investigate.
     if (that.options.preamble[outputFormat] !== undefined) {
         lines = lines.concat(that.options.preamble[outputFormat]);
     }

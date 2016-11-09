@@ -50,18 +50,12 @@ gpii.webdriver.init = function (that) {
     });
 
     var builder = new webdriver.Builder().withCapabilities(capabilities);
-    if (that.options.async) {
-        that.builderPromise = builder.buildAsync();
+    that.builderPromise = builder.build();
 
-        that.builderPromise.then(function (result) {
-            that.driver = result;
-            gpii.webdriver.configureDriver(that);
-        })["catch"](that.events.onError.fire);
-    }
-    else {
-        that.driver = builder.build();
+    that.builderPromise.then(function (result) {
+        that.driver = result;
         gpii.webdriver.configureDriver(that);
-    }
+    })["catch"](that.events.onError.fire);
 };
 
 /**
@@ -86,10 +80,7 @@ gpii.webdriver.execute = function (that, fnName, eventName, fnArgs) {
         return promise;
     }
     else {
-        var failurePromise = new webdriver.promise.Promise();
-        failurePromise["catch"](that.events.onError.fire);
-        failurePromise.cancel("Can't execute function because the underlying webdriver object is not available...");
-        return failurePromise;
+        fluid.fail("Cannot perform requests before the driver is ready...");
     }
 };
 
@@ -114,9 +105,9 @@ gpii.webdriver.navigateHelper = function (that, args) {
         return promise;
     }
     else {
-        var failurePromise = new webdriver.promise.Promise();
+        var failurePromise = new Promise();
         failurePromise["catch"](that.events.onError.fire);
-        failurePromise.cancel("Navigation function `" + navFnName + "` does not exist...");
+        failurePromise.reject("Navigation function `" + navFnName + "` does not exist...");
         return failurePromise;
     }
 };
@@ -141,9 +132,9 @@ gpii.webdriver.actionsHelper = function (that, actionDefs) {
             actions[actionFnName].apply(actions, actionArgs);
         }
         else {
-            var failurePromise = new webdriver.promise.Promise();
+            var failurePromise = new Promise();
             failurePromise["catch"](that.events.onError.fire);
-            failurePromise.cancel("Cannot perform unknown action '" + actionFnName + "'...");
+            failurePromise.reject("Cannot perform unknown action '" + actionFnName + "'...");
             return failurePromise;
         }
     });
@@ -170,7 +161,7 @@ gpii.webdriver.actionsHelper = function (that, actionDefs) {
 gpii.webdriver.dumpLogs = function (that, type) {
     type = type || "browser";
 
-    var promise = fluid.promise();
+    var promise = new Promise();
 
     that.driver.manage().logs().get(type)
         .then(function (logEntries) {
@@ -379,11 +370,4 @@ fluid.defaults("gpii.webdriver", {
             args:     ["{that}", "wait", "onWaitComplete", "{arguments}"]
         }
     }
-});
-
-// A convenience grade that sets `options.async` to false, to allow for use cases where synchronous initialization is
-// preferred.
-fluid.defaults("gpii.webdriver.syncInit", {
-    gradeNames: ["gpii.webdriver"],
-    async: false
 });

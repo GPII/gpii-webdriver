@@ -73,6 +73,26 @@ fluid.defaults("gpii.tests.webdriver.wait.caseHolder", {
                         args:     ["{arguments}.0.message", "Custom Message."]
                     }
                 ]
+            },
+            {
+                name: "Wait for an element to appear...",
+                type: "test",
+                sequence: [
+                    {
+                        func: "{testEnvironment}.webdriver.get",
+                        args: ["@expand:gpii.test.webdriver.resolveFileUrl({that}.options.fileUrl)"]
+                    },
+                    {
+                        event:    "{testEnvironment}.webdriver.events.onGetComplete",
+                        listener: "{testEnvironment}.webdriver.wait",
+                        args:     [gpii.webdriver.until.elementLocated(gpii.webdriver.By.css("body"))]
+                    },
+                    {
+                        event:    "{testEnvironment}.webdriver.events.onWaitComplete",
+                        listener: "jqUnit.assert",
+                        args:     ["We should be able to wait for a DOM element..."]
+                    }
+                ]
             }
         ]
     }]

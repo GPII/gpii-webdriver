@@ -17,21 +17,22 @@
   },
   "homepage": "https://github.com/the-t-in-rtf/gpii-webdriver#readme",
   "dependencies": {
-    "accessibility-developer-tools": "2.10.0",
-    "axe-core": "2.0.5",
-    "infusion": "2.0.0-dev.20161002T002156Z.a2802df",
-    "selenium-webdriver": "2.53.3"
+    "accessibility-developer-tools": "2.11.0",
+    "axe-core": "2.0.7",
+    "infusion": "2.0.0-dev.20161027T155641Z.0bcd507",
+    "selenium-webdriver": "3.0.0"
   },
   "devDependencies": {
-    "chromedriver": "2.23.1",
-    "eslint": "3.3.1",
+    "chromedriver": "2.25.1",
+    "eslint": "3.9.1",
+    "eslint-config-fluid": "1.0.0",
     "gpii-express": "git://github.com/the-t-in-rtf/gpii-express#baa1558d22ee7abcb6d6b6410af7cc95693f1b80",
     "fluid-grunt-eslint": "18.1.2",
     "grunt": "1.0.1",
     "grunt-jsonlint": "1.1.0",
     "istanbul": "0.4.5",
     "jsonlint": "1.6.2",
-    "kettle": "1.1.0",
+    "kettle": "1.2.0",
     "node-jqunit": "1.1.4"
   }
 }

@@ -58,7 +58,7 @@ gpii.test.webdriver.allBrowsers.generateAndRunTestEnvironment = function (that, 
  */
 gpii.test.webdriver.allBrowsers.getBrowsers = function (that) {
     if (process.env.BROWSERS) {
-        return process.env.BROWSERS.split(/[, ]/)
+        return process.env.BROWSERS.split(/[, ]/);
     }
     else {
         return that.options.browsers || gpii.test.webdriver.allBrowsers.getPlatformBrowsers();

@@ -8,7 +8,6 @@ driver is ready, the `onDriverReady` event is fired.
 
 | Option               | Type        | Description |
 | -------------------- | ----------- | ----------- |
-| `async`              | `{Boolean}` | Whether to initialize the underlying webdriver asynchronously.  Defaults to `true`. See `gpii.webdriver.syncInit` below for details about the implications of setting this to `false`. |
 | `asyncScriptTimeout` | `{Integer}` | The number of milliseconds to wait before timing out calls to `executeAsyncScript` (see below).  Defaults to `10000` (10 seconds). |
 | `browser`            | `{String}`  | A lowercase string identifying which [supported browser](http://seleniumhq.github.io/selenium/docs/api/javascript/module/selenium-webdriver/lib/capabilities_exports_Browser.html) to use.  The `SELENIUM_BROWSER` environment variable will always take precedence over this value. Defaults to `"firefox"`. |
 | `browserOptions`     | `{Object}`  | A map of [browser options](http://seleniumhq.github.io/selenium/docs/api/javascript/module/selenium-webdriver/lib/capabilities_exports_Capabilities.html), keyed at the top level by the browser name ("chrome", "ie", etc.).  If options exist for `that.options.browser`, they will be passed to the builder before the driver is created. |
@@ -37,15 +36,13 @@ Each element in `actionsArray` is expected to be an object whose `fn` value repr
 and whose `args` value represents the arguments to be passed to the function.  For example:
 
 ```
-var driver = gpii.webdriver.syncInit();
-driver.actions({ fn: "sendKeys", args: [gpii.webdriver.Key.TAB, gpii.webdriver.Key.TAB]});
+{ fn: "sendKeys", args: [gpii.webdriver.Key.TAB, gpii.webdriver.Key.TAB]};
 ```
 
 Note that if you wish to pass multiple actions, you will need to pass an array as the first argument, as in:
 
 ```
-var driver = gpii.webdriver.syncInit();
-driver.actions([{ fn: "sendKeys", args: [gpii.webdriver.Key.TAB]}, { fn: "sendKeys", args: [gpii.webdriver.Key.TAB]}]);
+[{ fn: "sendKeys", args: [gpii.webdriver.Key.TAB]}, { fn: "sendKeys", args: [gpii.webdriver.Key.TAB]}];
 ```
 
 The range of supported actions and options can be found in [the WebDriver documentation](http://seleniumhq.github.io/selenium/docs/api/javascript/module/selenium-webdriver/lib/actions_exports_ActionSequence.html).
@@ -295,46 +292,6 @@ View the WebDriver API documentation for more [details on the underlying `wait` 
 
 In addition to the "wrapped" events mentioned above, this component has a unique event (`onError` that is fired
 whenever any of the promises created by a "wrapped" function encounter an error.
-
-# `gpii.webdriver.syncInit`
-
-An alternate version of the grade that is built synchronously, and which is meant for use when promises are preferred
-over the event-driven IoC method.  The key distinction is that the driver can start queueing future requests
-immediately rather than having to wait for the driver to finish starting up.
-
-As a result, this grade can be used almost verbatim with examples from the
-[WebDriver documentation](http://seleniumhq.github.io/selenium/docs/api/javascript/index.html).  Here's an example taken
-from the WebDriver API that demonstrates using the library directly:
-
-```
-var webdriver = require("selenium-webdriver"),
-    By = require("selenium-webdriver").By,
-    until = require("selenium-webdriver").until;
-
-var driver = new webdriver.Builder()
-    .forBrowser("firefox")
-    .build();
-
-driver.get("http://www.google.com/ncr");
-driver.findElement(By.name("q")).sendKeys("webdriver");
-driver.findElement(By.name("btnG")).click();
-driver.wait(until.titleIs("webdriver - Google Search"), 1000);
-driver.quit();
-```
-
-Here's the same example using the `gpii.webdriver.syncInit` grade:
-
-```
-var driver = gpii.webdriver.syncInit({ browser: "firefox"});
-
-driver.get("http://www.google.com/ncr");
-driver.findElement(gpii.webdriver.By.name("q")).sendKeys("webdriver");
-driver.findElement(gpii.webdriver.By.name("btnG")).click();
-driver.wait(gpii.webdriver.until.titleIs("webdriver - Google Search"), 1000);
-driver.quit();
-```
-
-This grade fires all of the normal events, so you can use it in IoC tests (although there is no benefit to doing so).
 
 # `gpii.webdriver.By`
 
