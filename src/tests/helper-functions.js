@@ -139,10 +139,12 @@ fluid.registerNamespace("gpii.test.webdriver.axe");
  *
  * @param callback {Function} - The WebDriver API itself supplies a callback that we use to return the results of the scan.
  */
-gpii.test.webdriver.axe.runAxe = function (callback, axeOptions) {
+gpii.test.webdriver.axe.runAxe = function () {
+    var callback = arguments[arguments.length - 1];
+
     /* globals axe */
-    if (axeOptions) {
-        axe.configure(axeOptions);
+    if (arguments.length > 1) {
+        axe.configure(arguments[0]);
     }
 
     // TODO: We cannot use fluid.invokeGlobal here because we need to use the browser's `document` variable.  Discuss with Antranig.
