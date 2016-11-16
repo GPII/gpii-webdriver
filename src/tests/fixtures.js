@@ -70,6 +70,7 @@ fluid.defaults("gpii.tests.webDriver.hasScriptContent", {
     scriptContent: "@expand:gpii.tests.webDriver.hasScriptContent.cacheContent({that}.options.scriptPaths)"
 });
 
+// TODO:  Discuss future-proofing this strategy, which will not work in dependent packages post npm 3 / yarn.
 // A mix-in grade that adds aXe script content available at `{that}.scriptContent.axe` that can be injected into a
 // page using `executeScript`.
 fluid.defaults("gpii.test.webdriver.hasAxeContent", {
@@ -79,6 +80,7 @@ fluid.defaults("gpii.test.webdriver.hasAxeContent", {
     }
 });
 
+// TODO:  Discuss future-proofing this strategy, which will not work in dependent packages post npm 3 / yarn.
 // A mix-in grade that adds accessibility developer toolkit script content available at `{that}.scriptContent.axs` that
 // can be injected into a page using `executeScript`.
 fluid.defaults("gpii.test.webdriver.hasAxsContent", {

@@ -60,6 +60,26 @@ fluid.defaults("gpii.tests.webdriver.axe.caseHolder", {
                 ]
             },
             {
+                name: "Disable a check with configuration options...",
+                type: "test",
+                sequence: [
+                    {
+                        func: "{testEnvironment}.webdriver.get",
+                        args: ["@expand:gpii.test.webdriver.resolveFileUrl({that}.options.badUrl)"]
+                    },
+                    {
+                        event:    "{testEnvironment}.webdriver.events.onGetComplete",
+                        listener: "{testEnvironment}.webdriver.executeAsyncScript",
+                        args:     [gpii.test.webdriver.axe.runAxe, { rules: [{ id: "html-has-lang", enabled: false }]}]
+                    },
+                    {
+                        event:    "{testEnvironment}.webdriver.events.onExecuteAsyncScriptComplete",
+                        listener: "gpii.test.webdriver.axe.checkResults",
+                        args:     ["{arguments}.0"]
+                    }
+                ]
+            },
+            {
                 name: "Inject aXe into a page and run the tests...",
                 type: "test",
                 sequence: [

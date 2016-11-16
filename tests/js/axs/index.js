@@ -22,7 +22,7 @@ fluid.defaults("gpii.tests.webdriver.axs.caseHolder", {
         name: "Testing accessibility developer tools...",
         tests: [
             {
-                name: "Run the accessibilty developer tools on a good page...",
+                name: "Run the accessibility developer tools on a good page...",
                 type: "test",
                 sequence: [
                     {
@@ -42,7 +42,7 @@ fluid.defaults("gpii.tests.webdriver.axs.caseHolder", {
                 ]
             },
             {
-                name: "Run the accessibilty developer tools on a bad page...",
+                name: "Run the accessibility developer tools on a bad page...",
                 type: "test",
                 sequence: [
                     {
@@ -62,7 +62,27 @@ fluid.defaults("gpii.tests.webdriver.axs.caseHolder", {
                 ]
             },
             {
-                name: "Inject Axs into a page and run the accessibilty developer tools...",
+                name: "Disable a check with configuration options...",
+                type: "test",
+                sequence: [
+                    {
+                        func: "{testEnvironment}.webdriver.get",
+                        args: ["@expand:gpii.test.webdriver.resolveFileUrl({that}.options.badUrl)"]
+                    },
+                    {
+                        event:    "{testEnvironment}.webdriver.events.onGetComplete",
+                        listener: "{testEnvironment}.webdriver.executeScript",
+                        args:     [gpii.test.webdriver.axs.runAxs, { auditRulesToIgnore: ["humanLangMissing"]}]
+                    },
+                    {
+                        event:    "{testEnvironment}.webdriver.events.onExecuteScriptComplete",
+                        listener: "gpii.test.webdriver.axs.checkResults",
+                        args:     ["{arguments}.0"]
+                    }
+                ]
+            },
+            {
+                name: "Inject Axs into a page and run the accessibility developer tools...",
                 type: "test",
                 sequence: [
                     {
