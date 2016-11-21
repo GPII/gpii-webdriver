@@ -20,19 +20,19 @@
     "accessibility-developer-tools": "2.11.0",
     "axe-core": "2.0.7",
     "infusion": "2.0.0-dev.20161027T155641Z.0bcd507",
-    "selenium-webdriver": "3.0.0"
+    "selenium-webdriver": "3.0.1"
   },
   "devDependencies": {
     "chromedriver": "2.25.1",
-    "eslint": "3.9.1",
+    "eslint": "3.10.2",
     "eslint-config-fluid": "1.0.0",
-    "gpii-express": "git://github.com/the-t-in-rtf/gpii-express#baa1558d22ee7abcb6d6b6410af7cc95693f1b80",
+    "gpii-express": "git://github.com/the-t-in-rtf/gpii-express#39c32a4b306640c7c92dd1a7acd6d5af3f37ddef",
     "fluid-grunt-eslint": "18.1.2",
     "grunt": "1.0.1",
     "grunt-jsonlint": "1.1.0",
     "istanbul": "0.4.5",
     "jsonlint": "1.6.2",
-    "kettle": "1.2.0",
+    "kettle": "1.2.1",
     "node-jqunit": "1.1.4"
   }
 }
