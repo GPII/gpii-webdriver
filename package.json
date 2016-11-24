@@ -26,7 +26,7 @@
     "chromedriver": "2.25.1",
     "eslint": "3.10.2",
     "eslint-config-fluid": "1.0.0",
-    "gpii-express": "git://github.com/the-t-in-rtf/gpii-express#39c32a4b306640c7c92dd1a7acd6d5af3f37ddef",
+    "gpii-express": "1.0.0",
     "fluid-grunt-eslint": "18.1.2",
     "grunt": "1.0.1",
     "grunt-jsonlint": "1.1.0",
