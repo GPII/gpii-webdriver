@@ -190,8 +190,7 @@ fluid.defaults("gpii.webdriver", {
             nativeEvents: false
         },
         firefox: {
-            marionette: true,
-            nativeEvents: true
+            nativeEvents: false
         },
         chrome: {
             nativeEvents: true
