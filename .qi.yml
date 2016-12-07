@@ -16,9 +16,9 @@ apps:
     deploy: false
     setup:
       - sudo dnf -y install java-1.8.0-openjdk-devel.x86_64
-      - npm install
+      - yarn install
     test_cmds:
       - export PATH=$PATH:/home/vagrant/sync/node_modules/chromedriver/bin/chromedriver/
       - xhost +
       - export DISPLAY=:0
-      - BROWSERS=chrome npm test
+      - BROWSERS=chrome yarn test
