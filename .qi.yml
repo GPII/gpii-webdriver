@@ -7,7 +7,7 @@ apps:
   - app_name: gpii-webdriver
     app_start_service: false
     git_repository: https://github.com/the-t-in-rtf/gpii-webdriver.git
-    git_branch: GPII-1889
+    git_branch: GPII-1913
     software_stack: nodejs
     software_stack_version: lts
     folder:
