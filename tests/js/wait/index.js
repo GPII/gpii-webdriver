@@ -13,14 +13,13 @@ gpii.webdriver.loadTestingSupport();
 
 fluid.registerNamespace("gpii.tests.webdriver.wait");
 
+var jqUnit = require("node-jqunit");
+
 gpii.tests.webdriver.wait.displayAlert = function () {
     setTimeout(function () { window.alert("Danger! Intruders among us!"); }, 1000);
 };
 
 gpii.tests.webdriver.wait.confirmTimeoutMessage = function (message, expectedText) {
-    // I have to require this here or the whole suite will time out with "no tests found" errors.
-    // TODO: Review and discuss with Antranig.
-    var jqUnit = require("node-jqunit");
     jqUnit.assertTrue("The message should contain our custom text...", message.indexOf(expectedText) !== -1);
 };
 
