@@ -1,5 +1,6 @@
 // Helper functions for use in tests, for example, when inspecting the return values from `findElement`.
 /* eslint-env node */
+/* globals axs */
 "use strict";
 var fluid = require("infusion");
 var gpii = fluid.registerNamespace("gpii");
@@ -177,7 +178,6 @@ fluid.registerNamespace("gpii.test.webdriver.axs");
 
 
 gpii.test.webdriver.axs.runAxs = function (axsOptions) {
-    /* globals axs */
     var axsConfig = new axs.AuditConfiguration(axsOptions || {});
     return axs.Audit.run(axsConfig);
 };
