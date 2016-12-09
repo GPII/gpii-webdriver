@@ -36,7 +36,7 @@ fluid.defaults("gpii.tests.webdriver.qunit.simple.caseHolder", {
                         event:    "{testEnvironment}.webdriver.events.onExecuteScriptComplete",
                         listener: "gpii.tests.webdriver.qunit.checkTextOutput",
                         args:     ["{arguments}.0"]
-                    },
+                    }
                     // TODO: Get these working again
                     // {
                     //     func: "{testEnvironment}.webdriver.executeScript",
