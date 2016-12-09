@@ -4,7 +4,7 @@
 var fluid = require("infusion");
 var gpii  = fluid.registerNamespace("gpii");
 
-require("../../../");
+fluid.require("%gpii-webdriver");
 gpii.webdriver.loadTestingSupport();
 
 fluid.defaults("gpii.tests.webdriver.express.caseHolder", {

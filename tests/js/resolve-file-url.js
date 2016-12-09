@@ -6,7 +6,7 @@ var gpii = fluid.registerNamespace("gpii");
 var url = require("url");
 var os = require("os");
 
-require("../../src/tests/resolve-file-url");
+fluid.require("%gpii-webdriver/src/tests/resolve-file-url");
 
 var jqUnit = require("node-jqunit");
 

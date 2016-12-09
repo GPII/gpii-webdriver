@@ -8,7 +8,7 @@
 var fluid = require("infusion");
 var gpii = fluid.registerNamespace("gpii");
 
-require("../../../");
+fluid.require("%gpii-webdriver");
 gpii.webdriver.loadTestingSupport();
 
 var jqUnit = require("node-jqunit");
