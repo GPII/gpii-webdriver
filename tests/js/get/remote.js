@@ -40,9 +40,6 @@ fluid.defaults("gpii.tests.webdriver.get.remote.caseHolder", {
     }]
 });
 
-//     gradeNames: ["fluid.test.testEnvironment"],
-
-
 fluid.defaults("gpii.tests.webdriver.get.remote.environment", {
     gradeNames: ["gpii.test.webdriver.testEnvironment"],
     components: {
