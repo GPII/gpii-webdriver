@@ -28,7 +28,7 @@ fluid.defaults("gpii.tests.webdriver.fluid.caseHolder", {
                     {
                         event:    "{testEnvironment}.webdriver.events.onGetComplete",
                         listener: "{testEnvironment}.webdriver.executeScript",
-                        args:     [gpii.test.webdriver.invokeGlobal, "existingGlobalFunction"]
+                        args:     [gpii.test.webdriver.invokeGlobal, "gpii.tests.webdriver.fluid.existingGlobalFunction"]
                     },
                     {
                         event:    "{testEnvironment}.webdriver.events.onExecuteScriptComplete",
@@ -48,32 +48,12 @@ fluid.defaults("gpii.tests.webdriver.fluid.caseHolder", {
                     {
                         event:    "{testEnvironment}.webdriver.events.onGetComplete",
                         listener: "{testEnvironment}.webdriver.executeScript",
-                        args:     [gpii.test.webdriver.invokeGlobal, "existingGlobalFunctionWithArgs", ["foo", "bar"]]
+                        args:     [gpii.test.webdriver.invokeGlobal, "gpii.tests.webdriver.fluid.existingGlobalFunctionWithArgs", ["foo", "bar"]]
                     },
                     {
                         event:    "{testEnvironment}.webdriver.events.onExecuteScriptComplete",
                         listener: "jqUnit.assertEquals",
                         args:     ["The global function should have received the correct number of arguments..", 2, "{arguments}.0"]
-                    }
-                ]
-            },
-            {
-                name: "Call a namespaced function...",
-                type: "test",
-                sequence: [
-                    {
-                        func: "{testEnvironment}.webdriver.get",
-                        args: ["@expand:gpii.test.webdriver.resolveFileUrl({that}.options.fileUrl)"]
-                    },
-                    {
-                        event:    "{testEnvironment}.webdriver.events.onGetComplete",
-                        listener: "{testEnvironment}.webdriver.executeScript",
-                        args:     [gpii.test.webdriver.invokeGlobal, "namespaced.fn"]
-                    },
-                    {
-                        event:    "{testEnvironment}.webdriver.events.onExecuteScriptComplete",
-                        listener: "jqUnit.assertTrue",
-                        args:     ["The global namespaced function should have returned a true value...", "{arguments}.0"]
                     }
                 ]
             }
