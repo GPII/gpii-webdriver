@@ -18,13 +18,13 @@
   "homepage": "https://github.com/the-t-in-rtf/gpii-webdriver#readme",
   "dependencies": {
     "accessibility-developer-tools": "2.11.0",
-    "axe-core": "2.0.7",
+    "axe-core": "2.1.7",
     "infusion": "2.0.0-dev.20161219T170555Z.5778f7e",
     "selenium-webdriver": "3.0.1"
   },
   "devDependencies": {
-    "chromedriver": "2.25.2",
-    "eslint": "3.12.2",
+    "chromedriver": "2.27.2",
+    "eslint": "3.14.0",
     "eslint-config-fluid": "1.0.0",
     "fluid-grunt-eslint": "18.1.2",
     "gpii-express": "1.0.1-dev.20170106T131203Z.a048e61",
