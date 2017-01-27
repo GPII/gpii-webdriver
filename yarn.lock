@@ -971,6 +971,12 @@ infusion@2.0.0-dev.20161219T170555Z.5778f7e:
   dependencies:
     fluid-resolve "1.2.0"
 
+infusion@3.0.0-dev.20170127T130413Z.103de6e:
+  version "3.0.0-dev.20170127T130413Z.103de6e"
+  resolved "https://registry.yarnpkg.com/infusion/-/infusion-3.0.0-dev.20170127T130413Z.103de6e.tgz#59d5163cd6c55d4c5b3c34af54b74fdb331b1a1d"
+  dependencies:
+    fluid-resolve "1.2.0"
+
 inherits@2, inherits@2.0.3, inherits@~2.0.1:
   version "2.0.3"
   resolved "https://registry.yarnpkg.com/inherits/-/inherits-2.0.3.tgz#633c2c83e3da42a502f52466022480f4208261de"
