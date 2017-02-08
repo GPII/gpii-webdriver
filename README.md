@@ -107,7 +107,8 @@ see [GPII-1913](https://issues.gpii.net/browse/GPII-1913).
 For more information, check out the individual docs for:
 
 * [The driver component](./docs/webdriver.md)
-* [The helper functions](./docs/helper-functions.md)
+* [Accessibility Checks](./docs/accessibility-checks.md)
+* [Other Helper Functions](./docs/helper-functions.md)
 * [The browser-side QUnit harness](./docs/qunit-harness.md)
 * [The test fixtures included with this package](./docs/fixtures.md)
 * [The multi-browser test runner](./docs/allBrowsers.md)

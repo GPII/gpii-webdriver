@@ -135,8 +135,8 @@ fluid.registerNamespace("gpii.test.webdriver.axe");
  *
  * A function to run aXe in a browser and then return the results.  Should be used with `executeAsyncScript`.
  *
- * Requires the accessibility developer toolkit to have already been loaded (for example, by
- * using `executeScript` to pass its source to the browser.
+ * Requires the aXe library to have already been loaded (for example, by using `executeScript` to pass its source to the
+ * browser.
  *
  * @param callback {Function} - The WebDriver API itself supplies a callback that we use to return the results of the scan.
  */
