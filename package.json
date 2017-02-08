@@ -1,0 +1,38 @@
+{
+  "name": "gpii-webdriver",
+  "version": "1.0.0",
+  "description": "A series of Fluid components that help write tests using the WebDriver API.",
+  "main": "index.js",
+  "scripts": {
+    "test": "node node_modules/istanbul/lib/cli.js cover tests/all-tests.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/the-t-in-rtf/gpii-webdriver.git"
+  },
+  "author": "Tony Atkins <tony@raisingthefloor.org>",
+  "license": "BSD-3-Clause",
+  "bugs": {
+    "url": "https://github.com/the-t-in-rtf/gpii-webdriver/issues"
+  },
+  "homepage": "https://github.com/the-t-in-rtf/gpii-webdriver#readme",
+  "dependencies": {
+    "accessibility-developer-tools": "2.11.0",
+    "axe-core": "2.1.7",
+    "infusion": "3.0.0-dev.20170127T130413Z.103de6e",
+    "selenium-webdriver": "3.0.1"
+  },
+  "devDependencies": {
+    "chromedriver": "2.27.2",
+    "eslint": "3.14.1",
+    "eslint-config-fluid": "1.1.0",
+    "fluid-grunt-eslint": "18.1.2",
+    "gpii-express": "1.0.2",
+    "grunt": "1.0.1",
+    "grunt-jsonlint": "1.1.0",
+    "istanbul": "0.4.5",
+    "jsonlint": "1.6.2",
+    "kettle": "1.3.1",
+    "node-jqunit": "1.1.4"
+  }
+}
