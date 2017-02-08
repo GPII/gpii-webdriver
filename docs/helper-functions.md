@@ -40,7 +40,8 @@ A function to compare an array of elements with an array of expected values.  Id
 * `map` `{Map}` - A map to be converted.
 * Returns: {Object} The map in JSON form.
 
-Some things, like Capabilities, are Map objects that we would like to be able to inspect as plain old Javascript objects.
+Functions like `gpii.webdriver.getCapabilities` (see [the webdriver docs](./webdriver.md)) return  `Map` objects that
+we would like to be able to inspect as plain old Javascript objects.
 
 ## `gpii.test.webdriver.invokeGlobal(functionPath, fnArgs, environment)`
 
