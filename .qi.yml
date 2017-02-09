@@ -15,6 +15,7 @@ apps:
     run_in: fedora
     deploy: false
     setup:
+      - sudo dnf -y install chromedriver
       - sudo dnf -y install java-1.8.0-openjdk-devel.x86_64
       - yarn install
     test_cmds:
