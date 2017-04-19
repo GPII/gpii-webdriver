@@ -225,15 +225,6 @@ chalk@~0.4.0:
     has-color "~0.1.0"
     strip-ansi "~0.1.0"
 
-chromedriver@2.27.2:
-  version "2.27.2"
-  resolved "https://registry.yarnpkg.com/chromedriver/-/chromedriver-2.27.2.tgz#fd8ee03e6f8dde47d83b951bf99ea268538179c3"
-  dependencies:
-    adm-zip "^0.4.7"
-    kew "^0.7.0"
-    mkdirp "^0.5.1"
-    rimraf "^2.5.4"
-
 circular-json@^0.3.0:
   version "0.3.1"
   resolved "https://registry.yarnpkg.com/circular-json/-/circular-json-0.3.1.tgz#be8b36aefccde8b3ca7aa2d6afc07a37242c0d2d"
@@ -891,9 +882,9 @@ globby@^5.0.0:
     pify "^2.0.0"
     pinkie-promise "^2.0.0"
 
-gpii-express@1.0.7-dev.20170417T134005Z.8acdf26:
-  version "1.0.7-dev.20170417T134005Z.8acdf26"
-  resolved "https://registry.yarnpkg.com/gpii-express/-/gpii-express-1.0.7-dev.20170417T134005Z.8acdf26.tgz#c03f8821964870b9f64f864203455eeac02326a0"
+gpii-express@1.0.7-dev.20170419T132453Z.1118304:
+  version "1.0.7-dev.20170419T132453Z.1118304"
+  resolved "https://registry.yarnpkg.com/gpii-express/-/gpii-express-1.0.7-dev.20170419T132453Z.1118304.tgz#f90c378e2a9ec78959a0dabc6dcd3ac62393588d"
   dependencies:
     body-parser "1.17.1"
     cookie-parser "1.4.3"
@@ -1054,18 +1045,6 @@ infusion@2.0.0-dev.20151130T180545Z.18ee3f8:
   resolved "https://registry.yarnpkg.com/infusion/-/infusion-2.0.0-dev.20151130T180545Z.18ee3f8.tgz#07ade23574f012178be2218a8f5141bab14bdaa2"
   dependencies:
     resolve "1.1.6"
-
-infusion@3.0.0-dev.20170127T130413Z.103de6e:
-  version "3.0.0-dev.20170127T130413Z.103de6e"
-  resolved "https://registry.yarnpkg.com/infusion/-/infusion-3.0.0-dev.20170127T130413Z.103de6e.tgz#59d5163cd6c55d4c5b3c34af54b74fdb331b1a1d"
-  dependencies:
-    fluid-resolve "1.2.0"
-
-infusion@3.0.0-dev.20170214T161720Z.6126724:
-  version "3.0.0-dev.20170214T161720Z.6126724"
-  resolved "https://registry.yarnpkg.com/infusion/-/infusion-3.0.0-dev.20170214T161720Z.6126724.tgz#02af003f7f50a22edf5a9b0f4a7d604bc49f6d85"
-  dependencies:
-    fluid-resolve "1.2.0"
 
 infusion@3.0.0-dev.20170322T234120Z.278de35:
   version "3.0.0-dev.20170322T234120Z.278de35"
@@ -1239,25 +1218,21 @@ jsonpointer@^4.0.0:
   version "4.0.0"
   resolved "https://registry.yarnpkg.com/jsonpointer/-/jsonpointer-4.0.0.tgz#6661e161d2fc445f19f98430231343722e1fcbd5"
 
-kettle@1.4.0:
-  version "1.4.0"
-  resolved "https://registry.yarnpkg.com/kettle/-/kettle-1.4.0.tgz#fcc67df08796be2c9c2a71dc744012691fc607e6"
+kettle@1.4.1:
+  version "1.4.1"
+  resolved "https://registry.yarnpkg.com/kettle/-/kettle-1.4.1.tgz#167e8bc505e850eb64014039e9bd84f629da942c"
   dependencies:
     body-parser "1.16.1"
     cookie-parser "1.4.3"
     express "4.14.1"
     express-session "1.15.1"
     fluid-resolve "1.2.0"
-    infusion "3.0.0-dev.20170214T161720Z.6126724"
+    infusion "3.0.0-dev.20170322T234120Z.278de35"
     json5 "0.5.1"
     jsonlint "1.6.2"
     path-to-regexp "1.7.0"
     serve-static "1.11.2"
     ws "2.0.3"
-
-kew@^0.7.0:
-  version "0.7.0"
-  resolved "https://registry.yarnpkg.com/kew/-/kew-0.7.0.tgz#79d93d2d33363d6fdd2970b335d9141ad591d79b"
 
 kind-of@^3.0.2:
   version "3.0.4"
