@@ -19,8 +19,9 @@
   "dependencies": {
     "accessibility-developer-tools": "2.11.0",
     "axe-core": "2.1.7",
+    "brace-expansion": "1.1.7",
     "infusion": "3.0.0-dev.20170322T234120Z.278de35",
-    "selenium-webdriver": "3.0.1"
+    "selenium-webdriver": "3.4.0"
   },
   "devDependencies": {
     "eslint": "3.19.0",
