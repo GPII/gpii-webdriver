@@ -26,7 +26,7 @@ setup_job:
   stage: setup
   script:
     - choco install nodejs.install --version 6.9.1 --forcex86 -y
-    - choco install chromedriver -y
+    - choco install chromedriver geckodriver -y
     # node-inspector is pre-installed as a courtesy to assist in debugging.
     - do.ps1 -c "npm install -g node-inspector"
 vdrive_job:
