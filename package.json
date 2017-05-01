@@ -8,14 +8,11 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/the-t-in-rtf/gpii-webdriver.git"
+    "url": "git+https://github.com/GPII/gpii-webdriver.git"
   },
   "author": "Tony Atkins <tony@raisingthefloor.org>",
   "license": "BSD-3-Clause",
-  "bugs": {
-    "url": "https://github.com/the-t-in-rtf/gpii-webdriver/issues"
-  },
-  "homepage": "https://github.com/the-t-in-rtf/gpii-webdriver#readme",
+  "homepage": "https://github.com/GPII/gpii-webdriver#readme",
   "dependencies": {
     "accessibility-developer-tools": "2.11.0",
     "axe-core": "2.1.7",
