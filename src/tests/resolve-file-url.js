@@ -24,7 +24,13 @@ fluid.registerNamespace("gpii.test.webdriver");
 
  */
 gpii.test.webdriver.resolveFileUrl = function (path) {
-    var resolvedUrl = url.resolve("file://", fluid.module.resolvePath(path));
+    var resolvedPath = fluid.module.resolvePath(path);
+
+    // Until https://issues.fluidproject.org/browse/FLUID-6155 is resolved, we standardize both windows paths
+    // like `v://path/to/file` and `c:/deep/package/path/to/file` to use a single slash.
+    var sanitizedPath = resolvedPath.replace(/^([a-zA-Z]:\/)\/(.+)$/, "$1$2");
+
+    var resolvedUrl = url.resolve("file://", sanitizedPath);
 
     // Windows URL handling
     if (resolvedUrl.indexOf("file:") !== 0) {

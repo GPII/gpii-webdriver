@@ -18,7 +18,7 @@ jqUnit.module("Testing static URL resolution function...");
 jqUnit.test("Package-relative paths should be resolved", function () {
     var fileSegments = __filename.split(path.sep);
 
-    var normalizedPath = os.platform() === "win32" ? "/" + fileSegments[0] + "//" + fileSegments.slice(1).join("/") : fileSegments.join("/");
+    var normalizedPath = os.platform() === "win32" ? "/" + fileSegments[0] + "/" + fileSegments.slice(1).join("/") : fileSegments.join("/");
     var expectedUrl = "file://" + normalizedPath;
     jqUnit.assertEquals("A package-relative path should be resolved correctly...", expectedUrl, gpii.test.webdriver.resolveFileUrl("%gpii-webdriver/tests/js/resolve-file-url.js"));
 });
