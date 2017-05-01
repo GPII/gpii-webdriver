@@ -3,8 +3,9 @@
 var fluid = require("infusion");
 var gpii = fluid.registerNamespace("gpii");
 
-var url = require("url");
-var os = require("os");
+var url  = require("url");
+var os   = require("os");
+var path = require("path");
 
 fluid.require("%gpii-webdriver/src/tests/resolve-file-url");
 
@@ -12,13 +13,13 @@ var jqUnit = require("node-jqunit");
 
 jqUnit.module("Testing static URL resolution function...");
 
+
 // If we had more than three of these, I would write a quick "runner".  Forgive the very small duplication here.
 jqUnit.test("Package-relative paths should be resolved", function () {
-    var expectedUrl = url.resolve("file://", __filename);
-    // url.resolve does not properly construct file URLS on windows, so we have to fake it.
-    if (os.platform() === "win32") {
-        expectedUrl = "file:///" + expectedUrl[0].toUpperCase() + expectedUrl.substring(1);
-    }
+    var fileSegments = __filename.split(path.sep);
+
+    var normalizedPath = os.platform() === "win32" ? "/" + fileSegments[0] + "/" + fileSegments.slice(1).join("/") : fileSegments.join("/");
+    var expectedUrl = "file://" + normalizedPath;
     jqUnit.assertEquals("A package-relative path should be resolved correctly...", expectedUrl, gpii.test.webdriver.resolveFileUrl("%gpii-webdriver/tests/js/resolve-file-url.js"));
 });
 
@@ -27,7 +28,7 @@ jqUnit.test("Static strings should be preserved...", function () {
 });
 
 jqUnit.test("Missing packages should be ignored...", function () {
-    jqUnit.assertEquals("A bogus path should be resolved correctly...", "file:///%bogus-package/path/to/file", gpii.test.webdriver.resolveFileUrl("%bogus-package/path/to/file"));
+    jqUnit.assertEquals("A bogus package name should not be resolved...", "file:///%bogus-package/path/to/file", gpii.test.webdriver.resolveFileUrl("%bogus-package/path/to/file"));
 });
 
 jqUnit.test("Windows paths should resolve...", function () {
