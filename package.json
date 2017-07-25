@@ -1,6 +1,6 @@
 {
   "name": "gpii-webdriver",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "A series of Fluid components that help write tests using the WebDriver API.",
   "main": "index.js",
   "scripts": {
