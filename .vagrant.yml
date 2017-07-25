@@ -28,6 +28,8 @@ setup_job:
     - choco install chromedriver -y
     # node-inspector is pre-installed as a courtesy to assist in debugging.
     - do.ps1 -c "npm install -g node-inspector"
+    # required to avoid problems with esparse
+    - npm config set bin-links false --global
 
 test_job:
   stage: test          # name of the stage

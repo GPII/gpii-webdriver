@@ -3,7 +3,6 @@
 var fluid = require("infusion");
 var gpii = fluid.registerNamespace("gpii");
 
-var url  = require("url");
 var os   = require("os");
 var path = require("path");
 
