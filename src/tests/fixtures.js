@@ -161,6 +161,7 @@ fluid.defaults("gpii.test.webdriver.testEnvironment", {
             createOnEvent: "constructFixtures",
             type: "gpii.webdriver",
             options: {
+                browser: "{testEnvironment}.options.browser",
                 events: {
                     onDriverReady: "{testEnvironment}.events.onDriverReady",
                     stopFixtures:  "{testEnvironment}.events.stopFixtures"

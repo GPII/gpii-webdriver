@@ -44,8 +44,9 @@ gpii.webdriver.configureDriver = function (that) {
  *
  */
 gpii.webdriver.init = function (that) {
-    var capabilities = gpii.webdriver.Capabilities[that.options.browser]();
-    fluid.each(that.options.browserOptions[that.options.browser], function (value, key) {
+    var browserName = that.options.browser;
+    var capabilities = gpii.webdriver.Capabilities[browserName]();
+    fluid.each(that.options.browserOptions[browserName], function (value, key) {
         capabilities.set(key, value);
     });
 
@@ -193,7 +194,11 @@ fluid.defaults("gpii.webdriver", {
             nativeEvents: false
         },
         chrome: {
-            nativeEvents: true
+            nativeEvents: true,
+            // Default to "headless" mode for Chrome.
+            chromeOptions: {
+                args: ["disable-gpu", "headless"]
+            }
         },
         opera: {
             nativeEvents: false
