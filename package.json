@@ -18,13 +18,13 @@
     "axe-core": "2.1.7",
     "brace-expansion": "1.1.8",
     "infusion": "3.0.0-dev.20170724T165035Z.eee50c1",
-    "selenium-webdriver": "3.4.0"
+    "selenium-webdriver": "3.5.0"
   },
   "devDependencies": {
-    "eslint": "4.2.0",
+    "eslint": "4.5.0",
     "eslint-config-fluid": "1.1.0",
     "fluid-grunt-eslint": "18.1.2",
-    "gpii-express": "1.0.8-dev.20170725T113219Z.b8ef770",
+    "gpii-express": "1.0.9",
     "grunt": "1.0.1",
     "grunt-jsonlint": "1.1.0",
     "istanbul": "0.4.5",
