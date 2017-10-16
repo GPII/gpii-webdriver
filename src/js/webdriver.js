@@ -10,6 +10,8 @@
 var fluid = require("infusion");
 var gpii = fluid.registerNamespace("gpii");
 
+var process = require("process");
+
 fluid.registerNamespace("gpii.webdriver");
 
 var webdriver = require("selenium-webdriver");
@@ -46,7 +48,8 @@ gpii.webdriver.configureDriver = function (that) {
 gpii.webdriver.init = function (that) {
     var browserName = that.options.browser;
     var capabilities = gpii.webdriver.Capabilities[browserName]();
-    fluid.each(that.options.browserOptions[browserName], function (value, key) {
+    var browserOptions = (process.env.HEADLESS && that.options.headlessBrowserOptions[browserName]) || that.options.browserOptions[browserName];
+    fluid.each(browserOptions, function (value, key) {
         capabilities.set(key, value);
     });
 
@@ -186,19 +189,25 @@ fluid.defaults("gpii.webdriver", {
             args:     ["{that}"]
         }
     },
+    headlessBrowserOptions: {
+        chrome: {
+            nativeEvents: true,
+            chromeOptions: {
+                args: ["disable-gpu", "headless"]
+            }
+        }
+    },
     browserOptions: {
         ie: {
             nativeEvents: false
         },
         firefox: {
-            nativeEvents: false
+            // This flag introduced in geckodriver 0.19 would seem to be intended to help with our "click" woes in FF, but does not seem to.
+            // See the release notes for details: https://github.com/mozilla/geckodriver/releases/tag/v0.19.0
+            "moz:webdriverClick": true
         },
         chrome: {
-            nativeEvents: true,
-            // Default to "headless" mode for Chrome.
-            chromeOptions: {
-                args: ["disable-gpu", "headless"]
-            }
+            nativeEvents: true
         },
         opera: {
             nativeEvents: false
