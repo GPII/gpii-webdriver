@@ -52,7 +52,7 @@ and to receive the results of the code's execution.  Among many other things, th
 To run the tests locally, you will need to [install the drivers for each browser](http://www.seleniumhq.org/download/)
 you want to test.  Once you have done this, you can use the command `npm test` to run the tests.
 
-You can also use the command `vagrant up` to provision a linux box and run the Chrome and Firefox tests there.
+You can also use the command `vagrant up` to provision a linux box and run the Chrome tests there.
 
 # Using this Package to Write Your Own Tests
 
@@ -70,7 +70,7 @@ the caseHolder, testEnvironment or cross-browser test runner including with this
 
 # Running Under Windows
 
-# Internet Explorer
+## Internet Explorer
 
 There is a known problem with [very slow text input](https://github.com/seleniumhq/selenium-google-code-issue-archive/issues/5116)
 when using the 64-bit IEDriverServer.  If you are on a 64-bit Windows machine and seeing extreme
@@ -85,7 +85,7 @@ Note that once you do this, the `BROWSERS` and `SELENIUM_BROWSER` variables will
 only run in Internet Explorer.  The fourth step above simply avoids running the IE tests multiple times (once expecting
 to run using Chrome, once expecting to run using Internet Explorer, etc.).
 
-# Edge
+## Edge
 
 Edge is currently not verified working with any combination of Selenium and the WebDriver server, but it should be
 possible to use it with instructions like the following:
@@ -99,8 +99,8 @@ This will cause the tests to only be run in the Edge browser.  See above for mor
 
 # Firefox
 
-Firefox 47 and below will work with this package.  Firefox 48.0 and higher do not work for now.  For more information,
-see [GPII-1913](https://issues.gpii.net/browse/GPII-1913).
+Firefox 47 and below will work with older versions of this package.  Firefox 48.0 and higher do not work for now.  For
+more information, see [GPII-1913](https://issues.gpii.net/browse/GPII-1913).
 
 # More Information
 
@@ -112,3 +112,9 @@ For more information, check out the individual docs for:
 * [The browser-side QUnit harness](./docs/qunit-harness.md)
 * [The test fixtures included with this package](./docs/fixtures.md)
 * [The multi-browser test runner](./docs/allBrowsers.md)
+
+# Running Tests in "Headless" Mode
+
+Several browsers now support a "headless" mode, in which no window is displayed onscreen as the tests are run.  This
+tends to run faster and require less resources.  If you set the `HEADLESS` environment variable to a non-empty value,
+this package will attempt to run supported browser (as of this writing, only Chrome) in "headless" mode.
