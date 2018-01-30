@@ -74,7 +74,7 @@ gpii.webdriver.init = function (that) {
  * @param fnName {String} - The driver function to execute.
  * @param eventName {String} - The event to fire on successful completion.
  * @param fnArgs {Array} - The arguments (if any) to pass to `fnName`.
- * @returns a Promise that will be resolved when execution is complete, or rejected if there is an error.
+ * @return a Promise that will be resolved when execution is complete, or rejected if there is an error.
  *
  */
 gpii.webdriver.execute = function (that, fnName, eventName, fnArgs) {
@@ -89,7 +89,7 @@ gpii.webdriver.execute = function (that, fnName, eventName, fnArgs) {
  *
  * @param that - The component itself
  * @param args {Array} - An array representing a series of function names and arguments.  Each array's first element is a function name. The remaining arguments are passed to the function.
- * @returns a Promise that will be resolved when navigation is complete, or rejected if there is an error.
+ * @return a Promise that will be resolved when navigation is complete, or rejected if there is an error.
  *
  */
 gpii.webdriver.navigateHelper = function (that, args) {
@@ -118,7 +118,7 @@ gpii.webdriver.navigateHelper = function (that, args) {
  *
  * @param that - The component itself
  * @param actions {Object} - An array of action definitions.  Each element is an object with a `functionName` and `args` element.
- * @returns a Promise that will be resolved when the actions are complete, or rejected if there is an error.
+ * @return a Promise that will be resolved when the actions are complete, or rejected if there is an error.
  *
  */
 gpii.webdriver.actionsHelper = function (that, actionDefs) {

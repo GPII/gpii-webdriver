@@ -88,7 +88,7 @@ gpii.test.webdriver.inspectElements = function (message, elements, elementFn, ex
  * Some things, like Capabilities, are Map objects that we would like to be able to inspect as plain old Javascript objects.
  *
  * @param map {Map} A map to be converted.
- * @returns {Object} The map in JSON form.
+ * @return {Object} The map in JSON form.
  *
  */
 gpii.test.webdriver.mapToObject = function (map) {

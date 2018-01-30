@@ -54,7 +54,7 @@ gpii.test.webdriver.allBrowsers.generateAndRunTestEnvironment = function (that, 
  * 3. The default list of browsers for the current platform.
  *
  * @param that
- * @returns {*}
+ * @return {*}
  */
 gpii.test.webdriver.allBrowsers.getBrowsers = function (that) {
     if (process.env.BROWSERS) {
@@ -70,7 +70,7 @@ gpii.test.webdriver.allBrowsers.getBrowsers = function (that) {
  * A function to get the list of platform browsers based on `gpii.test.webdriver.allBrowsers.defaultPlatformBrowsers`
  * (see below) and `os.platform()`.
  *
- * @returns An {Array} of {String} values, each representing a browser.
+ * @return An {Array} of {String} values, each representing a browser.
  *
  */
 gpii.test.webdriver.allBrowsers.getPlatformBrowsers = function () {

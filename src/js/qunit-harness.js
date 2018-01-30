@@ -24,7 +24,7 @@ fluid.registerNamespace("gpii.webdriver.QUnitHarness.transforms");
  * A simple fluid transformation function to ensure cleaner output than Object.prototype.toString produces.
  *
  * @param value - The value to be transformed.
- * @returns {String} - returns `JSON.stringify(value)` for objects, or `value.toString()` otherwise.
+ * @return {String} - returns `JSON.stringify(value)` for objects, or `value.toString()` otherwise.
  *
  */
 gpii.webdriver.QUnitHarness.transforms.stringValue = function (value) {
@@ -54,7 +54,7 @@ gpii.webdriver.QUnitHarness.captureTestResults = function (that, type, data) {
  *
  * @param that - The component itself.
  * @param outputFormat {String} - The output format.  Currently "tap" and "text" are supported.
- * @returns {String} - A string representing the test results.
+ * @return {String} - A string representing the test results.
  *
  */
 gpii.webdriver.QUnitHarness.outputResults = function (that, outputFormat) {

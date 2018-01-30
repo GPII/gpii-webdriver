@@ -24,7 +24,7 @@ fluid.registerNamespace("gpii.test.webdriver.caseHolder");
  *
  * @param that - The caseHolder component
  * @param module - The individual test module.
- * @returns A copy of the original module with updated `name` values for all modules and tests.
+ * @return A copy of the original module with updated `name` values for all modules and tests.
  *
  */
 gpii.test.webdriver.caseHolder.prepareModule = function (that, module) {
@@ -46,7 +46,7 @@ gpii.test.webdriver.caseHolder.prepareModule = function (that, module) {
  * using the static function `gpii.test.express.helpers.addRequiredSequences` from the `gpii-express` package.
  *
  * @param that (The caseHolder component).
- * @returns {Object} A copy of the original modules, updated with the standard start and end sequences and transformed using `that.prepareModule`
+ * @return {Object} A copy of the original modules, updated with the standard start and end sequences and transformed using `that.prepareModule`
  */
 gpii.test.webdriver.caseHolder.prepareModules = function (that) {
     var modulesWithStartAndEnd = gpii.test.express.helpers.addRequiredSequences(that.options.rawModules, that.options.sequenceStart, that.options.sequenceEnd);
