@@ -180,7 +180,7 @@ gpii.webdriver.dumpLogs = function (that, type) {
 
 fluid.defaults("gpii.webdriver", {
     gradeNames: ["fluid.component"],
-    browser: "firefox", // The driver to use Firefox is available by default on all platforms, hence it is the default.
+    browser: "chrome", // Chrome is the only fully working browser at the moment.
     async: true,
     asyncScriptTimeout: 10000,
     listeners: {

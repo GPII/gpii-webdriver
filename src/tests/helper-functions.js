@@ -179,7 +179,8 @@ fluid.registerNamespace("gpii.test.webdriver.axs");
 
 gpii.test.webdriver.axs.runAxs = function (axsOptions) {
     var axsConfig = new axs.AuditConfiguration(axsOptions || {});
-    return axs.Audit.run(axsConfig);
+    var results = axs.Audit.run(axsConfig);
+    return results;
 };
 
 /**

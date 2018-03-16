@@ -73,7 +73,7 @@ fluid.defaults("gpii.tests.webdriver.axs.caseHolder", {
                     {
                         event:    "{testEnvironment}.webdriver.events.onGetComplete",
                         listener: "{testEnvironment}.webdriver.executeScript",
-                        args:     [gpii.test.webdriver.axs.runAxs, { auditRulesToIgnore: ["humanLangMissing"]}]
+                        args:     [gpii.test.webdriver.axs.runAxs, { auditRulesToIgnore: ["badAriaRole"]}]
                     },
                     {
                         event:    "{testEnvironment}.webdriver.events.onExecuteScriptComplete",
