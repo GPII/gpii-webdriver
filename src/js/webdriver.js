@@ -27,7 +27,7 @@ gpii.webdriver.Capabilities = require("selenium-webdriver/lib/capabilities").Cap
  * default.  Also ensures that `onDriverReady` is fired regardless of whether `that.driver` is initialized
  * synchronously or asynchronously.
  *
- * @param that - The component itself.
+ * @param {Object} that - The component itself.
  *
  */
 gpii.webdriver.configureDriver = function (that) {
@@ -42,7 +42,7 @@ gpii.webdriver.configureDriver = function (that) {
  * 1. The driver is configured properly once it's available.
  * 2. The `onDriverReady` event is fired once the driver is available.
  *
- * @param that - The component itself
+ * @param {Object} that - The component itself
  *
  */
 gpii.webdriver.init = function (that) {
@@ -70,11 +70,11 @@ gpii.webdriver.init = function (that) {
  * 2. The event `onError` is fired if execution fails.
  * 3. A promise is returned that will be resolved when execution finishes, or rejected on failure.
  *
- * @param that - The component itself.
- * @param fnName {String} - The driver function to execute.
- * @param eventName {String} - The event to fire on successful completion.
- * @param fnArgs {Array} - The arguments (if any) to pass to `fnName`.
- * @return a Promise that will be resolved when execution is complete, or rejected if there is an error.
+ * @param {Object} that - The component itself.
+ * @param {String} fnName - The driver function to execute.
+ * @param {String} eventName - The event to fire on successful completion.
+ * @param {Array} fnArgs - The arguments (if any) to pass to `fnName`.
+ * @return {Promise} A promise that will be resolved when execution is complete, or rejected if there is an error.
  *
  */
 gpii.webdriver.execute = function (that, fnName, eventName, fnArgs) {
@@ -87,9 +87,9 @@ gpii.webdriver.execute = function (that, fnName, eventName, fnArgs) {
  *
  * A helper function to assist in navigating from a single Fluid IoC test sequence step.  See the docs for details.
  *
- * @param that - The component itself
- * @param args {Array} - An array representing a series of function names and arguments.  Each array's first element is a function name. The remaining arguments are passed to the function.
- * @return a Promise that will be resolved when navigation is complete, or rejected if there is an error.
+ * @param {Object} that - The component itself
+ * @param {Array} args - An array representing a series of function names and arguments.  Each array's first element is a function name. The remaining arguments are passed to the function.
+ * @return {Promise} A promise that will be resolved when navigation is complete, or rejected if there is an error.
  *
  */
 gpii.webdriver.navigateHelper = function (that, args) {
@@ -116,9 +116,9 @@ gpii.webdriver.navigateHelper = function (that, args) {
  * A helper function to assist in performing a sequence of actions from a single Fluid IoC test sequence step.  See the
  * docs for details.
  *
- * @param that - The component itself
- * @param actions {Object} - An array of action definitions.  Each element is an object with a `functionName` and `args` element.
- * @return a Promise that will be resolved when the actions are complete, or rejected if there is an error.
+ * @param {Object} that - The component itself
+ * @param {Object} actionDefs - An array of action definitions.  Each element is an object with a `functionName` and `args` element.
+ * @return {Promise} A promise that will be resolved when the actions are complete, or rejected if there is an error.
  *
  */
 gpii.webdriver.actionsHelper = function (that, actionDefs) {
@@ -154,8 +154,8 @@ gpii.webdriver.actionsHelper = function (that, actionDefs) {
  *
  * See: http://seleniumhq.github.io/selenium/docs/api/javascript/module/selenium-webdriver/lib/logging.html
  *
- * @param that - The Component itself.
- * @param type {String} - The type of log entries to return, i.e. "browser" or "driver".
+ * @param {Object} that - The Component itself.
+ * @param {String} type - The type of log entries to return, i.e. "browser" or "driver".
  */
 /* istanbul ignore next */
 gpii.webdriver.dumpLogs = function (that, type) {
