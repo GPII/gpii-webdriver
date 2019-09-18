@@ -11,6 +11,8 @@ var gpii = fluid.registerNamespace("gpii");
 fluid.require("%gpii-webdriver");
 gpii.webdriver.loadTestingSupport();
 
+require("../lib/globalErrorHandler");
+
 fluid.defaults("gpii.tests.webdriver.actions.failure.caseHolder", {
     gradeNames: ["gpii.test.webdriver.caseHolder"],
     fileUrl: "%gpii-webdriver/tests/js/actions/html/tabs.html",
@@ -26,14 +28,21 @@ fluid.defaults("gpii.tests.webdriver.actions.failure.caseHolder", {
                         args: ["@expand:gpii.test.webdriver.resolveFileUrl({that}.options.fileUrl)"]
                     },
                     {
+                        funcName: "kettle.test.pushInstrumentedErrors",
+                        args: "gpii.test.webdriver.notifyGlobalFailure"
+                    },
+                    // This will result in a global error.
+                    {
                         event:    "{testEnvironment}.webdriver.events.onGetComplete",
                         listener: "{testEnvironment}.webdriver.actionsHelper",
                         args:     [{ fn: "bogus", args:[] }]
                     },
                     {
-                        event:    "{testEnvironment}.webdriver.events.onError",
-                        listener: "jqUnit.assert",
-                        args:     ["An error should be thrown..."]
+                        event: "{gpii.test.webdriver.globalFailureHandler}.events.onError",
+                        listener: "gpii.test.webdriver.awaitGlobalFailure"
+                    },
+                    {
+                        funcName: "kettle.test.popInstrumentedErrors"
                     }
                 ]
             }

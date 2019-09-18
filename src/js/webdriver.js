@@ -31,7 +31,7 @@ gpii.webdriver.Capabilities = require("selenium-webdriver/lib/capabilities").Cap
  *
  */
 gpii.webdriver.configureDriver = function (that) {
-    that.driver.manage().timeouts().setScriptTimeout(that.options.asyncScriptTimeout).then(that.events.onDriverReady.fire);
+    that.driver.manage().timeouts().setScriptTimeout(that.options.asyncScriptTimeout).then(that.events.onDriverReady.fire)["catch"](that.events.onError.fire);
 };
 
 /**
@@ -187,6 +187,10 @@ fluid.defaults("gpii.webdriver", {
         "onCreate.init": {
             funcName: "gpii.webdriver.init",
             args:     ["{that}"]
+        },
+        "onError.fail": {
+            funcName: "fluid.fail",
+            args: ["{arguments}.0"]
         }
     },
     headlessBrowserOptions: {

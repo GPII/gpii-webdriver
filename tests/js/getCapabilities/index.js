@@ -1,7 +1,7 @@
-// TODO: These fail with Firefox 57 and geckodriver 0.18.0
+// TODO: These fail with all tested browsers.
 /*
 
-    Test the "getCurrentUrl" function.
+    Test the "getCapabilities" function.
 
  */
 /* eslint-env node */

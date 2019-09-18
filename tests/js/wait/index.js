@@ -13,6 +13,8 @@ var gpii = fluid.registerNamespace("gpii");
 fluid.require("%gpii-webdriver");
 gpii.webdriver.loadTestingSupport();
 
+require("../lib/globalErrorHandler");
+
 fluid.registerNamespace("gpii.tests.webdriver.wait");
 
 var jqUnit = require("node-jqunit");
@@ -67,13 +69,20 @@ fluid.defaults("gpii.tests.webdriver.wait.caseHolder", {
                     },
                     {
                         event:    "{testEnvironment}.webdriver.events.onGetComplete",
-                        listener: "{testEnvironment}.webdriver.wait",
-                        args:     [gpii.webdriver.until.alertIsPresent(), 250, "Custom Message."]
+                        listener: "kettle.test.pushInstrumentedErrors",
+                        args: "gpii.test.webdriver.notifyGlobalFailure"
+                    },
+                    // This will result in a global error.
+                    {
+                        func: "{testEnvironment}.webdriver.wait",
+                        args: [gpii.webdriver.until.alertIsPresent(), 250, "Custom Message."]
                     },
                     {
-                        event:    "{testEnvironment}.webdriver.events.onError",
-                        listener: "gpii.tests.webdriver.wait.confirmTimeoutMessage",
-                        args:     ["{arguments}.0.message", "Custom Message."]
+                        event: "{gpii.test.webdriver.globalFailureHandler}.events.onError",
+                        listener: "gpii.test.webdriver.awaitGlobalFailure"
+                    },
+                    {
+                        funcName: "kettle.test.popInstrumentedErrors"
                     }
                 ]
             },

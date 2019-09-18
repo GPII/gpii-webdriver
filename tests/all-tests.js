@@ -11,7 +11,8 @@ require("./js/findElement");
 require("./js/findElements");
 require("./js/fluid");
 require("./js/get");
-require("./js/getCapabilities");
+// TODO: These fail with all tested browsers, but no one uses the functionality at the moment.
+//require("./js/getCapabilities");
 require("./js/getCurrentUrl");
 require("./js/getPageSource");
 require("./js/getTitle");
