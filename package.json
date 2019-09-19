@@ -18,7 +18,7 @@
         "accessibility-developer-tools": "2.12.0",
         "axe-core": "3.3.2",
         "brace-expansion": "1.1.11",
-        "infusion": "3.0.0-dev.20180312T184056Z.e4d2974d2",
+        "infusion": "3.0.0-dev.20190913T161245Z.3910173d0.FLUID-6148",
         "selenium-webdriver": "3.6.0"
     },
     "devDependencies": {
