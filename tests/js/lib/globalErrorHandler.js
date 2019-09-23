@@ -13,7 +13,6 @@ fluid.defaults("gpii.test.webdriver.globalFailureHandler", {
     }
 });
 
-fluid.registerNamespace("gpii.test.webdriver");
 gpii.test.webdriver.awaitGlobalFailure = function () {
     jqUnit.assert("An error should have occurred.");
 };

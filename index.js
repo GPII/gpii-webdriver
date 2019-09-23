@@ -14,6 +14,8 @@ gpii.webdriver.loadTestingSupport = function () {
     require("./src/tests/fixtures");
     require("./src/tests/helper-functions");
     require("./src/tests/resolve-file-url");
+    var kettle = require("kettle");
+    kettle.loadTestingSupport();
 };
 
 module.exports = gpii.webdriver;

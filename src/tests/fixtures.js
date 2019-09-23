@@ -22,7 +22,7 @@ fluid.registerNamespace("gpii.test.webdriver.caseHolder");
  * A function to prepend the value of `that.options.browser` to each module and test name.  Helps to distinguish tests
  * run using `allBrowsers` from one another.
  *
- * @param {Object} that - The caseHolder component
+ * @param {gpii.test.webdriver.caseHolder} that - The caseHolder component
  * @param {Object} module - The individual test module.
  * @return {Object} A copy of the original module with updated `name` values for all modules and tests.
  *
@@ -45,7 +45,7 @@ gpii.test.webdriver.caseHolder.prepareModule = function (that, module) {
  * A function that transforms each module using `that.prepareModule` and then prepends and appends standard sequences
  * using the static function `gpii.test.express.helpers.addRequiredSequences` from the `gpii-express` package.
  *
- * @param {Object} that - The caseHolder component itself.
+ * @param {gpii.test.webdriver.caseHolder} that - The caseHolder component itself.
  * @return {Object} A copy of the original modules, updated with the standard start and end sequences and transformed using `that.prepareModule`
  *
  */

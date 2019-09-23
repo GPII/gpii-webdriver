@@ -24,7 +24,7 @@ fluid.registerNamespace("gpii.test.webdriver.allBrowsers");
  * 3. Generates a distinct test environment for each browser with the right brower option set.
  * 4. Runs each generated environment.
  *
- * @param {Object} that - The component itself.
+ * @param {gpii.test.webdriver.allBrowsers} that - The component itself.
  */
 gpii.test.webdriver.allBrowsers.runAllTests = function (that) {
     var browsers = gpii.test.webdriver.allBrowsers.getBrowsers(that);
@@ -53,7 +53,7 @@ gpii.test.webdriver.allBrowsers.generateAndRunTestEnvironment = function (that, 
  * 2. `that.options.browsers`
  * 3. The default list of browsers for the current platform.
  *
- * @param {Object} that - The component itself.
+ * @param {gpii.test.webdriver.allBrowsers} that - The component itself.
  * @return {Array<String>} - An array of supported browser names.
  *
  */
