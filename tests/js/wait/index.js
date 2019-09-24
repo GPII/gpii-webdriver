@@ -69,8 +69,7 @@ fluid.defaults("gpii.tests.webdriver.wait.caseHolder", {
                     },
                     {
                         event:    "{testEnvironment}.webdriver.events.onGetComplete",
-                        listener: "kettle.test.pushInstrumentedErrors",
-                        args: "gpii.test.webdriver.notifyGlobalFailure"
+                        listener: "gpii.test.webdriver.pushInstrumentedErrors"
                     },
                     // This will result in a global error.
                     {

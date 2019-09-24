@@ -2,6 +2,8 @@
 "use strict";
 var fluid = require("infusion");
 var jqUnit = require("node-jqunit");
+var kettle = require("kettle");
+kettle.loadTestingSupport();
 
 var gpii = fluid.registerNamespace("gpii");
 
@@ -16,6 +18,12 @@ fluid.defaults("gpii.test.webdriver.globalFailureHandler", {
 gpii.test.webdriver.awaitGlobalFailure = function () {
     jqUnit.assert("An error should have occurred.");
 };
+
+gpii.test.webdriver.pushInstrumentedErrors = function () {
+    fluid.log("Getting ready to catch an expected error.");
+    kettle.test.pushInstrumentedErrors("gpii.test.webdriver.notifyGlobalFailure");
+};
+
 
 gpii.test.webdriver.notifyGlobalFailure = function () {
     globalFailureHandler.events.onError.fire(fluid.makeArray(arguments));

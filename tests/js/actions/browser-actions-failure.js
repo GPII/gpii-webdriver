@@ -28,8 +28,7 @@ fluid.defaults("gpii.tests.webdriver.actions.failure.caseHolder", {
                         args: ["@expand:gpii.test.webdriver.resolveFileUrl({that}.options.fileUrl)"]
                     },
                     {
-                        funcName: "kettle.test.pushInstrumentedErrors",
-                        args: "gpii.test.webdriver.notifyGlobalFailure"
+                        funcName: "gpii.test.webdriver.pushInstrumentedErrors"
                     },
                     // This will result in a global error.
                     {
