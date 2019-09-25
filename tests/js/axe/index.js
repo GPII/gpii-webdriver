@@ -70,7 +70,7 @@ fluid.defaults("gpii.tests.webdriver.axe.caseHolder", {
                     {
                         event:    "{testEnvironment}.webdriver.events.onGetComplete",
                         listener: "{testEnvironment}.webdriver.executeAsyncScript",
-                        args:     [gpii.test.webdriver.axe.runAxe, { rules: [{ id: "html-has-lang", enabled: false }]}]
+                        args:     [gpii.test.webdriver.axe.runAxe, { rules: [{ id: "html-has-lang", enabled: false }, { id: "page-has-heading-one", enabled: false}]}]
                     },
                     {
                         event:    "{testEnvironment}.webdriver.events.onExecuteAsyncScriptComplete",

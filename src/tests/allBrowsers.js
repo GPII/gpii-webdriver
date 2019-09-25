@@ -24,7 +24,7 @@ fluid.registerNamespace("gpii.test.webdriver.allBrowsers");
  * 3. Generates a distinct test environment for each browser with the right brower option set.
  * 4. Runs each generated environment.
  *
- * @param that - The component itself.
+ * @param {gpii.test.webdriver.allBrowsers} that - The component itself.
  */
 gpii.test.webdriver.allBrowsers.runAllTests = function (that) {
     var browsers = gpii.test.webdriver.allBrowsers.getBrowsers(that);
@@ -53,8 +53,9 @@ gpii.test.webdriver.allBrowsers.generateAndRunTestEnvironment = function (that, 
  * 2. `that.options.browsers`
  * 3. The default list of browsers for the current platform.
  *
- * @param that
- * @returns {*}
+ * @param {gpii.test.webdriver.allBrowsers} that - The component itself.
+ * @return {Array<String>} - An array of supported browser names.
+ *
  */
 gpii.test.webdriver.allBrowsers.getBrowsers = function (that) {
     if (process.env.BROWSERS) {
@@ -70,7 +71,7 @@ gpii.test.webdriver.allBrowsers.getBrowsers = function (that) {
  * A function to get the list of platform browsers based on `gpii.test.webdriver.allBrowsers.defaultPlatformBrowsers`
  * (see below) and `os.platform()`.
  *
- * @returns An {Array} of {String} values, each representing a browser.
+ * @return {Array<String>} An array of strings, each representing a browser.
  *
  */
 gpii.test.webdriver.allBrowsers.getPlatformBrowsers = function () {
@@ -84,7 +85,7 @@ fluid.registerNamespace("gpii.test.webdriver.allBrowsers");
  *
  * Set the `SELENIUM_BROWSER` environment variable to implicitly force the webdriver instance to use the selected browser.
  *
- * @param browser {String} The browser to use.
+ * @param {String} browser The browser to use.
  *
  */
 gpii.test.webdriver.allBrowsers.setBrowser = function (browser) {

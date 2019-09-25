@@ -22,9 +22,9 @@ fluid.registerNamespace("gpii.test.webdriver.caseHolder");
  * A function to prepend the value of `that.options.browser` to each module and test name.  Helps to distinguish tests
  * run using `allBrowsers` from one another.
  *
- * @param that - The caseHolder component
- * @param module - The individual test module.
- * @returns A copy of the original module with updated `name` values for all modules and tests.
+ * @param {gpii.test.webdriver.caseHolder} that - The caseHolder component
+ * @param {Object} module - The individual test module.
+ * @return {Object} A copy of the original module with updated `name` values for all modules and tests.
  *
  */
 gpii.test.webdriver.caseHolder.prepareModule = function (that, module) {
@@ -45,8 +45,9 @@ gpii.test.webdriver.caseHolder.prepareModule = function (that, module) {
  * A function that transforms each module using `that.prepareModule` and then prepends and appends standard sequences
  * using the static function `gpii.test.express.helpers.addRequiredSequences` from the `gpii-express` package.
  *
- * @param that (The caseHolder component).
- * @returns {Object} A copy of the original modules, updated with the standard start and end sequences and transformed using `that.prepareModule`
+ * @param {gpii.test.webdriver.caseHolder} that - The caseHolder component itself.
+ * @return {Object} A copy of the original modules, updated with the standard start and end sequences and transformed using `that.prepareModule`
+ *
  */
 gpii.test.webdriver.caseHolder.prepareModules = function (that) {
     var modulesWithStartAndEnd = gpii.test.express.helpers.addRequiredSequences(that.options.rawModules, that.options.sequenceStart, that.options.sequenceEnd);
@@ -161,6 +162,7 @@ fluid.defaults("gpii.test.webdriver.testEnvironment", {
             createOnEvent: "constructFixtures",
             type: "gpii.webdriver",
             options: {
+                browser: "{testEnvironment}.options.browser",
                 events: {
                     onDriverReady: "{testEnvironment}.events.onDriverReady",
                     stopFixtures:  "{testEnvironment}.events.stopFixtures"

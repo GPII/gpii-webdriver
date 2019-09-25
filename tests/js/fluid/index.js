@@ -66,15 +66,6 @@ fluid.defaults("gpii.tests.webdriver.fluid.environment", {
     components: {
         caseHolder: {
             type: "gpii.tests.webdriver.fluid.caseHolder"
-        },
-        webdriver: {
-            options: {
-                listener: {
-                    "onError.log": {
-                        funcName: "console.log"
-                    }
-                }
-            }
         }
     }
 });

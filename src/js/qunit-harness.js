@@ -23,8 +23,8 @@ fluid.registerNamespace("gpii.webdriver.QUnitHarness.transforms");
  *
  * A simple fluid transformation function to ensure cleaner output than Object.prototype.toString produces.
  *
- * @param value - The value to be transformed.
- * @returns {String} - returns `JSON.stringify(value)` for objects, or `value.toString()` otherwise.
+ * @param {Any} value - The value to be transformed.
+ * @return {String} - returns `JSON.stringify(value)` for objects, or `value.toString()` otherwise.
  *
  */
 gpii.webdriver.QUnitHarness.transforms.stringValue = function (value) {
@@ -39,9 +39,9 @@ fluid.defaults("gpii.webdriver.QUnitHarness.transforms.stringValue", {
  *
  * A function to intercept all QUnit events and store the information in the `results` member array.
  *
- * @param that - The component itself.
- * @param type {String} - The QUnit event we are handling ("start", "done", "log", etc., see below for full details).
- * @param data - The event data to be preserved.
+ * @param {gpii.webdriver.QUnitHarness} that - The component itself.
+ * @param {String} type - The QUnit event we are handling ("start", "done", "log", etc., see below for full details).
+ * @param {Any} data - The event data to be preserved.
  */
 gpii.webdriver.QUnitHarness.captureTestResults = function (that, type, data) {
     that.events[type].fire();
@@ -52,9 +52,9 @@ gpii.webdriver.QUnitHarness.captureTestResults = function (that, type, data) {
  *
  * A function to convert `that.results` into textual output.  See the documentation for full details.
  *
- * @param that - The component itself.
- * @param outputFormat {String} - The output format.  Currently "tap" and "text" are supported.
- * @returns {String} - A string representing the test results.
+ * @param {gpii.webdriver.QUnitHarness} that - The component itself.
+ * @param {String} outputFormat - The output format.  Currently "tap" and "text" are supported.
+ * @return {String} - A string representing the test results.
  *
  */
 gpii.webdriver.QUnitHarness.outputResults = function (that, outputFormat) {

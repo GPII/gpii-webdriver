@@ -1,6 +1,7 @@
+// TODO: These fail with all tested browsers.
 /*
 
-    Test the "getCurrentUrl" function.
+    Test the "getCapabilities" function.
 
  */
 /* eslint-env node */

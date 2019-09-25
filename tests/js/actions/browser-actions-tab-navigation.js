@@ -1,3 +1,4 @@
+// TODO: These fail with Firefox 57 and geckodriver 0.18.0
 /*
 
     Test the "findElement" function with a single element.

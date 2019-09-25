@@ -11,6 +11,8 @@ var gpii = fluid.registerNamespace("gpii");
 fluid.require("%gpii-webdriver");
 gpii.webdriver.loadTestingSupport();
 
+require("../lib/globalErrorHandler");
+
 fluid.defaults("gpii.tests.webdriver.findElement.notFound.caseHolder", {
     gradeNames: ["gpii.test.webdriver.caseHolder"],
     fileUrl: "%gpii-webdriver/tests/js/findElement/html/index.html",
@@ -27,13 +29,19 @@ fluid.defaults("gpii.tests.webdriver.findElement.notFound.caseHolder", {
                     },
                     {
                         event:    "{testEnvironment}.webdriver.events.onGetComplete",
-                        listener: "{testEnvironment}.webdriver.findElement",
-                        args:     [{ id: "notfound"}]
+                        listener: "gpii.test.webdriver.pushInstrumentedErrors"
+                    },
+                    // This will result in a global error.
+                    {
+                        func: "{testEnvironment}.webdriver.findElement",
+                        args: [{ id: "notfound"}]
                     },
                     {
-                        event:    "{testEnvironment}.webdriver.events.onError",
-                        listener: "jqUnit.assert",
-                        args:     ["An error should be thrown if we try to use a bad selector..."]
+                        event: "{gpii.test.webdriver.globalFailureHandler}.events.onError",
+                        listener: "gpii.test.webdriver.awaitGlobalFailure"
+                    },
+                    {
+                        funcName: "kettle.test.popInstrumentedErrors"
                     }
                 ]
             }

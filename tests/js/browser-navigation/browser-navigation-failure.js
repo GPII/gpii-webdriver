@@ -11,6 +11,8 @@ var gpii = fluid.registerNamespace("gpii");
 fluid.require("%gpii-webdriver");
 gpii.webdriver.loadTestingSupport();
 
+require("../lib/globalErrorHandler");
+
 fluid.defaults("gpii.tests.webdriver.navigation.browser.failure.caseHolder", {
     gradeNames: ["gpii.test.webdriver.caseHolder"],
     fileUrl: "%gpii-webdriver/tests/js/browser-navigation/html/first.html",
@@ -19,7 +21,7 @@ fluid.defaults("gpii.tests.webdriver.navigation.browser.failure.caseHolder", {
         name: "Testing the navigation helper's failure mode...",
         tests: [
             {
-                name: "Attempt to use a non-existant navigation function...",
+                name: "Attempt to use a non-existent navigation function...",
                 type: "test",
                 sequence: [
                     {
@@ -28,13 +30,19 @@ fluid.defaults("gpii.tests.webdriver.navigation.browser.failure.caseHolder", {
                     },
                     {
                         event:    "{testEnvironment}.webdriver.events.onGetComplete",
-                        listener: "{testEnvironment}.webdriver.navigateHelper",
-                        args:     ["bogus"]
+                        listener: "gpii.test.webdriver.pushInstrumentedErrors"
+                    },
+                    // This will result in a global error.
+                    {
+                        func: "{testEnvironment}.webdriver.navigateHelper",
+                        args: ["bogus"]
                     },
                     {
-                        event:    "{testEnvironment}.webdriver.events.onError",
-                        listener: "jqUnit.assert",
-                        args:     ["Calling a non-existant navigation function should result in an error..."]
+                        event: "{gpii.test.webdriver.globalFailureHandler}.events.onError",
+                        listener: "gpii.test.webdriver.awaitGlobalFailure"
+                    },
+                    {
+                        funcName: "kettle.test.popInstrumentedErrors"
                     }
                 ]
             }

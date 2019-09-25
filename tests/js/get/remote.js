@@ -22,7 +22,7 @@ fluid.defaults("gpii.tests.webdriver.get.remote.caseHolder", {
                 sequence: [
                     {
                         func: "{testEnvironment}.webdriver.get",
-                        args:     ["http://www.google.com/ncr"]
+                        args:     ["https://en.wikipedia.org/wiki/Jacquard_loom"]
                     },
                     {
                         event:    "{testEnvironment}.webdriver.events.onGetComplete",

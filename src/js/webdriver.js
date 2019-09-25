@@ -10,6 +10,8 @@
 var fluid = require("infusion");
 var gpii = fluid.registerNamespace("gpii");
 
+var process = require("process");
+
 fluid.registerNamespace("gpii.webdriver");
 
 var webdriver = require("selenium-webdriver");
@@ -25,11 +27,11 @@ gpii.webdriver.Capabilities = require("selenium-webdriver/lib/capabilities").Cap
  * default.  Also ensures that `onDriverReady` is fired regardless of whether `that.driver` is initialized
  * synchronously or asynchronously.
  *
- * @param that - The component itself.
+ * @param {gpii.webdriver} that - The component itself.
  *
  */
 gpii.webdriver.configureDriver = function (that) {
-    that.driver.manage().timeouts().setScriptTimeout(that.options.asyncScriptTimeout).then(that.events.onDriverReady.fire);
+    that.driver.manage().timeouts().setScriptTimeout(that.options.asyncScriptTimeout).then(that.events.onDriverReady.fire)["catch"](that.events.onError.fire);
 };
 
 /**
@@ -40,12 +42,14 @@ gpii.webdriver.configureDriver = function (that) {
  * 1. The driver is configured properly once it's available.
  * 2. The `onDriverReady` event is fired once the driver is available.
  *
- * @param that - The component itself
+ * @param {gpii.webdriver} that - The component itself
  *
  */
 gpii.webdriver.init = function (that) {
-    var capabilities = gpii.webdriver.Capabilities[that.options.browser]();
-    fluid.each(that.options.browserOptions[that.options.browser], function (value, key) {
+    var browserName = that.options.browser;
+    var capabilities = gpii.webdriver.Capabilities[browserName]();
+    var browserOptions = (process.env.HEADLESS && that.options.headlessBrowserOptions[browserName]) || that.options.browserOptions[browserName];
+    fluid.each(browserOptions, function (value, key) {
         capabilities.set(key, value);
     });
 
@@ -66,11 +70,11 @@ gpii.webdriver.init = function (that) {
  * 2. The event `onError` is fired if execution fails.
  * 3. A promise is returned that will be resolved when execution finishes, or rejected on failure.
  *
- * @param that - The component itself.
- * @param fnName {String} - The driver function to execute.
- * @param eventName {String} - The event to fire on successful completion.
- * @param fnArgs {Array} - The arguments (if any) to pass to `fnName`.
- * @returns a Promise that will be resolved when execution is complete, or rejected if there is an error.
+ * @param {gpii.webdriver} that - The component itself.
+ * @param {String} fnName - The driver function to execute.
+ * @param {String} eventName - The event to fire on successful completion.
+ * @param {Array} fnArgs - The arguments (if any) to pass to `fnName`.
+ * @return {Promise} A promise that will be resolved when execution is complete, or rejected if there is an error.
  *
  */
 gpii.webdriver.execute = function (that, fnName, eventName, fnArgs) {
@@ -83,9 +87,9 @@ gpii.webdriver.execute = function (that, fnName, eventName, fnArgs) {
  *
  * A helper function to assist in navigating from a single Fluid IoC test sequence step.  See the docs for details.
  *
- * @param that - The component itself
- * @param args {Array} - An array representing a series of function names and arguments.  Each array's first element is a function name. The remaining arguments are passed to the function.
- * @returns a Promise that will be resolved when navigation is complete, or rejected if there is an error.
+ * @param {gpii.webdriver} that - The component itself
+ * @param {Array} args - An array representing a series of function names and arguments.  Each array's first element is a function name. The remaining arguments are passed to the function.
+ * @return {Promise} A promise that will be resolved when navigation is complete, or rejected if there is an error.
  *
  */
 gpii.webdriver.navigateHelper = function (that, args) {
@@ -109,12 +113,20 @@ gpii.webdriver.navigateHelper = function (that, args) {
 
 /**
  *
+ * @typedef ActionDef
+ * @param {String} functionName - The name of the function to be called.
+ * @param {Array} args - The arguments to be passed to the function.
+ *
+ */
+
+/**
+ *
  * A helper function to assist in performing a sequence of actions from a single Fluid IoC test sequence step.  See the
  * docs for details.
  *
- * @param that - The component itself
- * @param actions {Object} - An array of action definitions.  Each element is an object with a `functionName` and `args` element.
- * @returns a Promise that will be resolved when the actions are complete, or rejected if there is an error.
+ * @param {gpii.webdriver} that - The component itself
+ * @param {Array<ActionDef>} actionDefs - An array of action definitions.
+ * @return {Promise} A `fluid.promise` that will be resolved when the actions are complete, or rejected if there is an error.
  *
  */
 gpii.webdriver.actionsHelper = function (that, actionDefs) {
@@ -150,8 +162,8 @@ gpii.webdriver.actionsHelper = function (that, actionDefs) {
  *
  * See: http://seleniumhq.github.io/selenium/docs/api/javascript/module/selenium-webdriver/lib/logging.html
  *
- * @param that - The Component itself.
- * @param type {String} - The type of log entries to return, i.e. "browser" or "driver".
+ * @param {gpii.webdriver} that - The Component itself.
+ * @param {String} type - The type of log entries to return, i.e. "browser" or "driver".
  */
 /* istanbul ignore next */
 gpii.webdriver.dumpLogs = function (that, type) {
@@ -174,15 +186,34 @@ gpii.webdriver.dumpLogs = function (that, type) {
     return promise;
 };
 
+gpii.webdriver.throwError = function (error) {
+    var moreSpecificError = fluid.find(["message", "error", "stack"], function (pathToError) {
+        return fluid.get(error, pathToError);
+    });
+    fluid.fail(moreSpecificError || error);
+};
+
 fluid.defaults("gpii.webdriver", {
     gradeNames: ["fluid.component"],
-    browser: "firefox", // The driver to use Firefox is available by default on all platforms, hence it is the default.
+    browser: "chrome", // Chrome is the only fully working browser at the moment.
     async: true,
     asyncScriptTimeout: 10000,
     listeners: {
         "onCreate.init": {
             funcName: "gpii.webdriver.init",
             args:     ["{that}"]
+        },
+        "onError.fail": {
+            funcName: "gpii.webdriver.throwError",
+            args: ["{arguments}.0"] // error
+        }
+    },
+    headlessBrowserOptions: {
+        chrome: {
+            nativeEvents: true,
+            chromeOptions: {
+                args: ["disable-gpu", "headless"]
+            }
         }
     },
     browserOptions: {
@@ -190,7 +221,9 @@ fluid.defaults("gpii.webdriver", {
             nativeEvents: false
         },
         firefox: {
-            nativeEvents: false
+            // This flag introduced in geckodriver 0.19 would seem to be intended to help with our "click" woes in FF, but does not seem to.
+            // See the release notes for details: https://github.com/mozilla/geckodriver/releases/tag/v0.19.0
+            "moz:webdriverClick": true
         },
         chrome: {
             nativeEvents: true

@@ -6,12 +6,13 @@ driver is ready, the `onDriverReady` event is fired.
 
 ## Component Options
 
-| Option               | Type        | Description |
-| -------------------- | ----------- | ----------- |
-| `asyncScriptTimeout` | `{Integer}` | The number of milliseconds to wait before timing out calls to `executeAsyncScript` (see below).  Defaults to `10000` (10 seconds). |
-| `browser`            | `{String}`  | A lowercase string identifying which [supported browser](http://seleniumhq.github.io/selenium/docs/api/javascript/module/selenium-webdriver/lib/capabilities_exports_Browser.html) to use.  The `SELENIUM_BROWSER` environment variable will always take precedence over this value. Defaults to `"firefox"`. |
-| `browserOptions`     | `{Object}`  | A map of [browser options](http://seleniumhq.github.io/selenium/docs/api/javascript/module/selenium-webdriver/lib/capabilities_exports_Capabilities.html), keyed at the top level by the browser name ("chrome", "ie", etc.).  If options exist for `that.options.browser`, they will be passed to the builder before the driver is created. |
-| `logOnQuit`          | `{Boolean}` | Whether to dump the webdriver log output to console.log when the browser is quit. Defaults to `false`. |
+| Option                   | Type        | Description |
+| ------------------------ | ----------- | ----------- |
+| `asyncScriptTimeout`     | `{Integer}` | The number of milliseconds to wait before timing out calls to `executeAsyncScript` (see below).  Defaults to `10000` (10 seconds). |
+| `browser`                | `{String}`  | A lowercase string identifying which [supported browser](http://seleniumhq.github.io/selenium/docs/api/javascript/module/selenium-webdriver/lib/capabilities_exports_Browser.html) to use.  The `SELENIUM_BROWSER` environment variable will always take precedence over this value. Defaults to `"firefox"`. |
+| `browserOptions`         | `{Object}`  | A map of [browser options](http://seleniumhq.github.io/selenium/docs/api/javascript/module/selenium-webdriver/lib/capabilities_exports_Capabilities.html), keyed at the top level by the browser name ("chrome", "ie", etc.).  If options exist for `that.options.browser`, they will be passed to the builder before the driver is created. |
+| `headlessBrowserOptions` | `{Object}`  | A map of [browser options](http://seleniumhq.github.io/selenium/docs/api/javascript/module/selenium-webdriver/lib/capabilities_exports_Capabilities.html) (see above) to use when running the tests in "headless" mode.  If there are no options for a given browser here, the options in `browserOptions` will be used instead. |
+| `logOnQuit`              | `{Boolean}` | Whether to dump the webdriver log output to console.log when the browser is quit. Defaults to `false`. |
 
 ## Component Invokers
 
@@ -313,14 +314,16 @@ The underlying WebDriver driver allows you to override two key pieces of informa
 1. The browser to be used.
 2. The external Selenium server to be used (if any).
 
-By default, this grade uses Firefox to run tests (as the driver required is included with our runner).  You can change
-this by passing `options.browser` in your component options (see below), or you can set the `SELENIUM_BROWSER`
+By default, this grade uses Chrome to run tests.  You can change this by passing `options.browser` in your component options (see below), or you can set the `SELENIUM_BROWSER`
 environment variable to one of [the supported browsers](http://seleniumhq.github.io/selenium/docs/api/javascript/module/selenium-webdriver/lib/capabilities_exports_Browser.html)
 (in lowercase form).  Note that this option is not compatible with the use of the [multi-browser harness](allBrowsers.md),
 if you are using that, you should use the `BROWSERS` environment variable instead.
 
 By default, this package will work without a Selenium instance.  If you have your own Selenium server, you can use it
 by setting the `SELENIUM_REMOTE_URL` environment variable to the URL of your server.
+
+In addition, this package supports a `HEADLESS` environment variable, which can be used to run supported browsers
+(currently only Chrome) in "headless" mode.
 
 # 404 and other errors
 
