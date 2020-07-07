@@ -17,6 +17,7 @@ jobs:
 
     env:
       HEADLESS: true
+      BROWSERS: chrome
 
     steps:
       - uses: actions/checkout@v2
