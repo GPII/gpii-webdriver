@@ -1,4 +1,6 @@
-# `gpii.test.webdriver.caseHolder`
+# Fluid IoC Test Fixtures Provided by This Package
+
+## `fluid.test.webdriver.caseHolder`
 
 This caseHolder does three key things:
 
@@ -7,9 +9,9 @@ This caseHolder does three key things:
 3. It tells the test environment to clean up the driver after each test sequence is complete.
 
 Note that the wiring that creates and cleans up the driver assumes that your caseholder will be loaded from an
-instance of `gpii.test.webdriver.testEnvironment` (see below).
+instance of `fluid.test.webdriver.testEnvironment` (see below).
 
-## Component Options
+### Component Options
 
 | Option          | Type     | Description |
 | --------------- | -------- | ----------- |
@@ -18,8 +20,7 @@ instance of `gpii.test.webdriver.testEnvironment` (see below).
 | `sequenceEnd`   | `Object`   | A series of test sequence steps to execute at the end of each test sequence. |
 | `rawModules`    | `Object`   | The raw test modules to "evolve" as outlined above. |
 
-
-# `gpii.test.webdriver.testEnvironment`
+## `fluid.test.webdriver.testEnvironment`
 
 A Fluid IoC test environment that creates a webdriver instance when its `constructFixtures` event is fired.  Provides
-all of the required events and listeners to work with a `gpii.test.webdriver.caseHolder` instance (see above).
+all of the required events and listeners to work with a `fluid.test.webdriver.caseHolder` instance (see above).

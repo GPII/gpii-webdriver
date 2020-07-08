@@ -6,16 +6,15 @@
 /* eslint-env node */
 "use strict";
 var fluid = require("infusion");
-var gpii = fluid.registerNamespace("gpii");
 
-fluid.require("%gpii-webdriver");
-gpii.webdriver.loadTestingSupport();
+fluid.require("%fluid-webdriver");
+fluid.webdriver.loadTestingSupport();
 
-fluid.defaults("gpii.tests.webdriver.axe.caseHolder", {
-    gradeNames: ["gpii.test.webdriver.caseHolder", "gpii.test.webdriver.hasAxeContent"],
-    goodUrl: "%gpii-webdriver/tests/js/axe/html/good.html",
-    badUrl: "%gpii-webdriver/tests/js/axe/html/bad.html",
-    injectUrl: "%gpii-webdriver/tests/js/axe/html/injection.html",
+fluid.defaults("fluid.tests.webdriver.axe.caseHolder", {
+    gradeNames: ["fluid.test.webdriver.caseHolder", "fluid.test.webdriver.hasAxeContent"],
+    goodUrl: "%fluid-webdriver/tests/js/axe/html/good.html",
+    badUrl: "%fluid-webdriver/tests/js/axe/html/bad.html",
+    injectUrl: "%fluid-webdriver/tests/js/axe/html/injection.html",
     rawModules: [{
         name: "Testing aXe reporting...",
         tests: [
@@ -25,16 +24,16 @@ fluid.defaults("gpii.tests.webdriver.axe.caseHolder", {
                 sequence: [
                     {
                         func: "{testEnvironment}.webdriver.get",
-                        args: ["@expand:gpii.test.webdriver.resolveFileUrl({that}.options.goodUrl)"]
+                        args: ["@expand:fluid.test.webdriver.resolveFileUrl({that}.options.goodUrl)"]
                     },
                     {
                         event:    "{testEnvironment}.webdriver.events.onGetComplete",
                         listener: "{testEnvironment}.webdriver.executeAsyncScript",
-                        args:     [gpii.test.webdriver.axe.runAxe]
+                        args:     [fluid.test.webdriver.axe.runAxe]
                     },
                     {
                         event:    "{testEnvironment}.webdriver.events.onExecuteAsyncScriptComplete",
-                        listener: "gpii.test.webdriver.axe.checkResults",
+                        listener: "fluid.test.webdriver.axe.checkResults",
                         args:     ["{arguments}.0"]
                     }
                 ]
@@ -45,16 +44,16 @@ fluid.defaults("gpii.tests.webdriver.axe.caseHolder", {
                 sequence: [
                     {
                         func: "{testEnvironment}.webdriver.get",
-                        args: ["@expand:gpii.test.webdriver.resolveFileUrl({that}.options.badUrl)"]
+                        args: ["@expand:fluid.test.webdriver.resolveFileUrl({that}.options.badUrl)"]
                     },
                     {
                         event:    "{testEnvironment}.webdriver.events.onGetComplete",
                         listener: "{testEnvironment}.webdriver.executeAsyncScript",
-                        args:     [gpii.test.webdriver.axe.runAxe]
+                        args:     [fluid.test.webdriver.axe.runAxe]
                     },
                     {
                         event:    "{testEnvironment}.webdriver.events.onExecuteAsyncScriptComplete",
-                        listener: "gpii.test.webdriver.axe.checkResults",
+                        listener: "fluid.test.webdriver.axe.checkResults",
                         args:     ["{arguments}.0", true]
                     }
                 ]
@@ -65,16 +64,16 @@ fluid.defaults("gpii.tests.webdriver.axe.caseHolder", {
                 sequence: [
                     {
                         func: "{testEnvironment}.webdriver.get",
-                        args: ["@expand:gpii.test.webdriver.resolveFileUrl({that}.options.badUrl)"]
+                        args: ["@expand:fluid.test.webdriver.resolveFileUrl({that}.options.badUrl)"]
                     },
                     {
                         event:    "{testEnvironment}.webdriver.events.onGetComplete",
                         listener: "{testEnvironment}.webdriver.executeAsyncScript",
-                        args:     [gpii.test.webdriver.axe.runAxe, { rules: [{ id: "html-has-lang", enabled: false }, { id: "page-has-heading-one", enabled: false}]}]
+                        args:     [fluid.test.webdriver.axe.runAxe, { rules: [{ id: "html-has-lang", enabled: false }, { id: "page-has-heading-one", enabled: false}]}]
                     },
                     {
                         event:    "{testEnvironment}.webdriver.events.onExecuteAsyncScriptComplete",
-                        listener: "gpii.test.webdriver.axe.checkResults",
+                        listener: "fluid.test.webdriver.axe.checkResults",
                         args:     ["{arguments}.0"]
                     }
                 ]
@@ -85,7 +84,7 @@ fluid.defaults("gpii.tests.webdriver.axe.caseHolder", {
                 sequence: [
                     {
                         func: "{testEnvironment}.webdriver.get",
-                        args: ["@expand:gpii.test.webdriver.resolveFileUrl({that}.options.injectUrl)"]
+                        args: ["@expand:fluid.test.webdriver.resolveFileUrl({that}.options.injectUrl)"]
                     },
                     {
                         event:    "{testEnvironment}.webdriver.events.onGetComplete",
@@ -95,11 +94,11 @@ fluid.defaults("gpii.tests.webdriver.axe.caseHolder", {
                     {
                         event:    "{testEnvironment}.webdriver.events.onExecuteScriptComplete",
                         listener: "{testEnvironment}.webdriver.executeAsyncScript",
-                        args:     [gpii.test.webdriver.axe.runAxe]
+                        args:     [fluid.test.webdriver.axe.runAxe]
                     },
                     {
                         event:    "{testEnvironment}.webdriver.events.onExecuteAsyncScriptComplete",
-                        listener: "gpii.test.webdriver.axe.checkResults",
+                        listener: "fluid.test.webdriver.axe.checkResults",
                         args:     ["{arguments}.0"]
                     }
                 ]
@@ -108,13 +107,13 @@ fluid.defaults("gpii.tests.webdriver.axe.caseHolder", {
     }]
 });
 
-fluid.defaults("gpii.tests.webdriver.axe.environment", {
-    gradeNames: ["gpii.test.webdriver.testEnvironment"],
+fluid.defaults("fluid.tests.webdriver.axe.environment", {
+    gradeNames: ["fluid.test.webdriver.testEnvironment"],
     components: {
         caseHolder: {
-            type: "gpii.tests.webdriver.axe.caseHolder"
+            type: "fluid.tests.webdriver.axe.caseHolder"
         }
     }
 });
 
-gpii.test.webdriver.allBrowsers({ baseTestEnvironment: "gpii.tests.webdriver.axe.environment" });
+fluid.test.webdriver.allBrowsers({ baseTestEnvironment: "fluid.tests.webdriver.axe.environment" });

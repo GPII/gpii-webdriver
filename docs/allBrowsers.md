@@ -1,4 +1,4 @@
-# `gpii.test.webdriver.allBrowsers`
+# `fluid.test.webdriver.allBrowsers`
 
 This grade helps you run your tests against a range of browsers.  The defaults are designed for use with
 [Fluid IoC tests](http://docs.fluidproject.org/infusion/development/IoCTestingFramework.html#how-to-use-the-ioc-testing-framework).
@@ -26,18 +26,19 @@ first:
 
 1. The `BROWSERS` environment variable (see below).
 2. `that.options.browsers` (see above)
-3. `gpii.test.webdriver.allBrowsers.defaultPlatformBrowsers`, the platform-specific list of "verified working" browsers (see below).
+3. `fluid.test.webdriver.allBrowsers.defaultPlatformBrowsers`, the platform-specific list of "verified working" browsers
+   (see below).
 
 The `BROWSERS` environment variable should be a space or comma-delimited list of browsers, as in the following example
 for a unix-like system:
 
-```
+```shell script
 export BROWSERS="firefox chrome"
 ```
 
 If you're working with Windows PowerShell, the syntax is something like:
 
-```
+```snippet
 $env:BROWSERS = "chrome"
 ```
 
@@ -48,10 +49,10 @@ Note that you can run the tests for a single browser by setting `BROWSERS` to a 
 To use this grade with IoC tests, you must define a base `testEnvironment`, and then instantiate this grade as in the
 following example:
 
-```
+```javascript
 fluid.defaults("my.tests.testRunner", {
-    gradeNames: ["gpii.test.webdriver.allBrowsers"],
-    baseTestEnvironment: "gpii.tests.webdriver.executeScript.args.environment"
+    gradeNames: ["fluid.test.webdriver.allBrowsers"],
+    baseTestEnvironment: "fluid.tests.webdriver.executeScript.args.environment"
 });
 
 my.tests.testRunner();
@@ -63,7 +64,7 @@ If you want to use this grade to run tests that do not use the Fluid IoC test fr
 `runTestsInSingleBrowser` invoker (see above) with your own function that runs the tests for a single browser.  See
 the "syncInit" and "dumpLogs" tests in this package for examples.
 
-# `gpii.test.webdriver.allBrowsers.defaultPlatformBrowsers`
+## `fluid.test.webdriver.allBrowsers.defaultPlatformBrowsers`
 
 A static list of the default (confirmed working) browsers, by platform.  Only OS X, Windows, and Linux have any browsers
 at all, as the other platforms [are not supported by Selenium itself](http://www.seleniumhq.org/about/platforms.jsp).

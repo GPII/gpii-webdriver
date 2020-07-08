@@ -6,15 +6,13 @@
 /* eslint-env node */
 "use strict";
 var fluid = require("infusion");
-var gpii = fluid.registerNamespace("gpii");
 
-fluid.require("%gpii-webdriver");
-gpii.webdriver.loadTestingSupport();
+fluid.require("%fluid-webdriver");
+fluid.webdriver.loadTestingSupport();
 
-
-fluid.defaults("gpii.tests.webdriver.sleep.caseHolder", {
-    gradeNames: ["gpii.test.webdriver.caseHolder"],
-    fileUrl: "%gpii-webdriver/tests/js/executeScript/html/executeScript.html",
+fluid.defaults("fluid.tests.webdriver.sleep.caseHolder", {
+    gradeNames: ["fluid.test.webdriver.caseHolder"],
+    fileUrl: "%fluid-webdriver/tests/js/executeScript/html/executeScript.html",
     rawModules: [{
         name: "Testing the driver's `sleep` function...",
         tests: [
@@ -24,7 +22,7 @@ fluid.defaults("gpii.tests.webdriver.sleep.caseHolder", {
                 sequence: [
                     {
                         func: "{testEnvironment}.webdriver.get",
-                        args: ["@expand:gpii.test.webdriver.resolveFileUrl({that}.options.fileUrl)"]
+                        args: ["@expand:fluid.test.webdriver.resolveFileUrl({that}.options.fileUrl)"]
                     },
                     {
                         event:    "{testEnvironment}.webdriver.events.onGetComplete",
@@ -42,13 +40,13 @@ fluid.defaults("gpii.tests.webdriver.sleep.caseHolder", {
     }]
 });
 
-fluid.defaults("gpii.tests.webdriver.sleep.environment", {
-    gradeNames: ["gpii.test.webdriver.testEnvironment"],
+fluid.defaults("fluid.tests.webdriver.sleep.environment", {
+    gradeNames: ["fluid.test.webdriver.testEnvironment"],
     components: {
         caseHolder: {
-            type: "gpii.tests.webdriver.sleep.caseHolder"
+            type: "fluid.tests.webdriver.sleep.caseHolder"
         }
     }
 });
 
-gpii.test.webdriver.allBrowsers({ baseTestEnvironment: "gpii.tests.webdriver.sleep.environment" });
+fluid.test.webdriver.allBrowsers({ baseTestEnvironment: "fluid.tests.webdriver.sleep.environment" });

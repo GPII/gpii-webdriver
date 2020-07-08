@@ -6,13 +6,12 @@
 /* eslint-env node */
 "use strict";
 var fluid = require("infusion");
-var gpii = fluid.registerNamespace("gpii");
 
-fluid.require("%gpii-webdriver");
-gpii.webdriver.loadTestingSupport();
+fluid.require("%fluid-webdriver");
+fluid.webdriver.loadTestingSupport();
 
-fluid.defaults("gpii.tests.webdriver.getCurrentUrl.caseHolder", {
-    gradeNames: ["gpii.test.webdriver.caseHolder"],
+fluid.defaults("fluid.tests.webdriver.getCurrentUrl.caseHolder", {
+    gradeNames: ["fluid.test.webdriver.caseHolder"],
     // We have to use a non-file URL because file URLs are problematic on Windows, with browser responses like:
     //
     //  * `file://C:/something`
@@ -46,13 +45,13 @@ fluid.defaults("gpii.tests.webdriver.getCurrentUrl.caseHolder", {
     }]
 });
 
-fluid.defaults("gpii.tests.webdriver.getCurrentUrl.environment", {
-    gradeNames: ["gpii.test.webdriver.testEnvironment"],
+fluid.defaults("fluid.tests.webdriver.getCurrentUrl.environment", {
+    gradeNames: ["fluid.test.webdriver.testEnvironment"],
     components: {
         caseHolder: {
-            type: "gpii.tests.webdriver.getCurrentUrl.caseHolder"
+            type: "fluid.tests.webdriver.getCurrentUrl.caseHolder"
         }
     }
 });
 
-gpii.test.webdriver.allBrowsers({ baseTestEnvironment: "gpii.tests.webdriver.getCurrentUrl.environment" });
+fluid.test.webdriver.allBrowsers({ baseTestEnvironment: "fluid.tests.webdriver.getCurrentUrl.environment" });

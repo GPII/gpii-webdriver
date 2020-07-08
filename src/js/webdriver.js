@@ -2,24 +2,23 @@
 
     A wrapper around the `selenium-webdriver` package.  See the documentation for details:
 
-    https://github.com/GPII/gpii-webdriver/blob/master/docs/webdriver.md
+    https://github.com/fluid-project/fluid-webdriver/blob/master/docs/webdriver.md
 
  */
 /* eslint-env node */
 "use strict";
 var fluid = require("infusion");
-var gpii = fluid.registerNamespace("gpii");
 
 var process = require("process");
 
-fluid.registerNamespace("gpii.webdriver");
+fluid.registerNamespace("fluid.webdriver");
 
 var webdriver = require("selenium-webdriver");
 
-gpii.webdriver.By           = webdriver.By;
-gpii.webdriver.until        = webdriver.until;
-gpii.webdriver.Key          = webdriver.Key;
-gpii.webdriver.Capabilities = require("selenium-webdriver/lib/capabilities").Capabilities;
+fluid.webdriver.By           = webdriver.By;
+fluid.webdriver.until        = webdriver.until;
+fluid.webdriver.Key          = webdriver.Key;
+fluid.webdriver.Capabilities = require("selenium-webdriver/lib/capabilities").Capabilities;
 
 /**
  *
@@ -27,10 +26,10 @@ gpii.webdriver.Capabilities = require("selenium-webdriver/lib/capabilities").Cap
  * default.  Also ensures that `onDriverReady` is fired regardless of whether `that.driver` is initialized
  * synchronously or asynchronously.
  *
- * @param {gpii.webdriver} that - The component itself.
+ * @param {fluid.webdriver} that - The component itself.
  *
  */
-gpii.webdriver.configureDriver = function (that) {
+fluid.webdriver.configureDriver = function (that) {
     that.driver.manage().timeouts().setScriptTimeout(that.options.asyncScriptTimeout).then(that.events.onDriverReady.fire)["catch"](that.events.onError.fire);
 };
 
@@ -42,12 +41,12 @@ gpii.webdriver.configureDriver = function (that) {
  * 1. The driver is configured properly once it's available.
  * 2. The `onDriverReady` event is fired once the driver is available.
  *
- * @param {gpii.webdriver} that - The component itself
+ * @param {fluid.webdriver} that - The component itself
  *
  */
-gpii.webdriver.init = function (that) {
+fluid.webdriver.init = function (that) {
     var browserName = that.options.browser;
-    var capabilities = gpii.webdriver.Capabilities[browserName]();
+    var capabilities = fluid.webdriver.Capabilities[browserName]();
     var browserOptions = (process.env.HEADLESS && that.options.headlessBrowserOptions[browserName]) || that.options.browserOptions[browserName];
     fluid.each(browserOptions, function (value, key) {
         capabilities.set(key, value);
@@ -58,7 +57,7 @@ gpii.webdriver.init = function (that) {
 
     that.builderPromise.then(function (result) {
         that.driver = result;
-        gpii.webdriver.configureDriver(that);
+        fluid.webdriver.configureDriver(that);
     })["catch"](that.events.onError.fire);
 };
 
@@ -70,14 +69,14 @@ gpii.webdriver.init = function (that) {
  * 2. The event `onError` is fired if execution fails.
  * 3. A promise is returned that will be resolved when execution finishes, or rejected on failure.
  *
- * @param {gpii.webdriver} that - The component itself.
+ * @param {fluid.webdriver} that - The component itself.
  * @param {String} fnName - The driver function to execute.
  * @param {String} eventName - The event to fire on successful completion.
  * @param {Array} fnArgs - The arguments (if any) to pass to `fnName`.
  * @return {Promise} A promise that will be resolved when execution is complete, or rejected if there is an error.
  *
  */
-gpii.webdriver.execute = function (that, fnName, eventName, fnArgs) {
+fluid.webdriver.execute = function (that, fnName, eventName, fnArgs) {
     var promise = that.driver[fnName].apply(that.driver, fnArgs);
     promise.then(that.events[eventName].fire)["catch"](that.events.onError.fire);
     return promise;
@@ -87,12 +86,12 @@ gpii.webdriver.execute = function (that, fnName, eventName, fnArgs) {
  *
  * A helper function to assist in navigating from a single Fluid IoC test sequence step.  See the docs for details.
  *
- * @param {gpii.webdriver} that - The component itself
+ * @param {fluid.webdriver} that - The component itself
  * @param {Array} args - An array representing a series of function names and arguments.  Each array's first element is a function name. The remaining arguments are passed to the function.
  * @return {Promise} A promise that will be resolved when navigation is complete, or rejected if there is an error.
  *
  */
-gpii.webdriver.navigateHelper = function (that, args) {
+fluid.webdriver.navigateHelper = function (that, args) {
     var argsArray = fluid.makeArray(args);
     var navFnName = argsArray[0];
     var navFnArgs = argsArray.slice(1);
@@ -124,12 +123,12 @@ gpii.webdriver.navigateHelper = function (that, args) {
  * A helper function to assist in performing a sequence of actions from a single Fluid IoC test sequence step.  See the
  * docs for details.
  *
- * @param {gpii.webdriver} that - The component itself
+ * @param {fluid.webdriver} that - The component itself
  * @param {Array<ActionDef>} actionDefs - An array of action definitions.
  * @return {Promise} A `fluid.promise` that will be resolved when the actions are complete, or rejected if there is an error.
  *
  */
-gpii.webdriver.actionsHelper = function (that, actionDefs) {
+fluid.webdriver.actionsHelper = function (that, actionDefs) {
     var actions = that.driver.actions();
     fluid.each(fluid.makeArray(actionDefs), function (actionDef) {
         var actionFnName = actionDef.fn;
@@ -162,11 +161,11 @@ gpii.webdriver.actionsHelper = function (that, actionDefs) {
  *
  * See: http://seleniumhq.github.io/selenium/docs/api/javascript/module/selenium-webdriver/lib/logging.html
  *
- * @param {gpii.webdriver} that - The Component itself.
+ * @param {fluid.webdriver} that - The Component itself.
  * @param {String} type - The type of log entries to return, i.e. "browser" or "driver".
  */
 /* istanbul ignore next */
-gpii.webdriver.dumpLogs = function (that, type) {
+fluid.webdriver.dumpLogs = function (that, type) {
     type = type || "browser";
 
     var promise = new Promise();
@@ -186,25 +185,25 @@ gpii.webdriver.dumpLogs = function (that, type) {
     return promise;
 };
 
-gpii.webdriver.throwError = function (error) {
+fluid.webdriver.throwError = function (error) {
     var moreSpecificError = fluid.find(["message", "error", "stack"], function (pathToError) {
         return fluid.get(error, pathToError);
     });
     fluid.fail(moreSpecificError || error);
 };
 
-fluid.defaults("gpii.webdriver", {
+fluid.defaults("fluid.webdriver", {
     gradeNames: ["fluid.component"],
     browser: "chrome", // Chrome is the only fully working browser at the moment.
     async: true,
     asyncScriptTimeout: 10000,
     listeners: {
         "onCreate.init": {
-            funcName: "gpii.webdriver.init",
+            funcName: "fluid.webdriver.init",
             args:     ["{that}"]
         },
         "onError.fail": {
-            funcName: "gpii.webdriver.throwError",
+            funcName: "fluid.webdriver.throwError",
             args: ["{arguments}.0"] // error
         }
     },
@@ -271,129 +270,129 @@ fluid.defaults("gpii.webdriver", {
     invokers: {
         // "helpers" to simplify the use of key underlying driver functions
         actionsHelper: {
-            funcName: "gpii.webdriver.actionsHelper",
+            funcName: "fluid.webdriver.actionsHelper",
             args:     ["{that}", "{arguments}.0"] // actionArray
         },
         dumpLogs: {
-            funcName: "gpii.webdriver.dumpLogs",
+            funcName: "fluid.webdriver.dumpLogs",
             args:     ["{that}", "{arguments}.0"] // type
         },
         navigateHelper: {
-            funcName: "gpii.webdriver.navigateHelper",
+            funcName: "fluid.webdriver.navigateHelper",
             args:     ["{that}", "{arguments}"]
         },
 
         // Invokers to wrap the underlying driver functions
         actions: {
-            funcName: "gpii.webdriver.execute",
+            funcName: "fluid.webdriver.execute",
             args:     ["{that}", "actions", "onActionsComplete", "{arguments}"]
         },
         // TODO:  Test this once we have a use case for it in our own tests.
         call: {
-            funcName: "gpii.webdriver.execute",
+            funcName: "fluid.webdriver.execute",
             args:     ["{that}", "call", "onCallComplete", "{arguments}"]
         },
         close: {
-            funcName: "gpii.webdriver.execute",
+            funcName: "fluid.webdriver.execute",
             args:     ["{that}", "close", "onCloseComplete", "{arguments}"]
         },
         executeAsyncScript: {
-            funcName: "gpii.webdriver.execute",
+            funcName: "fluid.webdriver.execute",
             args:     ["{that}", "executeAsyncScript", "onExecuteAsyncScriptComplete", "{arguments}"]
         },
         executeScript: {
-            funcName: "gpii.webdriver.execute",
+            funcName: "fluid.webdriver.execute",
             args:     ["{that}", "executeScript", "onExecuteScriptComplete", "{arguments}"]
         },
         findElement: {
-            funcName: "gpii.webdriver.execute",
+            funcName: "fluid.webdriver.execute",
             args:     ["{that}", "findElement", "onFindElementComplete", "{arguments}"]
         },
         findElements: {
-            funcName: "gpii.webdriver.execute",
+            funcName: "fluid.webdriver.execute",
             args:     ["{that}", "findElements", "onFindElementsComplete", "{arguments}"]
         },
         get: {
-            funcName: "gpii.webdriver.execute",
+            funcName: "fluid.webdriver.execute",
             args:     ["{that}", "get", "onGetComplete", "{arguments}"]
         },
         // TODO:  Test this once we have a use case for it in our own tests.
         getAllWindowHandles: {
-            funcName: "gpii.webdriver.execute",
+            funcName: "fluid.webdriver.execute",
             args:     ["{that}", "getAllWindowHandles", "onGetAllWindowHandlesComplete", "{arguments}"]
         },
         // TODO:  Test this once we have a use case for it in our own tests.
         getCapabilities: {
-            funcName: "gpii.webdriver.execute",
+            funcName: "fluid.webdriver.execute",
             args:     ["{that}", "getCapabilities", "onGetCapabilitiesComplete", "{arguments}"]
         },
         getCurrentUrl: {
-            funcName: "gpii.webdriver.execute",
+            funcName: "fluid.webdriver.execute",
             args:     ["{that}", "getCurrentUrl", "onGetCurrentUrlComplete", "{arguments}"]
         },
         getPageSource: {
-            funcName: "gpii.webdriver.execute",
+            funcName: "fluid.webdriver.execute",
             args:     ["{that}", "getPageSource", "onGetPageSourceComplete", "{arguments}"]
         },
         getSession: {
-            funcName: "gpii.webdriver.execute",
+            funcName: "fluid.webdriver.execute",
             args:     ["{that}", "getSession", "onGetSessionComplete", "{arguments}"]
         },
         getTitle: {
-            funcName: "gpii.webdriver.execute",
+            funcName: "fluid.webdriver.execute",
             args:     ["{that}", "getTitle", "onGetTitleComplete", "{arguments}"]
         },
         // TODO:  Test this once we have a use case for it in our own tests.
         getWindowHandle: {
-            funcName: "gpii.webdriver.execute",
+            funcName: "fluid.webdriver.execute",
             args:     ["{that}", "getWindowHandle", "onGetWindowHandleComplete", "{arguments}"]
         },
         isElementPresent: {
-            funcName: "gpii.webdriver.execute",
+            funcName: "fluid.webdriver.execute",
             args:     ["{that}", "isElementPresent", "onIsElementPresentComplete", "{arguments}"]
         },
         // TODO:  Test this once we have a use case for it in our own tests.
         manage: {
-            funcName: "gpii.webdriver.execute",
+            funcName: "fluid.webdriver.execute",
             args:     ["{that}", "manage", "onManageComplete", "{arguments}"]
         },
         navigate: {
-            funcName: "gpii.webdriver.execute",
+            funcName: "fluid.webdriver.execute",
             args:     ["{that}", "navigate", "onNavigateComplete", "{arguments}"]
         },
         quit: {
-            funcName: "gpii.webdriver.execute",
+            funcName: "fluid.webdriver.execute",
             args:     ["{that}", "quit", "onQuitComplete", "{arguments}"]
         },
         // TODO:  Test this once we have a use case for it in our own tests.
         schedule: {
-            funcName: "gpii.webdriver.execute",
+            funcName: "fluid.webdriver.execute",
             args:     ["{that}", "schedule", "onScheduleComplete", "{arguments}"]
         },
         // TODO:  Test this once we have a use case for it in our own tests.
         setFileDetector: {
-            funcName: "gpii.webdriver.execute",
+            funcName: "fluid.webdriver.execute",
             args:     ["{that}", "setFileDetector", "onSetFileDetectorComplete", "{arguments}"]
         },
         sleep: {
-            funcName: "gpii.webdriver.execute",
+            funcName: "fluid.webdriver.execute",
             args:     ["{that}", "sleep", "onSleepComplete", "{arguments}"]
         },
         switchTo: {
-            funcName: "gpii.webdriver.execute",
+            funcName: "fluid.webdriver.execute",
             args:     ["{that}", "switchTo", "onSwitchToComplete", "{arguments}"]
         },
         takeScreenshot: {
-            funcName: "gpii.webdriver.execute",
+            funcName: "fluid.webdriver.execute",
             args:     ["{that}", "takeScreenshot", "onTakeScreenshotComplete", "{arguments}"]
         },
         // TODO:  Test this once we have at least one mobile platform available.
         touchActions: {
-            funcName: "gpii.webdriver.execute",
+            funcName: "fluid.webdriver.execute",
             args:     ["{that}", "touchActions", "onTouchActionsComplete", "{arguments}"]
         },
         wait: {
-            funcName: "gpii.webdriver.execute",
+            funcName: "fluid.webdriver.execute",
             args:     ["{that}", "wait", "onWaitComplete", "{arguments}"]
         }
     }

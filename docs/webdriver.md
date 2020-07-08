@@ -1,4 +1,4 @@
-# `gpii.webdriver`
+# `fluid.webdriver`
 
 This component wraps a [WebDriver driver](http://seleniumhq.github.io/selenium/docs/api/javascript/module/selenium-webdriver/lib/webdriver_exports_WebDriver.html).
 A driver can be used to control a browser installed on the system.  On startup, a webdriver instance is built.  When the
@@ -16,7 +16,7 @@ driver is ready, the `onDriverReady` event is fired.
 
 ## Component Invokers
 
-# `{that}.actions()`
+### `{that}.actions()`
 
 Retrieves an `actions` instance that can be used to perform one or more actions in the current browser.  This value is
 passed as the result of `onActionsComplete`.  Returns a promise that is resolved with the same value.
@@ -27,7 +27,7 @@ to complete your action sequence.
 
 View the WebDriver API documentation for more [details on the underlying `actions` function.](http://seleniumhq.github.io/selenium/docs/api/javascript/module/selenium-webdriver/lib/webdriver_exports_WebDriver.html#actions)
 
-# `{that}.actionsHelper(actionsArray)`
+### `{that}.actionsHelper(actionsArray)`
 
 A helper which constructs an entire sequence of actions and executes them in order (including adding the final `perform`
 step to indicate that the sequence is complete).  Fires `onActionsHelperComplete` when all actions have been performed.
@@ -36,38 +36,37 @@ Returns a promise that is resolved when all actions have been performed.
 Each element in `actionsArray` is expected to be an object whose `fn` value represents the function name to be executed,
 and whose `args` value represents the arguments to be passed to the function.  For example:
 
-```
-{ fn: "sendKeys", args: [gpii.webdriver.Key.TAB, gpii.webdriver.Key.TAB]};
+```snippet
+{ fn: "sendKeys", args: [fluid.webdriver.Key.TAB, fluid.webdriver.Key.TAB]};
 ```
 
 Note that if you wish to pass multiple actions, you will need to pass an array as the first argument, as in:
 
-```
-[{ fn: "sendKeys", args: [gpii.webdriver.Key.TAB]}, { fn: "sendKeys", args: [gpii.webdriver.Key.TAB]}];
+```snippet
+[{ fn: "sendKeys", args: [fluid.webdriver.Key.TAB]}, { fn: "sendKeys", args: [fluid.webdriver.Key.TAB]}];
 ```
 
 The range of supported actions and options can be found in [the WebDriver documentation](http://seleniumhq.github.io/selenium/docs/api/javascript/module/selenium-webdriver/lib/actions_exports_ActionSequence.html).
 
-# `{that}.call(fn, opt_scope, var_args)`
+### `{that}.call(fn, opt_scope, var_args)`
 
 This function is not used or tested in this module, but is exposed for future developers to explore and extend as desired.
 
 View the WebDriver API documentation for more [details on the underlying `call` function.](http://seleniumhq.github.io/selenium/docs/api/javascript/module/selenium-webdriver/lib/webdriver_exports_WebDriver.html#call)
 
-
-# `{that}.close()`
+### `{that}.close()`
 
 Close the current window.
 
 View the WebDriver API documentation for more [details on the underlying `close` function.](http://seleniumhq.github.io/selenium/docs/api/javascript/module/selenium-webdriver/lib/webdriver_exports_WebDriver.html#close)
 
-# `{that}.dumpLogs(type)`
+### `{that}.dumpLogs(type)`
 
 Return all WebDriver logs that have accumulated since the last call to this function.  The required `type` variable
 filters the results by [type](http://seleniumhq.github.io/selenium/docs/api/javascript/module/selenium-webdriver/lib/logging_exports_Type.html).
 Based on informal testing, it appears that only "browser" and "driver" are supported by the underlying function.
 
-# `{that}.executeAsyncScript(script, var_args)`
+### `{that}.executeAsyncScript(script, var_args)`
 
 Execute `script` on the client side with `var_args` arguments.  A final implicit `callback` argument is provided, the
 callback must be executed before a result will be returned.  Fires the `onExecuteAsyncScript` event when the script has
@@ -76,8 +75,7 @@ the return value passed to the callback.
 
 View the WebDriver API documentation for more [details on the underlying `executeAsyncScript` function.](http://seleniumhq.github.io/selenium/docs/api/javascript/module/selenium-webdriver/lib/webdriver_exports_WebDriver.html#executeAsyncScript)
 
-
-# `{that}.executeScript(script, var_args)`
+### `{that}.executeScript(script, var_args)`
 
 Execute `script` immediately with `var_args` arguments.  Fires the `onExecuteScript` event when the script has
 finished executing.  Returns a promise that is resolved once the script is executed.  The results will contain the
@@ -85,10 +83,9 @@ return value of `script`.
 
 View the WebDriver API documentation for more [details on the underlying `executeScript` function.](http://seleniumhq.github.io/selenium/docs/api/javascript/module/selenium-webdriver/lib/webdriver_exports_WebDriver.html#executeScript)
 
+### `{that}.findElement(locator)`
 
-# `{that}.findElement(locator)`
-
-Find and return a particular element using `locator`, which is typically defined using `gpii.webdriver.By` (see below).
+Find and return a particular element using `locator`, which is typically defined using `fluid.webdriver.By` (see below).
 
 Fires the `onFindElement` event when the search is complete.  Returns a promise that is resolved once the search is
 complete.  If an element is found, the element itself will be the result.  If there are multiple elements, the result
@@ -96,94 +93,83 @@ will be the first matching element.  If there are no matching elements, the `onE
 
 View the WebDriver API documentation for more [details on the underlying `findElement` function.](http://seleniumhq.github.io/selenium/docs/api/javascript/module/selenium-webdriver/lib/webdriver_exports_WebDriver.html#findElement)
 
+### `{that}.findElements(locator)`
 
-# `{that}.findElements(locator)`
-
-Find and return a particular element using `locator`, which is typically defined using `gpii.webdriver.By` (see below).
+Find and return a particular element using `locator`, which is typically defined using `fluid.webdriver.By` (see below).
 
 Fires the `onFindElements` event when the search is complete.  Returns a promise that is resolved once the search is
 complete.  The results contain an array of matching elements, or an empty array if no matching elements are found.
 
 View the WebDriver API documentation for more [details on the underlying `findElements` function.](http://seleniumhq.github.io/selenium/docs/api/javascript/module/selenium-webdriver/lib/webdriver_exports_WebDriver.html#findElements)
 
-
-# `{that}.get(url)`
+### `{that}.get(url)`
 
 Instructs the browser to navigate to `url`.  Fires the `onGetComplete` event when the page has finished loading.  Returns
 a promise that is resolved once the page has finished loading.
 
 View the WebDriver API documentation for more [details on the underlying `get` function.](http://seleniumhq.github.io/selenium/docs/api/javascript/module/selenium-webdriver/lib/webdriver_exports_WebDriver.html#get)
 
-
-# `{that}.getAllWindowHandles()`
+### `{that}.getAllWindowHandles()`
 
 This function is not used or tested in this module, but is exposed for future developers to explore and extend as desired.
 
 View the WebDriver API documentation for more [details on the underlying `getAllWindowHandles` function.](http://seleniumhq.github.io/selenium/docs/api/javascript/module/selenium-webdriver/lib/webdriver_exports_WebDriver.html#getAllWindowHandles)
 
-
-# `{that}.getCapabilities()`
+### `{that}.getCapabilities()`
 
 Retrieve the current capabilities of the browser window.  The event `onGetCapabilitiesComplete` is fired with the value.
 Returns a promise that will be resolved with the current capabilties.
 
 View the WebDriver API documentation for more [details on the underlying `getCapabilities` function.](http://seleniumhq.github.io/selenium/docs/api/javascript/module/selenium-webdriver/lib/webdriver_exports_WebDriver.html#getCapabilities)
 
-
-# `{that}.getCurrentUrl()`
+### `{that}.getCurrentUrl()`
 
 Retrieve the current effective URL of the browser window.  The event `onGetCurrentUrlComplete` is fired with the value.
 Returns a promise that will be resolved with the current URL.
 
 View the WebDriver API documentation for more [details on the underlying `getCurrentUrl` function.](http://seleniumhq.github.io/selenium/docs/api/javascript/module/selenium-webdriver/lib/webdriver_exports_WebDriver.html#getCurrentUrl)
 
-
-# `{that}.getPageSource()`
+### `{that}.getPageSource()`
 
 Retrieve the current browser window's page source.  The event 'onGetPageSource' is fired with the result of this call.
 Returns a promise that will be resolved with the value of the page source.
 
 View the WebDriver API documentation for more [details on the underlying `getPageSource` function.](http://seleniumhq.github.io/selenium/docs/api/javascript/module/selenium-webdriver/lib/webdriver_exports_WebDriver.html#getPageSource)
 
-
-# `{that}.getSession()`
+### `{that}.getSession()`
 
 This function is not used or tested in this module, but is exposed for future developers to explore and extend as desired.
 
 View the WebDriver API documentation for more [details on the underlying `getSession` function.](http://seleniumhq.github.io/selenium/docs/api/javascript/module/selenium-webdriver/lib/webdriver_exports_WebDriver.html#getSession)
 
-
-# `{that}.getTitle()`
+### `{that}.getTitle()`
 
 Retrieve the current browser window's title.  The event 'onGetTitle' is fired with the result of this call.  Returns a
 promise that will be resolved with the value of the page title.
 
 View the WebDriver API documentation for more [details on the underlying `getTitle` function.](http://seleniumhq.github.io/selenium/docs/api/javascript/module/selenium-webdriver/lib/webdriver_exports_WebDriver.html#getTitle)
 
-
-# `{that}.getWindowHandle()`
+### `{that}.getWindowHandle()`
 
 This function is not used or tested in this module, but is exposed for future developers to explore and extend as desired.
 
 View the WebDriver API documentation for more [details on the underlying `getWindowHandle` function.](http://seleniumhq.github.io/selenium/docs/api/javascript/module/selenium-webdriver/lib/webdriver_exports_WebDriver.html#getWindowHandle)
 
+### `{that}.isElementPresent(locator)`
 
-# `{that}.isElementPresent(locator)`
-
-Confirm whether an element that matches `locator` exists.  `locator` is typically defined using `gpii.webdriver.By`
+Confirm whether an element that matches `locator` exists.  `locator` is typically defined using `fluid.webdriver.By`
 (see below).  The event `onIsElementPresentComplete` is fired with the result.  Returns a promise that will be resolved
 with the result.
 
 View the WebDriver API documentation for more [details on the underlying `isElementPresent` function.](http://seleniumhq.github.io/selenium/docs/api/javascript/module/selenium-webdriver/lib/webdriver_exports_WebDriver.html#isElementPresent)
 
-
-# `{that}.manage()`
+### `{that}.manage()`
 
 This function is not used or tested in this module, but is exposed for future developers to explore and extend as desired.
 
 View the WebDriver API documentation for more [details on the underlying `manage` function.](http://seleniumhq.github.io/selenium/docs/api/javascript/module/selenium-webdriver/lib/webdriver_exports_WebDriver.html#manage)
 
-# `{that}.navigate()`
+### `{that}.navigate()`
 
 Retrieves an `navigate` instance that can be used to navigate using the current browser .  This value is
 passed as the result of `onNavigateComplete`.  Returns a promise that is resolved with the same value.
@@ -192,7 +178,7 @@ Typically you will use `{that}.navigateHelper` rather than calling this directly
 
 View the WebDriver API documentation for more [details on the underlying `navigate` function.](http://seleniumhq.github.io/selenium/docs/api/javascript/module/selenium-webdriver/lib/webdriver_exports_WebDriver.html#navigate)
 
-# `{that}.navigateHelper(fnName, args)`
+### `{that}.navigateHelper(fnName, args)`
 
 A convenience helper to make it easier to work with `navigate`.  Instantiates a navigator and then executes its `fnName`
 function with `args` arguments.  Fires `onNavigateHelperComplete` when navigation is completed.  Returns a promise that
@@ -200,44 +186,39 @@ is resolved when navigation is completed.
 
 See the WebDriver API documentation for [details regarding the supported navigation functions and their arguments](http://seleniumhq.github.io/selenium/docs/api/javascript/module/selenium-webdriver/lib/webdriver_exports_Navigation.html).
 
-# `{that}.quit()`
+### `{that}.quit()`
 
 Instruct the current browser to quit.  Fires the event `onQuitComplete` once the browser has finished shutting down.
 Returns a promise that is resolved when the browser has finished shutting down.
 
 View the WebDriver API documentation for more [details on the underlying `quit` function.](http://seleniumhq.github.io/selenium/docs/api/javascript/module/selenium-webdriver/lib/webdriver_exports_WebDriver.html#quit)
 
-
-# `{that}.schedule(command, description)`
+### `{that}.schedule(command, description)`
 
 This function is not used or tested in this module, but is exposed for future developers to explore and extend as desired.
 
 View the WebDriver API documentation for more [details on the underlying `schedule` function.](http://seleniumhq.github.io/selenium/docs/api/javascript/module/selenium-webdriver/lib/webdriver_exports_WebDriver.html#schedule)
 
-
-# `{that}.setFileDetector(detector)`
+### `{that}.setFileDetector(detector)`
 
 This function is not used or tested in this module, but is exposed for future developers to explore and extend as desired.
 
 View the WebDriver API documentation for more [details on the underlying `setFileDetector` function.](http://seleniumhq.github.io/selenium/docs/api/javascript/module/selenium-webdriver/lib/webdriver_exports_WebDriver.html#setFileDetector)
 
-
-# `{that}.sleep(ms)`
+### `{that}.sleep(ms)`
 
 Instructs the browser to sleep for `ms` milliseconds.  Fires an `onSleepComplete` event once the browser has slept for
 the specified time.  Returns a promise that will be resolved once the browser has slept for the specified time.
 
 View the WebDriver API documentation for more [details on the underlying `sleep` function.](http://seleniumhq.github.io/selenium/docs/api/javascript/module/selenium-webdriver/lib/webdriver_exports_WebDriver.html#sleep)
 
-
-# `{that}.switchTo()`
+### `{that}.switchTo()`
 
 This function is not used or tested in this module, but is exposed for future developers to explore and extend as desired.
 
 View the WebDriver API documentation for more [details on the underlying `switchTo` function.](http://seleniumhq.github.io/selenium/docs/api/javascript/module/selenium-webdriver/lib/webdriver_exports_WebDriver.html#switchTo)
 
-
-# `{that}.takeScreenshot()`
+### `{that}.takeScreenshot()`
 
 Take a screenshot of the current browser window.  The `onTakeScreenshotComplete` event is fired with the results.
 Returns a promise that will be resolved with the results once the screenshot has been taken.  The results in this case
@@ -245,17 +226,15 @@ are base64 encoded binary data in PNG format.
 
 View the WebDriver API documentation for more [details on the underlying `takeScreenshot` function.](http://seleniumhq.github.io/selenium/docs/api/javascript/module/selenium-webdriver/lib/webdriver_exports_WebDriver.html#takeScreenshot)
 
-
-# `{that}.touchActions()`
+### `{that}.touchActions()`
 
 This function is not used or tested in this module, but is exposed for future developers to explore and extend as desired.
 
 View the WebDriver API documentation for more [details on the underlying `touchActions` function.](http://seleniumhq.github.io/selenium/docs/api/javascript/module/selenium-webdriver/lib/webdriver_exports_WebDriver.html#touchActions)
 
+### `{that}.wait(condition, opt_timeout, opt_message)`
 
-# `{that}.wait(condition, opt_timeout, opt_message)`
-
-Instruct the browser to wait until `condition` is true.  `condition` is typically defined using `gpii.webdriver.until`
+Instruct the browser to wait until `condition` is true.  `condition` is typically defined using `fluid.webdriver.until`
 (see below).  Fires `onWaitComplete` when the condition has been met, or `onError` if the request times out.  Returns
 a promise that will be resolved when the condition is true.  The optional `opt_timeout` parameter represents the number
 of milliseconds to wait for `condition` before timing out.  The optional `opt_message` parameter is a custom message
@@ -266,10 +245,10 @@ Note that Javascript `Error` objects cannot be serialized properly using `JSON.s
 you'll need to either inspect individual elements (such as `message`), or to call the Error object's `toString` method.
 Here are sample sequence steps with a comment regarding the probably value.
 
-```
+```snippet
 {
     func: "{testEnvironment}.webdriver.wait",
-    args: [gpii.webdriver.until.alertIsPresent(), 500, "Custom message."]
+    args: [fluid.webdriver.until.alertIsPresent(), 500, "Custom message."]
 },
 {
     listener: "console.log",
@@ -294,27 +273,29 @@ View the WebDriver API documentation for more [details on the underlying `wait` 
 In addition to the "wrapped" events mentioned above, this component has a unique event (`onError` that is fired
 whenever any of the promises created by a "wrapped" function encounter an error.
 
-# `gpii.webdriver.By`
+## `fluid.webdriver.By`
 
 The `By` object provided by the webdriver library is available under this global name.  It is used to construct
 selectors for use with invokers like `findElement` (see above).
 
 View the WebDriver API documentation for more [details on the `By` object.](http://seleniumhq.github.io/selenium/docs/api/javascript/module/selenium-webdriver/index_exports_By.html)
 
-# `gpii.webdriver.until`
+## `fluid.webdriver.until`
+
 The `until` object provided by the webdriver library is available under this global name.  It is used to construct
 conditions for use with the `wait` invoker (see above).
 
 View the WebDriver API documentation for more [details on the `until` object.](http://seleniumhq.github.io/selenium/docs/api/javascript/module/selenium-webdriver/lib/until.html)
 
-# Key environment variables used by these grades
+## Key environment variables used by these grades
 
 The underlying WebDriver driver allows you to override two key pieces of information using environment variables:
 
 1. The browser to be used.
 2. The external Selenium server to be used (if any).
 
-By default, this grade uses Chrome to run tests.  You can change this by passing `options.browser` in your component options (see below), or you can set the `SELENIUM_BROWSER`
+By default, this grade uses Chrome to run tests.  You can change this by passing `options.browser` in your component
+options (see below), or you can set the `SELENIUM_BROWSER`
 environment variable to one of [the supported browsers](http://seleniumhq.github.io/selenium/docs/api/javascript/module/selenium-webdriver/lib/capabilities_exports_Browser.html)
 (in lowercase form).  Note that this option is not compatible with the use of the [multi-browser harness](allBrowsers.md),
 if you are using that, you should use the `BROWSERS` environment variable instead.
@@ -325,7 +306,7 @@ by setting the `SELENIUM_REMOTE_URL` environment variable to the URL of your ser
 In addition, this package supports a `HEADLESS` environment variable, which can be used to run supported browsers
 (currently only Chrome) in "headless" mode.
 
-# 404 and other errors
+## 404 and other errors
 
 The WebDriver API [does not provide any mechanism to trap HTTP response codes or errors](https://github.com/seleniumhq/selenium-google-code-issue-archive/issues/141),
 for example that result when trying to open a page that doesn't exist.  However, it also does not interfere with the

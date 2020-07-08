@@ -6,16 +6,15 @@
 /* eslint-env node */
 "use strict";
 var fluid = require("infusion");
-var gpii = fluid.registerNamespace("gpii");
 
-fluid.require("%gpii-webdriver");
-gpii.webdriver.loadTestingSupport();
+fluid.require("%fluid-webdriver");
+fluid.webdriver.loadTestingSupport();
 
 require("../lib/globalErrorHandler");
 
-fluid.defaults("gpii.tests.webdriver.actions.failure.caseHolder", {
-    gradeNames: ["gpii.test.webdriver.caseHolder"],
-    fileUrl: "%gpii-webdriver/tests/js/actions/html/tabs.html",
+fluid.defaults("fluid.tests.webdriver.actions.failure.caseHolder", {
+    gradeNames: ["fluid.test.webdriver.caseHolder"],
+    fileUrl: "%fluid-webdriver/tests/js/actions/html/tabs.html",
     rawModules: [{
         name: "Test the failure modes of the action helper...",
         tests: [
@@ -25,10 +24,10 @@ fluid.defaults("gpii.tests.webdriver.actions.failure.caseHolder", {
                 sequence: [
                     {
                         func: "{testEnvironment}.webdriver.get",
-                        args: ["@expand:gpii.test.webdriver.resolveFileUrl({that}.options.fileUrl)"]
+                        args: ["@expand:fluid.test.webdriver.resolveFileUrl({that}.options.fileUrl)"]
                     },
                     {
-                        funcName: "gpii.test.webdriver.pushInstrumentedErrors"
+                        funcName: "fluid.test.webdriver.pushInstrumentedErrors"
                     },
                     // This will result in a global error.
                     {
@@ -37,8 +36,8 @@ fluid.defaults("gpii.tests.webdriver.actions.failure.caseHolder", {
                         args:     [{ fn: "bogus", args:[] }]
                     },
                     {
-                        event: "{gpii.test.webdriver.globalFailureHandler}.events.onError",
-                        listener: "gpii.test.webdriver.awaitGlobalFailure"
+                        event: "{fluid.test.webdriver.globalFailureHandler}.events.onError",
+                        listener: "fluid.test.webdriver.awaitGlobalFailure"
                     },
                     {
                         funcName: "kettle.test.popInstrumentedErrors"
@@ -49,13 +48,13 @@ fluid.defaults("gpii.tests.webdriver.actions.failure.caseHolder", {
     }]
 });
 
-fluid.defaults("gpii.tests.webdriver.actions.failure.environment", {
-    gradeNames: ["gpii.test.webdriver.testEnvironment"],
+fluid.defaults("fluid.tests.webdriver.actions.failure.environment", {
+    gradeNames: ["fluid.test.webdriver.testEnvironment"],
     components: {
         caseHolder: {
-            type: "gpii.tests.webdriver.actions.failure.caseHolder"
+            type: "fluid.tests.webdriver.actions.failure.caseHolder"
         }
     }
 });
 
-gpii.test.webdriver.allBrowsers({ baseTestEnvironment: "gpii.tests.webdriver.actions.failure.environment" });
+fluid.test.webdriver.allBrowsers({ baseTestEnvironment: "fluid.tests.webdriver.actions.failure.environment" });

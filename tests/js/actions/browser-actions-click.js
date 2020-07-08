@@ -7,21 +7,20 @@
 /* eslint-env node */
 "use strict";
 var fluid = require("infusion");
-var gpii = fluid.registerNamespace("gpii");
 
-fluid.require("%gpii-webdriver");
-gpii.webdriver.loadTestingSupport();
+fluid.require("%fluid-webdriver");
+fluid.webdriver.loadTestingSupport();
 
-fluid.registerNamespace("gpii.tests.webdriver.actions.text");
+fluid.registerNamespace("fluid.tests.webdriver.actions.text");
 
 /* globals document */
-gpii.tests.webdriver.actions.text.getRadioButtonValue = function () {
+fluid.tests.webdriver.actions.text.getRadioButtonValue = function () {
     return document.sampleForm.color.value;
 };
 
-fluid.defaults("gpii.tests.webdriver.actions.text.caseHolder", {
-    gradeNames: ["gpii.test.webdriver.caseHolder"],
-    fileUrl: "%gpii-webdriver/tests/js/actions/html/click.html",
+fluid.defaults("fluid.tests.webdriver.actions.text.caseHolder", {
+    gradeNames: ["fluid.test.webdriver.caseHolder"],
+    fileUrl: "%fluid-webdriver/tests/js/actions/html/click.html",
     rawModules: [{
         name: "Testing mouse 'click' input...",
         tests: [
@@ -31,12 +30,12 @@ fluid.defaults("gpii.tests.webdriver.actions.text.caseHolder", {
                 sequence: [
                     {
                         func: "{testEnvironment}.webdriver.get",
-                        args: ["@expand:gpii.test.webdriver.resolveFileUrl({that}.options.fileUrl)"]
+                        args: ["@expand:fluid.test.webdriver.resolveFileUrl({that}.options.fileUrl)"]
                     },
                     {
                         event:    "{testEnvironment}.webdriver.events.onGetComplete",
                         listener: "{testEnvironment}.webdriver.findElement",
-                        args:     [gpii.webdriver.By.id("red-button")]
+                        args:     [fluid.webdriver.By.id("red-button")]
                     },
                     {
                         event:    "{testEnvironment}.webdriver.events.onFindElementComplete",
@@ -47,7 +46,7 @@ fluid.defaults("gpii.tests.webdriver.actions.text.caseHolder", {
                     {
                         event:    "{testEnvironment}.webdriver.events.onActionsHelperComplete",
                         listener: "{testEnvironment}.webdriver.executeScript",
-                        args:     [gpii.tests.webdriver.actions.text.getRadioButtonValue]
+                        args:     [fluid.tests.webdriver.actions.text.getRadioButtonValue]
                     },
                     {
                         event:    "{testEnvironment}.webdriver.events.onExecuteScriptComplete",
@@ -60,13 +59,13 @@ fluid.defaults("gpii.tests.webdriver.actions.text.caseHolder", {
     }]
 });
 
-fluid.defaults("gpii.tests.webdriver.actions.text.environment", {
-    gradeNames: ["gpii.test.webdriver.testEnvironment"],
+fluid.defaults("fluid.tests.webdriver.actions.text.environment", {
+    gradeNames: ["fluid.test.webdriver.testEnvironment"],
     components: {
         caseHolder: {
-            type: "gpii.tests.webdriver.actions.text.caseHolder"
+            type: "fluid.tests.webdriver.actions.text.caseHolder"
         }
     }
 });
 
-gpii.test.webdriver.allBrowsers({ baseTestEnvironment: "gpii.tests.webdriver.actions.text.environment" });
+fluid.test.webdriver.allBrowsers({ baseTestEnvironment: "fluid.tests.webdriver.actions.text.environment" });

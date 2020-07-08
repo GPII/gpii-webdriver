@@ -6,17 +6,16 @@
 /* eslint-env node */
 "use strict";
 var fluid = require("infusion");
-var gpii = fluid.registerNamespace("gpii");
 
-fluid.require("%gpii-webdriver");
-gpii.webdriver.loadTestingSupport();
+fluid.require("%fluid-webdriver");
+fluid.webdriver.loadTestingSupport();
 
 require("../lib/globalErrorHandler");
 
-fluid.defaults("gpii.tests.webdriver.navigation.browser.failure.caseHolder", {
-    gradeNames: ["gpii.test.webdriver.caseHolder"],
-    fileUrl: "%gpii-webdriver/tests/js/browser-navigation/html/first.html",
-    secondFileUrl: "%gpii-webdriver/tests/js/browser-navigation/html/second.html",
+fluid.defaults("fluid.tests.webdriver.navigation.browser.failure.caseHolder", {
+    gradeNames: ["fluid.test.webdriver.caseHolder"],
+    fileUrl: "%fluid-webdriver/tests/js/browser-navigation/html/first.html",
+    secondFileUrl: "%fluid-webdriver/tests/js/browser-navigation/html/second.html",
     rawModules: [{
         name: "Testing the navigation helper's failure mode...",
         tests: [
@@ -26,11 +25,11 @@ fluid.defaults("gpii.tests.webdriver.navigation.browser.failure.caseHolder", {
                 sequence: [
                     {
                         func: "{testEnvironment}.webdriver.get",
-                        args: ["@expand:gpii.test.webdriver.resolveFileUrl({that}.options.fileUrl)"]
+                        args: ["@expand:fluid.test.webdriver.resolveFileUrl({that}.options.fileUrl)"]
                     },
                     {
                         event:    "{testEnvironment}.webdriver.events.onGetComplete",
-                        listener: "gpii.test.webdriver.pushInstrumentedErrors"
+                        listener: "fluid.test.webdriver.pushInstrumentedErrors"
                     },
                     // This will result in a global error.
                     {
@@ -38,8 +37,8 @@ fluid.defaults("gpii.tests.webdriver.navigation.browser.failure.caseHolder", {
                         args: ["bogus"]
                     },
                     {
-                        event: "{gpii.test.webdriver.globalFailureHandler}.events.onError",
-                        listener: "gpii.test.webdriver.awaitGlobalFailure"
+                        event: "{fluid.test.webdriver.globalFailureHandler}.events.onError",
+                        listener: "fluid.test.webdriver.awaitGlobalFailure"
                     },
                     {
                         funcName: "kettle.test.popInstrumentedErrors"
@@ -50,13 +49,13 @@ fluid.defaults("gpii.tests.webdriver.navigation.browser.failure.caseHolder", {
     }]
 });
 
-fluid.defaults("gpii.tests.webdriver.navigation.browser.failure.environment", {
-    gradeNames: ["gpii.test.webdriver.testEnvironment"],
+fluid.defaults("fluid.tests.webdriver.navigation.browser.failure.environment", {
+    gradeNames: ["fluid.test.webdriver.testEnvironment"],
     components: {
         caseHolder: {
-            type: "gpii.tests.webdriver.navigation.browser.failure.caseHolder"
+            type: "fluid.tests.webdriver.navigation.browser.failure.caseHolder"
         }
     }
 });
 
-gpii.test.webdriver.allBrowsers({ baseTestEnvironment: "gpii.tests.webdriver.navigation.browser.failure.environment" });
+fluid.test.webdriver.allBrowsers({ baseTestEnvironment: "fluid.tests.webdriver.navigation.browser.failure.environment" });

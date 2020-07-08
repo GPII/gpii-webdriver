@@ -7,14 +7,13 @@
 /* eslint-env node */
 "use strict";
 var fluid = require("infusion");
-var gpii = fluid.registerNamespace("gpii");
 
-fluid.require("%gpii-webdriver");
-gpii.webdriver.loadTestingSupport();
+fluid.require("%fluid-webdriver");
+fluid.webdriver.loadTestingSupport();
 
-fluid.defaults("gpii.tests.webdriver.getCapabilties.caseHolder", {
-    gradeNames: ["gpii.test.webdriver.caseHolder"],
-    fileUrl: "%gpii-webdriver/tests/js/executeScript/html/executeScript.html",
+fluid.defaults("fluid.tests.webdriver.getCapabilties.caseHolder", {
+    gradeNames: ["fluid.test.webdriver.caseHolder"],
+    fileUrl: "%fluid-webdriver/tests/js/executeScript/html/executeScript.html",
     rawModules: [{
         name: "Test `getCapabilities`...",
         tests: [
@@ -29,7 +28,7 @@ fluid.defaults("gpii.tests.webdriver.getCapabilties.caseHolder", {
                     {
                         event:    "{testEnvironment}.webdriver.events.onGetCapabilitiesComplete",
                         listener: "jqUnit.assertLeftHand",
-                        args:     ["The capabilities should at least indicate that javascript is enabled....", { javascriptEnabled: true }, "@expand:gpii.test.webdriver.mapToObject({arguments}.0)"]
+                        args:     ["The capabilities should at least indicate that javascript is enabled....", { javascriptEnabled: true }, "@expand:fluid.test.webdriver.mapToObject({arguments}.0)"]
                     }
                 ]
             }
@@ -37,13 +36,13 @@ fluid.defaults("gpii.tests.webdriver.getCapabilties.caseHolder", {
     }]
 });
 
-fluid.defaults("gpii.tests.webdriver.getCapabilties.environment", {
-    gradeNames: ["gpii.test.webdriver.testEnvironment"],
+fluid.defaults("fluid.tests.webdriver.getCapabilties.environment", {
+    gradeNames: ["fluid.test.webdriver.testEnvironment"],
     components: {
         caseHolder: {
-            type: "gpii.tests.webdriver.getCapabilties.caseHolder"
+            type: "fluid.tests.webdriver.getCapabilties.caseHolder"
         }
     }
 });
 
-gpii.test.webdriver.allBrowsers({ baseTestEnvironment: "gpii.tests.webdriver.getCapabilties.environment" });
+fluid.test.webdriver.allBrowsers({ baseTestEnvironment: "fluid.tests.webdriver.getCapabilties.environment" });

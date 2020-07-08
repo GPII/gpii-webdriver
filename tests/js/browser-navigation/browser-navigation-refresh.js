@@ -7,15 +7,14 @@
 /* eslint-env node */
 "use strict";
 var fluid = require("infusion");
-var gpii = fluid.registerNamespace("gpii");
 
-fluid.require("%gpii-webdriver");
-gpii.webdriver.loadTestingSupport();
+fluid.require("%fluid-webdriver");
+fluid.webdriver.loadTestingSupport();
 
 var jqUnit = require("node-jqunit");
 
-fluid.registerNamespace("gpii.tests.webdriver.navigation.browser.refresh");
-gpii.tests.webdriver.navigation.browser.refresh.isHidden = function (message, element, shouldBeDisplayed) {
+fluid.registerNamespace("fluid.tests.webdriver.navigation.browser.refresh");
+fluid.tests.webdriver.navigation.browser.refresh.isHidden = function (message, element, shouldBeDisplayed) {
     jqUnit.stop();
     element.isDisplayed().then(function (result) {
         jqUnit.start();
@@ -23,9 +22,9 @@ gpii.tests.webdriver.navigation.browser.refresh.isHidden = function (message, el
     });
 };
 
-fluid.defaults("gpii.tests.webdriver.navigation.browser.refresh.caseHolder", {
-    gradeNames: ["gpii.test.webdriver.caseHolder"],
-    fileUrl: "%gpii-webdriver/tests/js/browser-navigation/html/refresh.html",
+fluid.defaults("fluid.tests.webdriver.navigation.browser.refresh.caseHolder", {
+    gradeNames: ["fluid.test.webdriver.caseHolder"],
+    fileUrl: "%fluid-webdriver/tests/js/browser-navigation/html/refresh.html",
     rawModules: [{
         name: "Testing the browser's `refresh` function...",
         tests: [
@@ -35,7 +34,7 @@ fluid.defaults("gpii.tests.webdriver.navigation.browser.refresh.caseHolder", {
                 sequence: [
                     {
                         func: "{testEnvironment}.webdriver.get",
-                        args: ["@expand:gpii.test.webdriver.resolveFileUrl({that}.options.fileUrl)"]
+                        args: ["@expand:fluid.test.webdriver.resolveFileUrl({that}.options.fileUrl)"]
                     },
                     {
                         event:    "{testEnvironment}.webdriver.events.onGetComplete",
@@ -44,7 +43,7 @@ fluid.defaults("gpii.tests.webdriver.navigation.browser.refresh.caseHolder", {
                     },
                     {
                         event:    "{testEnvironment}.webdriver.events.onFindElementComplete",
-                        listener: "gpii.tests.webdriver.navigation.browser.refresh.isHidden",
+                        listener: "fluid.tests.webdriver.navigation.browser.refresh.isHidden",
                         args:     ["The message should be visible...", "{arguments}.0", true] // message, element, shouldBeDisplayed
                     },
                     {
@@ -63,7 +62,7 @@ fluid.defaults("gpii.tests.webdriver.navigation.browser.refresh.caseHolder", {
                     },
                     {
                         event:    "{testEnvironment}.webdriver.events.onFindElementComplete",
-                        listener: "gpii.tests.webdriver.navigation.browser.refresh.isHidden",
+                        listener: "fluid.tests.webdriver.navigation.browser.refresh.isHidden",
                         args:     ["The message should no longer be visible...", "{arguments}.0", false] // message, element, shouldBeDisplayed
                     },
                     {
@@ -77,7 +76,7 @@ fluid.defaults("gpii.tests.webdriver.navigation.browser.refresh.caseHolder", {
                     },
                     {
                         event:    "{testEnvironment}.webdriver.events.onFindElementComplete",
-                        listener: "gpii.tests.webdriver.navigation.browser.refresh.isHidden",
+                        listener: "fluid.tests.webdriver.navigation.browser.refresh.isHidden",
                         args:     ["The message should be visible again...", "{arguments}.0", true] // message, element, shouldBeDisplayed
                     }
                 ]
@@ -86,13 +85,13 @@ fluid.defaults("gpii.tests.webdriver.navigation.browser.refresh.caseHolder", {
     }]
 });
 
-fluid.defaults("gpii.tests.webdriver.navigation.browser.refresh.environment", {
-    gradeNames: ["gpii.test.webdriver.testEnvironment"],
+fluid.defaults("fluid.tests.webdriver.navigation.browser.refresh.environment", {
+    gradeNames: ["fluid.test.webdriver.testEnvironment"],
     components: {
         caseHolder: {
-            type: "gpii.tests.webdriver.navigation.browser.refresh.caseHolder"
+            type: "fluid.tests.webdriver.navigation.browser.refresh.caseHolder"
         }
     }
 });
 
-gpii.test.webdriver.allBrowsers({ baseTestEnvironment: "gpii.tests.webdriver.navigation.browser.refresh.environment" });
+fluid.test.webdriver.allBrowsers({ baseTestEnvironment: "fluid.tests.webdriver.navigation.browser.refresh.environment" });

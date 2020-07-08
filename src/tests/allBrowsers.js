@@ -2,18 +2,16 @@
 
     A harness to run tests in a range of browsers.  See the documentation for details:
 
-    https://github.com/GPII/gpii-webdriver/blob/master/docs/allBrowsers.md
+    https://github.com/fluid-project/fluid-webdriver/blob/master/docs/allBrowsers.md
 
  */
 /* eslint-env node */
 // Run the tests in a range of browsers based on the platform or the supplied options
 "use strict";
 var fluid = require("infusion");
-var gpii  = fluid.registerNamespace("gpii");
-
 var os    = require("os");
 
-fluid.registerNamespace("gpii.test.webdriver.allBrowsers");
+fluid.registerNamespace("fluid.test.webdriver.allBrowsers");
 
 /**
  *
@@ -24,21 +22,21 @@ fluid.registerNamespace("gpii.test.webdriver.allBrowsers");
  * 3. Generates a distinct test environment for each browser with the right brower option set.
  * 4. Runs each generated environment.
  *
- * @param {gpii.test.webdriver.allBrowsers} that - The component itself.
+ * @param {fluid.test.webdriver.allBrowsers} that - The component itself.
  */
-gpii.test.webdriver.allBrowsers.runAllTests = function (that) {
-    var browsers = gpii.test.webdriver.allBrowsers.getBrowsers(that);
+fluid.test.webdriver.allBrowsers.runAllTests = function (that) {
+    var browsers = fluid.test.webdriver.allBrowsers.getBrowsers(that);
 
     fluid.each(browsers, function (browser) {
         that.runTestsInSingleBrowser(browser);
     });
 };
 
-gpii.test.webdriver.allBrowsers.generateAndRunTestEnvironment = function (that, browser) {
+fluid.test.webdriver.allBrowsers.generateAndRunTestEnvironment = function (that, browser) {
     var gradeName = that.options.baseTestEnvironment + "." + browser;
 
     fluid.defaults(gradeName, {
-        gradeNames: ["gpii.test.webdriver.allBrowsers.testEnvironment", that.options.baseTestEnvironment],
+        gradeNames: ["fluid.test.webdriver.allBrowsers.testEnvironment", that.options.baseTestEnvironment],
         browser: browser
     });
 
@@ -53,33 +51,33 @@ gpii.test.webdriver.allBrowsers.generateAndRunTestEnvironment = function (that, 
  * 2. `that.options.browsers`
  * 3. The default list of browsers for the current platform.
  *
- * @param {gpii.test.webdriver.allBrowsers} that - The component itself.
+ * @param {fluid.test.webdriver.allBrowsers} that - The component itself.
  * @return {Array<String>} - An array of supported browser names.
  *
  */
-gpii.test.webdriver.allBrowsers.getBrowsers = function (that) {
+fluid.test.webdriver.allBrowsers.getBrowsers = function (that) {
     if (process.env.BROWSERS) {
         return process.env.BROWSERS.split(/[, ]/);
     }
     else {
-        return that.options.browsers || gpii.test.webdriver.allBrowsers.getPlatformBrowsers();
+        return that.options.browsers || fluid.test.webdriver.allBrowsers.getPlatformBrowsers();
     }
 };
 
 /**
  *
- * A function to get the list of platform browsers based on `gpii.test.webdriver.allBrowsers.defaultPlatformBrowsers`
+ * A function to get the list of platform browsers based on `fluid.test.webdriver.allBrowsers.defaultPlatformBrowsers`
  * (see below) and `os.platform()`.
  *
  * @return {Array<String>} An array of strings, each representing a browser.
  *
  */
-gpii.test.webdriver.allBrowsers.getPlatformBrowsers = function () {
+fluid.test.webdriver.allBrowsers.getPlatformBrowsers = function () {
     var platform = os.platform();
-    return gpii.test.webdriver.allBrowsers.defaultPlatformBrowsers[platform];
+    return fluid.test.webdriver.allBrowsers.defaultPlatformBrowsers[platform];
 };
 
-fluid.registerNamespace("gpii.test.webdriver.allBrowsers");
+fluid.registerNamespace("fluid.test.webdriver.allBrowsers");
 
 /**
  *
@@ -88,15 +86,15 @@ fluid.registerNamespace("gpii.test.webdriver.allBrowsers");
  * @param {String} browser The browser to use.
  *
  */
-gpii.test.webdriver.allBrowsers.setBrowser = function (browser) {
+fluid.test.webdriver.allBrowsers.setBrowser = function (browser) {
     process.env.SELENIUM_BROWSER = browser;
 };
 
-fluid.defaults("gpii.test.webdriver.allBrowsers.testEnvironment", {
+fluid.defaults("fluid.test.webdriver.allBrowsers.testEnvironment", {
     gradeNames: ["fluid.component"],
     listeners: {
         "onCreate.setBrowser": {
-            funcName: "gpii.test.webdriver.allBrowsers.setBrowser",
+            funcName: "fluid.test.webdriver.allBrowsers.setBrowser",
             args:     ["{that}.options.browser"]
         }
     }
@@ -113,30 +111,30 @@ fluid.defaults("gpii.test.webdriver.allBrowsers.testEnvironment", {
     http://www.seleniumhq.org/about/platforms.jsp
 
  */
-gpii.test.webdriver.allBrowsers.defaultPlatformBrowsers = {
+fluid.test.webdriver.allBrowsers.defaultPlatformBrowsers = {
     aix:     [],
-    // Firefox is not supported on desktop platforms until https://issues.gpii.net/browse/GPII-1913 is resolved.
+    // Firefox is not supported on desktop platforms until https://issues.fluid.net/browse/fluid-1913 is resolved.
     darwin:  ["chrome"],
     freebsd: [],
     linux:   ["firefox", "chrome"],
     openbsd: [],
     sunos:   [],
-    // Firefox is not supported on desktop platforms until https://issues.gpii.net/browse/GPII-1913 is resolved.
+    // Firefox is not supported on desktop platforms until https://issues.fluid.net/browse/fluid-1913 is resolved.
     win32:   ["chrome"] // See the README (or the comment above) for details regarding "ie".
 };
 
 // A grade that gets the list of browsers and then calls its `runTestsInSingleBrowser` invoker.
-fluid.defaults("gpii.test.webdriver.allBrowsers", {
+fluid.defaults("fluid.test.webdriver.allBrowsers", {
     gradeNames: ["fluid.component"],
     listeners: {
         "onCreate.runAllTests": {
-            funcName: "gpii.test.webdriver.allBrowsers.runAllTests",
+            funcName: "fluid.test.webdriver.allBrowsers.runAllTests",
             args:     ["{that}"]
         }
     },
     invokers: {
         runTestsInSingleBrowser: {
-            funcName: "gpii.test.webdriver.allBrowsers.generateAndRunTestEnvironment",
+            funcName: "fluid.test.webdriver.allBrowsers.generateAndRunTestEnvironment",
             args:     ["{that}", "{arguments}.0"] // browser
         }
     }
