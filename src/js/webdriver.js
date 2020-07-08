@@ -124,37 +124,27 @@ fluid.webdriver.navigateHelper = function (that, args) {
  * docs for details.
  *
  * @param {fluid.webdriver} that - The component itself
- * @param {Array<ActionDef>} actionDefs - An array of action definitions.
- * @return {Promise} A `fluid.promise` that will be resolved when the actions are complete, or rejected if there is an error.
+ * @param {(ActionDef|Array<ActionDef>)} actionDefs - A single action definition or an Array of action definitions.
+ * @return {Promise} An ES6 promise that will be resolved when the actions are complete, or rejected if there is an error.
  *
  */
 fluid.webdriver.actionsHelper = function (that, actionDefs) {
     var actions = that.driver.actions();
-    var invalidAction = false;
     fluid.each(fluid.makeArray(actionDefs), function (actionDef) {
-        if (!invalidAction) {
-            var actionFnName = actionDef.fn;
-            var actionArgs   = actionDef.args;
+        var actionFnName = actionDef.fn;
+        var actionArgs   = actionDef.args;
 
-            if (actions[actionFnName]) {
-                actions[actionFnName].apply(actions, actionArgs);
-            }
-            else {
-                invalidAction = actionFnName;
-            }
+        if (actions[actionFnName]) {
+            actions[actionFnName].apply(actions, actionArgs);
+        }
+        else {
+            fluid.log("WARNING: Cannot perform unknown action '" + actionFnName + "'...");
         }
     });
 
-    if (invalidAction) {
-        var failurePromise = Promise.reject(new Error("Cannot perform unknown action '" + invalidAction + "'..."));
-        failurePromise["catch"](that.events.onError.fire);
-        return failurePromise;
-    }
-    else {
-        var promise = actions.perform();
-        promise.then(that.events.onActionsHelperComplete.fire)["catch"](that.events.onError.fire);
-        return promise;
-    }
+    var promise = actions.perform();
+    promise.then(that.events.onActionsHelperComplete.fire)["catch"](that.events.onError.fire);
+    return promise;
 };
 
 /**
