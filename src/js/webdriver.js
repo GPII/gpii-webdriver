@@ -103,7 +103,7 @@ fluid.webdriver.navigateHelper = function (that, args) {
         return promise;
     }
     else {
-        var failurePromise = new Promise();
+        var failurePromise = new Promise(fluid.identity, fluid.identity);
         failurePromise["catch"](that.events.onError.fire);
         failurePromise.reject("Navigation function `" + navFnName + "` does not exist...");
         return failurePromise;
@@ -130,23 +130,31 @@ fluid.webdriver.navigateHelper = function (that, args) {
  */
 fluid.webdriver.actionsHelper = function (that, actionDefs) {
     var actions = that.driver.actions();
+    var invalidAction = false;
     fluid.each(fluid.makeArray(actionDefs), function (actionDef) {
-        var actionFnName = actionDef.fn;
-        var actionArgs   = actionDef.args;
+        if (!invalidAction) {
+            var actionFnName = actionDef.fn;
+            var actionArgs   = actionDef.args;
 
-        if (actions[actionFnName]) {
-            actions[actionFnName].apply(actions, actionArgs);
-        }
-        else {
-            var failurePromise = new Promise();
-            failurePromise["catch"](that.events.onError.fire);
-            failurePromise.reject("Cannot perform unknown action '" + actionFnName + "'...");
-            return failurePromise;
+            if (actions[actionFnName]) {
+                actions[actionFnName].apply(actions, actionArgs);
+            }
+            else {
+                invalidAction = actionFnName;
+            }
         }
     });
-    var promise = actions.perform();
-    promise.then(that.events.onActionsHelperComplete.fire)["catch"](that.events.onError.fire);
-    return promise;
+
+    if (invalidAction) {
+        var failurePromise = Promise.reject(new Error("Cannot perform unknown action '" + invalidAction + "'..."));
+        failurePromise["catch"](that.events.onError.fire);
+        return failurePromise;
+    }
+    else {
+        var promise = actions.perform();
+        promise.then(that.events.onActionsHelperComplete.fire)["catch"](that.events.onError.fire);
+        return promise;
+    }
 };
 
 /**

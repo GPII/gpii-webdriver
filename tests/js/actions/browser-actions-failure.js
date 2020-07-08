@@ -1,6 +1,6 @@
 /*
 
-    Test the "findElement" function with a single element.
+    Test the failure modes of the actions endpoint.
 
  */
 /* eslint-env node */
