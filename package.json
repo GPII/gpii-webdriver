@@ -1,6 +1,6 @@
 {
     "name": "fluid-webdriver",
-    "version": "1.1.1",
+    "version": "1.1.2",
     "description": "A series of Fluid components that help write tests using the WebDriver API.",
     "main": "index.js",
     "scripts": {
