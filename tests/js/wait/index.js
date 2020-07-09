@@ -8,28 +8,26 @@
 var fluid = require("infusion");
 fluid.setLogging(true);
 
-var gpii = fluid.registerNamespace("gpii");
-
-fluid.require("%gpii-webdriver");
-gpii.webdriver.loadTestingSupport();
+fluid.require("%fluid-webdriver");
+fluid.webdriver.loadTestingSupport();
 
 require("../lib/globalErrorHandler");
 
-fluid.registerNamespace("gpii.tests.webdriver.wait");
+fluid.registerNamespace("fluid.tests.webdriver.wait");
 
 var jqUnit = require("node-jqunit");
 
-gpii.tests.webdriver.wait.displayAlert = function () {
+fluid.tests.webdriver.wait.displayAlert = function () {
     setTimeout(function () { window.alert("Danger! Intruders among us!");}, 10);
 };
 
-gpii.tests.webdriver.wait.confirmTimeoutMessage = function (message, expectedText) {
+fluid.tests.webdriver.wait.confirmTimeoutMessage = function (message, expectedText) {
     jqUnit.assertTrue("The message should contain our custom text...", message.indexOf(expectedText) !== -1);
 };
 
-fluid.defaults("gpii.tests.webdriver.wait.caseHolder", {
-    gradeNames: ["gpii.test.webdriver.caseHolder"],
-    fileUrl: "%gpii-webdriver/tests/js/executeScript/html/executeScript.html",
+fluid.defaults("fluid.tests.webdriver.wait.caseHolder", {
+    gradeNames: ["fluid.test.webdriver.caseHolder"],
+    fileUrl: "%fluid-webdriver/tests/js/executeScript/html/executeScript.html",
     rawModules: [{
         name: "Testing the driver's `wait` function...",
         tests: [
@@ -41,16 +39,16 @@ fluid.defaults("gpii.tests.webdriver.wait.caseHolder", {
             //     sequence: [
             //         {
             //             func: "{testEnvironment}.webdriver.get",
-            //             args: ["@expand:gpii.test.webdriver.resolveFileUrl({that}.options.fileUrl)"]
+            //             args: ["@expand:fluid.test.webdriver.resolveFileUrl({that}.options.fileUrl)"]
             //         },
             //         {
             //             event:    "{testEnvironment}.webdriver.events.onGetComplete",
             //             listener: "{testEnvironment}.webdriver.executeScript",
-            //             args:     [gpii.tests.webdriver.wait.displayAlert]
+            //             args:     [fluid.tests.webdriver.wait.displayAlert]
             //         },
             //         {
             //             func: "{testEnvironment}.webdriver.wait",
-            //             args: [gpii.webdriver.until.alertIsPresent()]
+            //             args: [fluid.webdriver.until.alertIsPresent()]
             //         },
             //         {
             //             event:    "{testEnvironment}.webdriver.events.onWaitComplete",
@@ -65,20 +63,20 @@ fluid.defaults("gpii.tests.webdriver.wait.caseHolder", {
                 sequence: [
                     {
                         func: "{testEnvironment}.webdriver.get",
-                        args: ["@expand:gpii.test.webdriver.resolveFileUrl({that}.options.fileUrl)"]
+                        args: ["@expand:fluid.test.webdriver.resolveFileUrl({that}.options.fileUrl)"]
                     },
                     {
                         event:    "{testEnvironment}.webdriver.events.onGetComplete",
-                        listener: "gpii.test.webdriver.pushInstrumentedErrors"
+                        listener: "fluid.test.webdriver.pushInstrumentedErrors"
                     },
                     // This will result in a global error.
                     {
                         func: "{testEnvironment}.webdriver.wait",
-                        args: [gpii.webdriver.until.alertIsPresent(), 250, "Custom Message."]
+                        args: [fluid.webdriver.until.alertIsPresent(), 250, "Custom Message."]
                     },
                     {
-                        event: "{gpii.test.webdriver.globalFailureHandler}.events.onError",
-                        listener: "gpii.test.webdriver.awaitGlobalFailure"
+                        event: "{fluid.test.webdriver.globalFailureHandler}.events.onError",
+                        listener: "fluid.test.webdriver.awaitGlobalFailure"
                     },
                     {
                         funcName: "kettle.test.popInstrumentedErrors"
@@ -91,12 +89,12 @@ fluid.defaults("gpii.tests.webdriver.wait.caseHolder", {
                 sequence: [
                     {
                         func: "{testEnvironment}.webdriver.get",
-                        args: ["@expand:gpii.test.webdriver.resolveFileUrl({that}.options.fileUrl)"]
+                        args: ["@expand:fluid.test.webdriver.resolveFileUrl({that}.options.fileUrl)"]
                     },
                     {
                         event:    "{testEnvironment}.webdriver.events.onGetComplete",
                         listener: "{testEnvironment}.webdriver.wait",
-                        args:     [gpii.webdriver.until.elementLocated(gpii.webdriver.By.css("body"))]
+                        args:     [fluid.webdriver.until.elementLocated(fluid.webdriver.By.css("body"))]
                     },
                     {
                         event:    "{testEnvironment}.webdriver.events.onWaitComplete",
@@ -109,13 +107,13 @@ fluid.defaults("gpii.tests.webdriver.wait.caseHolder", {
     }]
 });
 
-fluid.defaults("gpii.tests.webdriver.wait.environment", {
-    gradeNames: ["gpii.test.webdriver.testEnvironment"],
+fluid.defaults("fluid.tests.webdriver.wait.environment", {
+    gradeNames: ["fluid.test.webdriver.testEnvironment"],
     components: {
         caseHolder: {
-            type: "gpii.tests.webdriver.wait.caseHolder"
+            type: "fluid.tests.webdriver.wait.caseHolder"
         }
     }
 });
 
-gpii.test.webdriver.allBrowsers({ baseTestEnvironment: "gpii.tests.webdriver.wait.environment" });
+fluid.test.webdriver.allBrowsers({ baseTestEnvironment: "fluid.tests.webdriver.wait.environment" });

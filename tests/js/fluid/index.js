@@ -6,14 +6,13 @@
 /* eslint-env node */
 "use strict";
 var fluid = require("infusion");
-var gpii = fluid.registerNamespace("gpii");
 
-fluid.require("%gpii-webdriver");
-gpii.webdriver.loadTestingSupport();
+fluid.require("%fluid-webdriver");
+fluid.webdriver.loadTestingSupport();
 
-fluid.defaults("gpii.tests.webdriver.fluid.caseHolder", {
-    gradeNames: ["gpii.test.webdriver.caseHolder", "gpii.test.webdriver.hasFluidContent"],
-    fileUrl: "%gpii-webdriver/tests/js/fluid/html/index.html",
+fluid.defaults("fluid.tests.webdriver.fluid.caseHolder", {
+    gradeNames: ["fluid.test.webdriver.caseHolder", "fluid.test.webdriver.hasFluidContent"],
+    fileUrl: "%fluid-webdriver/tests/js/fluid/html/index.html",
     rawModules: [{
         name: "Testing our wrapper around fluid.invokeGlobalFunction...",
         tests: [
@@ -23,12 +22,12 @@ fluid.defaults("gpii.tests.webdriver.fluid.caseHolder", {
                 sequence: [
                     {
                         func: "{testEnvironment}.webdriver.get",
-                        args: ["@expand:gpii.test.webdriver.resolveFileUrl({that}.options.fileUrl)"]
+                        args: ["@expand:fluid.test.webdriver.resolveFileUrl({that}.options.fileUrl)"]
                     },
                     {
                         event:    "{testEnvironment}.webdriver.events.onGetComplete",
                         listener: "{testEnvironment}.webdriver.executeScript",
-                        args:     [gpii.test.webdriver.invokeGlobal, "gpii.tests.webdriver.fluid.existingGlobalFunction"]
+                        args:     [fluid.test.webdriver.invokeGlobal, "fluid.tests.webdriver.fluid.existingGlobalFunction"]
                     },
                     {
                         event:    "{testEnvironment}.webdriver.events.onExecuteScriptComplete",
@@ -43,12 +42,12 @@ fluid.defaults("gpii.tests.webdriver.fluid.caseHolder", {
                 sequence: [
                     {
                         func: "{testEnvironment}.webdriver.get",
-                        args: ["@expand:gpii.test.webdriver.resolveFileUrl({that}.options.fileUrl)"]
+                        args: ["@expand:fluid.test.webdriver.resolveFileUrl({that}.options.fileUrl)"]
                     },
                     {
                         event:    "{testEnvironment}.webdriver.events.onGetComplete",
                         listener: "{testEnvironment}.webdriver.executeScript",
-                        args:     [gpii.test.webdriver.invokeGlobal, "gpii.tests.webdriver.fluid.existingGlobalFunctionWithArgs", ["foo", "bar"]]
+                        args:     [fluid.test.webdriver.invokeGlobal, "fluid.tests.webdriver.fluid.existingGlobalFunctionWithArgs", ["foo", "bar"]]
                     },
                     {
                         event:    "{testEnvironment}.webdriver.events.onExecuteScriptComplete",
@@ -61,13 +60,13 @@ fluid.defaults("gpii.tests.webdriver.fluid.caseHolder", {
     }]
 });
 
-fluid.defaults("gpii.tests.webdriver.fluid.environment", {
-    gradeNames: ["gpii.test.webdriver.testEnvironment"],
+fluid.defaults("fluid.tests.webdriver.fluid.environment", {
+    gradeNames: ["fluid.test.webdriver.testEnvironment"],
     components: {
         caseHolder: {
-            type: "gpii.tests.webdriver.fluid.caseHolder"
+            type: "fluid.tests.webdriver.fluid.caseHolder"
         }
     }
 });
 
-gpii.test.webdriver.allBrowsers({ baseTestEnvironment: "gpii.tests.webdriver.fluid.environment" });
+fluid.test.webdriver.allBrowsers({ baseTestEnvironment: "fluid.tests.webdriver.fluid.environment" });

@@ -1,5 +1,5 @@
 {
-    "name": "gpii-webdriver",
+    "name": "fluid-webdriver",
     "version": "1.1.1",
     "description": "A series of Fluid components that help write tests using the WebDriver API.",
     "main": "index.js",
@@ -9,29 +9,27 @@
     },
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/GPII/gpii-webdriver.git"
+        "url": "git+https://github.com/fluid-project/fluid-webdriver.git"
     },
     "author": "Tony Atkins <tony@raisingthefloor.org>",
     "license": "BSD-3-Clause",
-    "homepage": "https://github.com/GPII/gpii-webdriver#readme",
+    "homepage": "https://github.com/fluid-project/fluid-webdriver#readme",
     "dependencies": {
         "accessibility-developer-tools": "2.12.0",
-        "axe-core": "3.3.2",
+        "axe-core": "3.5.5",
         "brace-expansion": "1.1.11",
-        "infusion": "3.0.0-dev.20190913T161245Z.3910173d0.FLUID-6148",
+        "infusion": "3.0.0-dev.20200326T173810Z.24ddb2718",
         "selenium-webdriver": "3.6.0"
     },
     "devDependencies": {
-        "eslint": "6.4.0",
-        "eslint-config-fluid": "1.3.0",
-        "fluid-grunt-eslint": "18.1.2",
-        "gpii-express": "1.0.15",
-        "grunt": "1.0.4",
-        "grunt-jsonlint": "2.0.0",
+        "eslint": "7.4.0",
+        "eslint-config-fluid": "1.4.0",
+        "fluid-express": "1.0.16",
+        "fluid-grunt-lint-all": "1.0.8",
+        "grunt": "1.2.1",
         "istanbul": "0.4.5",
-        "jsonlint": "1.6.3",
-        "kettle": "1.11.0",
+        "kettle": "1.12.0",
         "node-jqunit": "1.1.8",
-        "rimraf": "3.0.0"
+        "rimraf": "3.0.2"
     }
 }

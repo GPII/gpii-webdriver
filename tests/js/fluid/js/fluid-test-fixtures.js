@@ -2,13 +2,12 @@
 /* globals fluid */
 (function () {
     "use strict";
-    gpii = fluid.registerNamespace("gpii");
-    fluid.registerNamespace("gpii.tests.webdriver.fluid");
-    gpii.tests.webdriver.fluid.existingGlobalFunction = function () {
+    fluid.registerNamespace("fluid.tests.webdriver.fluid");
+    fluid.tests.webdriver.fluid.existingGlobalFunction = function () {
         return true;
     };
 
-    gpii.tests.webdriver.fluid.existingGlobalFunctionWithArgs = function () {
+    fluid.tests.webdriver.fluid.existingGlobalFunctionWithArgs = function () {
         return arguments.length;
     };
 })();

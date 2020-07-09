@@ -6,15 +6,14 @@
 /* eslint-env node */
 "use strict";
 var fluid = require("infusion");
-var gpii = fluid.registerNamespace("gpii");
 
-fluid.require("%gpii-webdriver");
-gpii.webdriver.loadTestingSupport();
+fluid.require("%fluid-webdriver");
+fluid.webdriver.loadTestingSupport();
 
-fluid.defaults("gpii.tests.webdriver.navigation.browser.back.caseHolder", {
-    gradeNames: ["gpii.test.webdriver.caseHolder"],
-    startUrl: "%gpii-webdriver/tests/js/browser-navigation/html/first.html",
-    secondUrl: "%gpii-webdriver/tests/js/browser-navigation/html/second.html",
+fluid.defaults("fluid.tests.webdriver.navigation.browser.back.caseHolder", {
+    gradeNames: ["fluid.test.webdriver.caseHolder"],
+    startUrl: "%fluid-webdriver/tests/js/browser-navigation/html/first.html",
+    secondUrl: "%fluid-webdriver/tests/js/browser-navigation/html/second.html",
     rawModules: [{
         name: "Testing the browser's `back` button...",
         tests: [
@@ -24,12 +23,12 @@ fluid.defaults("gpii.tests.webdriver.navigation.browser.back.caseHolder", {
                 sequence: [
                     {
                         func: "{testEnvironment}.webdriver.get",
-                        args: ["@expand:gpii.test.webdriver.resolveFileUrl({that}.options.startUrl)"]
+                        args: ["@expand:fluid.test.webdriver.resolveFileUrl({that}.options.startUrl)"]
                     },
                     {
                         event:    "{testEnvironment}.webdriver.events.onGetComplete",
                         listener: "{testEnvironment}.webdriver.navigateHelper",
-                        args:     ["to", "@expand:gpii.test.webdriver.resolveFileUrl({that}.options.secondUrl)"]
+                        args:     ["to", "@expand:fluid.test.webdriver.resolveFileUrl({that}.options.secondUrl)"]
                     },
                     {
                         event:    "{testEnvironment}.webdriver.events.onNavigateHelperComplete",
@@ -43,7 +42,7 @@ fluid.defaults("gpii.tests.webdriver.navigation.browser.back.caseHolder", {
                     },
                     {
                         event:    "{testEnvironment}.webdriver.events.onFindElementComplete",
-                        listener: "gpii.test.webdriver.inspectElement",
+                        listener: "fluid.test.webdriver.inspectElement",
                         args:     ["We should be back on the first page...", "{arguments}.0", "getText", "This is the first page."] // message, element, elementFn, expectedValue, jqUnitFn
                     }
                 ]
@@ -52,13 +51,13 @@ fluid.defaults("gpii.tests.webdriver.navigation.browser.back.caseHolder", {
     }]
 });
 
-fluid.defaults("gpii.tests.webdriver.navigation.browser.back.environment", {
-    gradeNames: ["gpii.test.webdriver.testEnvironment"],
+fluid.defaults("fluid.tests.webdriver.navigation.browser.back.environment", {
+    gradeNames: ["fluid.test.webdriver.testEnvironment"],
     components: {
         caseHolder: {
-            type: "gpii.tests.webdriver.navigation.browser.back.caseHolder"
+            type: "fluid.tests.webdriver.navigation.browser.back.caseHolder"
         }
     }
 });
 
-gpii.test.webdriver.allBrowsers({ baseTestEnvironment: "gpii.tests.webdriver.navigation.browser.back.environment" });
+fluid.test.webdriver.allBrowsers({ baseTestEnvironment: "fluid.tests.webdriver.navigation.browser.back.environment" });

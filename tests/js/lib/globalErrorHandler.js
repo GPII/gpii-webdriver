@@ -5,28 +5,26 @@ var jqUnit = require("node-jqunit");
 var kettle = require("kettle");
 kettle.loadTestingSupport();
 
-var gpii = fluid.registerNamespace("gpii");
-
-fluid.defaults("gpii.test.webdriver.globalFailureHandler", {
+fluid.defaults("fluid.test.webdriver.globalFailureHandler", {
     gradeNames: ["fluid.component", "fluid.resolveRootSingle"],
-    singleRootType: "gpii.test.globalFailureHandlerHolder",
+    singleRootType: "fluid.test.globalFailureHandlerHolder",
     events: {
         onError: null
     }
 });
 
-gpii.test.webdriver.awaitGlobalFailure = function () {
+fluid.test.webdriver.awaitGlobalFailure = function () {
     jqUnit.assert("An error should have occurred.");
 };
 
-gpii.test.webdriver.pushInstrumentedErrors = function () {
+fluid.test.webdriver.pushInstrumentedErrors = function () {
     fluid.log("Getting ready to catch an expected error.");
-    kettle.test.pushInstrumentedErrors("gpii.test.webdriver.notifyGlobalFailure");
+    kettle.test.pushInstrumentedErrors("fluid.test.webdriver.notifyGlobalFailure");
 };
 
 
-gpii.test.webdriver.notifyGlobalFailure = function () {
+fluid.test.webdriver.notifyGlobalFailure = function () {
     globalFailureHandler.events.onError.fire(fluid.makeArray(arguments));
 };
 
-var globalFailureHandler = gpii.test.webdriver.globalFailureHandler();
+var globalFailureHandler = fluid.test.webdriver.globalFailureHandler();

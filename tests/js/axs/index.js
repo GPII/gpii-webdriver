@@ -9,16 +9,15 @@
 /* eslint-env node */
 "use strict";
 var fluid = require("infusion");
-var gpii = fluid.registerNamespace("gpii");
 
-fluid.require("%gpii-webdriver");
-gpii.webdriver.loadTestingSupport();
+fluid.require("%fluid-webdriver");
+fluid.webdriver.loadTestingSupport();
 
-fluid.defaults("gpii.tests.webdriver.axs.caseHolder", {
-    gradeNames: ["gpii.test.webdriver.caseHolder", "gpii.test.webdriver.hasAxsContent"],
-    goodUrl: "%gpii-webdriver/tests/js/axs/html/good.html",
-    badUrl: "%gpii-webdriver/tests/js/axs/html/bad.html",
-    injectUrl: "%gpii-webdriver/tests/js/axs/html/injection.html",
+fluid.defaults("fluid.tests.webdriver.axs.caseHolder", {
+    gradeNames: ["fluid.test.webdriver.caseHolder", "fluid.test.webdriver.hasAxsContent"],
+    goodUrl: "%fluid-webdriver/tests/js/axs/html/good.html",
+    badUrl: "%fluid-webdriver/tests/js/axs/html/bad.html",
+    injectUrl: "%fluid-webdriver/tests/js/axs/html/injection.html",
     rawModules: [{
         name: "Testing accessibility developer tools...",
         tests: [
@@ -28,16 +27,16 @@ fluid.defaults("gpii.tests.webdriver.axs.caseHolder", {
                 sequence: [
                     {
                         func: "{testEnvironment}.webdriver.get",
-                        args: ["@expand:gpii.test.webdriver.resolveFileUrl({that}.options.goodUrl)"]
+                        args: ["@expand:fluid.test.webdriver.resolveFileUrl({that}.options.goodUrl)"]
                     },
                     {
                         event:    "{testEnvironment}.webdriver.events.onGetComplete",
                         listener: "{testEnvironment}.webdriver.executeScript",
-                        args:     [gpii.test.webdriver.axs.runAxs]
+                        args:     [fluid.test.webdriver.axs.runAxs]
                     },
                     {
                         event:    "{testEnvironment}.webdriver.events.onExecuteScriptComplete",
-                        listener: "gpii.test.webdriver.axs.checkResults",
+                        listener: "fluid.test.webdriver.axs.checkResults",
                         args:     ["{arguments}.0"]
                     }
                 ]
@@ -48,16 +47,16 @@ fluid.defaults("gpii.tests.webdriver.axs.caseHolder", {
                 sequence: [
                     {
                         func: "{testEnvironment}.webdriver.get",
-                        args: ["@expand:gpii.test.webdriver.resolveFileUrl({that}.options.badUrl)"]
+                        args: ["@expand:fluid.test.webdriver.resolveFileUrl({that}.options.badUrl)"]
                     },
                     {
                         event:    "{testEnvironment}.webdriver.events.onGetComplete",
                         listener: "{testEnvironment}.webdriver.executeScript",
-                        args:     [gpii.test.webdriver.axs.runAxs]
+                        args:     [fluid.test.webdriver.axs.runAxs]
                     },
                     {
                         event:    "{testEnvironment}.webdriver.events.onExecuteScriptComplete",
-                        listener: "gpii.test.webdriver.axs.checkResults",
+                        listener: "fluid.test.webdriver.axs.checkResults",
                         args:     ["{arguments}.0", true]
                     }
                 ]
@@ -68,16 +67,16 @@ fluid.defaults("gpii.tests.webdriver.axs.caseHolder", {
                 sequence: [
                     {
                         func: "{testEnvironment}.webdriver.get",
-                        args: ["@expand:gpii.test.webdriver.resolveFileUrl({that}.options.badUrl)"]
+                        args: ["@expand:fluid.test.webdriver.resolveFileUrl({that}.options.badUrl)"]
                     },
                     {
                         event:    "{testEnvironment}.webdriver.events.onGetComplete",
                         listener: "{testEnvironment}.webdriver.executeScript",
-                        args:     [gpii.test.webdriver.axs.runAxs, { auditRulesToIgnore: ["badAriaRole"]}]
+                        args:     [fluid.test.webdriver.axs.runAxs, { auditRulesToIgnore: ["badAriaRole"]}]
                     },
                     {
                         event:    "{testEnvironment}.webdriver.events.onExecuteScriptComplete",
-                        listener: "gpii.test.webdriver.axs.checkResults",
+                        listener: "fluid.test.webdriver.axs.checkResults",
                         args:     ["{arguments}.0"]
                     }
                 ]
@@ -88,7 +87,7 @@ fluid.defaults("gpii.tests.webdriver.axs.caseHolder", {
                 sequence: [
                     {
                         func: "{testEnvironment}.webdriver.get",
-                        args: ["@expand:gpii.test.webdriver.resolveFileUrl({that}.options.injectUrl)"]
+                        args: ["@expand:fluid.test.webdriver.resolveFileUrl({that}.options.injectUrl)"]
                     },
                     {
                         event:    "{testEnvironment}.webdriver.events.onGetComplete",
@@ -98,11 +97,11 @@ fluid.defaults("gpii.tests.webdriver.axs.caseHolder", {
                     {
                         event:    "{testEnvironment}.webdriver.events.onExecuteScriptComplete",
                         listener: "{testEnvironment}.webdriver.executeScript",
-                        args:     [gpii.test.webdriver.axs.runAxs]
+                        args:     [fluid.test.webdriver.axs.runAxs]
                     },
                     {
                         event:    "{testEnvironment}.webdriver.events.onExecuteScriptComplete",
-                        listener: "gpii.test.webdriver.axs.checkResults",
+                        listener: "fluid.test.webdriver.axs.checkResults",
                         args:     ["{arguments}.0"]
                     }
                 ]
@@ -111,13 +110,13 @@ fluid.defaults("gpii.tests.webdriver.axs.caseHolder", {
     }]
 });
 
-fluid.defaults("gpii.tests.webdriver.axs.environment", {
-    gradeNames: ["gpii.test.webdriver.testEnvironment"],
+fluid.defaults("fluid.tests.webdriver.axs.environment", {
+    gradeNames: ["fluid.test.webdriver.testEnvironment"],
     components: {
         caseHolder: {
-            type: "gpii.tests.webdriver.axs.caseHolder"
+            type: "fluid.tests.webdriver.axs.caseHolder"
         }
     }
 });
 
-gpii.test.webdriver.allBrowsers({ baseTestEnvironment: "gpii.tests.webdriver.axs.environment" });
+fluid.test.webdriver.allBrowsers({ baseTestEnvironment: "fluid.tests.webdriver.axs.environment" });

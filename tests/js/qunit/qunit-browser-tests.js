@@ -6,17 +6,15 @@
 /* eslint-env node */
 "use strict";
 var fluid = require("infusion");
-var gpii = fluid.registerNamespace("gpii");
 
-
-fluid.require("%gpii-webdriver");
-gpii.webdriver.loadTestingSupport();
+fluid.require("%fluid-webdriver");
+fluid.webdriver.loadTestingSupport();
 
 require("./helper-functions");
 
-fluid.defaults("gpii.tests.webdriver.qunit.simple.caseHolder", {
-    gradeNames: ["gpii.test.webdriver.caseHolder"],
-    fileUrl: "%gpii-webdriver/tests/js/qunit/html/qunit.html",
+fluid.defaults("fluid.tests.webdriver.qunit.simple.caseHolder", {
+    gradeNames: ["fluid.test.webdriver.caseHolder"],
+    fileUrl: "%fluid-webdriver/tests/js/qunit/html/qunit.html",
     rawModules: [{
         name: "Confirming that we can retrieve native QUnit results from a standalone web page...",
         tests: [
@@ -26,26 +24,32 @@ fluid.defaults("gpii.tests.webdriver.qunit.simple.caseHolder", {
                 sequence: [
                     {
                         func: "{testEnvironment}.webdriver.get",
-                        args: ["@expand:gpii.test.webdriver.resolveFileUrl({that}.options.fileUrl)"]
+                        args: ["@expand:fluid.test.webdriver.resolveFileUrl({that}.options.fileUrl)"]
                     },
+                    // Wait until the test results appear.
                     {
                         event:    "{testEnvironment}.webdriver.events.onGetComplete",
+                        listener: "{testEnvironment}.webdriver.wait",
+                        args:     [fluid.webdriver.until.elementLocated(fluid.webdriver.By.css("#qunit-testresult"))]
+                    },
+                    {
+                        event:    "{testEnvironment}.webdriver.events.onWaitComplete",
                         listener: "{testEnvironment}.webdriver.executeScript",
-                        args:     [gpii.test.webdriver.invokeGlobal, "gpii.webdriver.QUnitHarness.instance.outputResults", "text"]
+                        args:     [fluid.test.webdriver.invokeGlobal, "fluid.webdriver.QUnitHarness.instance.outputResults", "text"]
                     },
                     {
                         event:    "{testEnvironment}.webdriver.events.onExecuteScriptComplete",
-                        listener: "gpii.tests.webdriver.qunit.checkTextOutput",
+                        listener: "fluid.tests.webdriver.qunit.checkTextOutput",
                         args:     ["{arguments}.0"]
                     }
                     // TODO: Get these working again
                     // {
                     //     func: "{testEnvironment}.webdriver.executeScript",
-                    //     args: [gpii.test.webdriver.invokeGlobal, "gpii.webdriver.QUnitHarness.instance.outputResults"]
+                    //     args: [fluid.test.webdriver.invokeGlobal, "fluid.webdriver.QUnitHarness.instance.outputResults"]
                     // },
                     // {
                     //     event:    "{testEnvironment}.webdriver.events.onExecuteScriptComplete",
-                    //     listener: "gpii.tests.webdriver.qunit.checkTapOutput",
+                    //     listener: "fluid.tests.webdriver.qunit.checkTapOutput",
                     //     args:     ["{arguments}.0"]
                     // }
                 ]
@@ -54,13 +58,13 @@ fluid.defaults("gpii.tests.webdriver.qunit.simple.caseHolder", {
     }]
 });
 
-fluid.defaults("gpii.tests.webdriver.qunit.simple.environment", {
-    gradeNames: ["gpii.test.webdriver.testEnvironment"],
+fluid.defaults("fluid.tests.webdriver.qunit.simple.environment", {
+    gradeNames: ["fluid.test.webdriver.testEnvironment"],
     components: {
         caseHolder: {
-            type: "gpii.tests.webdriver.qunit.simple.caseHolder"
+            type: "fluid.tests.webdriver.qunit.simple.caseHolder"
         }
     }
 });
 
-gpii.test.webdriver.allBrowsers({ baseTestEnvironment: "gpii.tests.webdriver.qunit.simple.environment" });
+fluid.test.webdriver.allBrowsers({ baseTestEnvironment: "fluid.tests.webdriver.qunit.simple.environment" });

@@ -6,14 +6,13 @@
 /* eslint-env node */
 "use strict";
 var fluid = require("infusion");
-var gpii = fluid.registerNamespace("gpii");
 
-fluid.require("%gpii-webdriver");
-gpii.webdriver.loadTestingSupport();
+fluid.require("%fluid-webdriver");
+fluid.webdriver.loadTestingSupport();
 
-fluid.defaults("gpii.tests.webdriver.findElements.multiple.caseHolder", {
-    gradeNames: ["gpii.test.webdriver.caseHolder"],
-    fileUrl: "%gpii-webdriver/tests/js/findElement/html/index.html",
+fluid.defaults("fluid.tests.webdriver.findElements.multiple.caseHolder", {
+    gradeNames: ["fluid.test.webdriver.caseHolder"],
+    fileUrl: "%fluid-webdriver/tests/js/findElement/html/index.html",
     rawModules: [{
         name: "Testing the driver's `findElements` function (multiple)...",
         tests: [
@@ -23,7 +22,7 @@ fluid.defaults("gpii.tests.webdriver.findElements.multiple.caseHolder", {
                 sequence: [
                     {
                         func: "{testEnvironment}.webdriver.get",
-                        args: ["@expand:gpii.test.webdriver.resolveFileUrl({that}.options.fileUrl)"]
+                        args: ["@expand:fluid.test.webdriver.resolveFileUrl({that}.options.fileUrl)"]
                     },
                     {
                         event:    "{testEnvironment}.webdriver.events.onGetComplete",
@@ -32,7 +31,7 @@ fluid.defaults("gpii.tests.webdriver.findElements.multiple.caseHolder", {
                     },
                     {
                         event:    "{testEnvironment}.webdriver.events.onFindElementsComplete",
-                        listener: "gpii.test.webdriver.inspectElements",
+                        listener: "fluid.test.webdriver.inspectElements",
                         args:     ["We should receive an array of values...", "{arguments}.0", "getText", ["One of many.", "Yet another."]] // message, element, elementFn, expectedValue, jqUnitFn
                     }
                 ]
@@ -41,13 +40,13 @@ fluid.defaults("gpii.tests.webdriver.findElements.multiple.caseHolder", {
     }]
 });
 
-fluid.defaults("gpii.tests.webdriver.findElements.multiple.environment", {
-    gradeNames: ["gpii.test.webdriver.testEnvironment"],
+fluid.defaults("fluid.tests.webdriver.findElements.multiple.environment", {
+    gradeNames: ["fluid.test.webdriver.testEnvironment"],
     components: {
         caseHolder: {
-            type: "gpii.tests.webdriver.findElements.multiple.caseHolder"
+            type: "fluid.tests.webdriver.findElements.multiple.caseHolder"
         }
     }
 });
 
-gpii.test.webdriver.allBrowsers({ baseTestEnvironment: "gpii.tests.webdriver.findElements.multiple.environment" });
+fluid.test.webdriver.allBrowsers({ baseTestEnvironment: "fluid.tests.webdriver.findElements.multiple.environment" });

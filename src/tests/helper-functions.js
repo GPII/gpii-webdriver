@@ -3,14 +3,13 @@
 /* globals axs */
 "use strict";
 var fluid = require("infusion");
-var gpii = fluid.registerNamespace("gpii");
 
 var jqUnit = require("node-jqunit");
 var path = require("path");
 var fs = require("fs");
 var os = require("os");
 
-fluid.registerNamespace("gpii.test.webdriver");
+fluid.registerNamespace("fluid.test.webdriver");
 /**
  *
  * A function to that calls `elementFn` against DOM element `element` and compares the result to `expectedValue` using
@@ -22,7 +21,7 @@ fluid.registerNamespace("gpii.test.webdriver");
  * @param {Object} expectedValue The expected return value.
  * @param {String} jqUnitFn The jqUnit function to use for the test.
  */
-gpii.test.webdriver.inspectElement = function (message, element, elementFn, expectedValue, jqUnitFn) {
+fluid.test.webdriver.inspectElement = function (message, element, elementFn, expectedValue, jqUnitFn) {
     jqUnitFn = jqUnitFn || "assertEquals";
     element[elementFn]().then(function (result) {
         jqUnit[jqUnitFn](message, expectedValue, result);
@@ -39,7 +38,7 @@ gpii.test.webdriver.inspectElement = function (message, element, elementFn, expe
  * @param {String} jqUnitFn The jqUnit function to use for the comparison, typically `assertEquals` or `assertDeepEq`.
  *
  */
-gpii.test.webdriver.testElementValue = function (message, element, expectedValue, jqUnitFn) {
+fluid.test.webdriver.testElementValue = function (message, element, expectedValue, jqUnitFn) {
     jqUnitFn = jqUnitFn || "assertEquals";
     element.getAttribute("value").then(function (result) {
         jqUnit[jqUnitFn](message, expectedValue, result);
@@ -55,7 +54,7 @@ gpii.test.webdriver.testElementValue = function (message, element, expectedValue
  * @param {Boolean} selected True if the element should be selected, false otherwise.
  *
  */
-gpii.test.webdriver.testElementSelected = function (message, element, selected) {
+fluid.test.webdriver.testElementSelected = function (message, element, selected) {
     var jqUnitFn = selected ? "assertTrue" : "assertFalse";
     jqUnit[jqUnitFn](message, element.isSelected());
 };
@@ -63,7 +62,7 @@ gpii.test.webdriver.testElementSelected = function (message, element, selected) 
 /**
  *
  * A function to compare an array of elements with an array of expected values.  Ideal for use with
- * `{gpii.webdriver}.findElements`, which returns an array of elements.
+ * `{fluid.webdriver}.findElements`, which returns an array of elements.
  *
  * @param {String} message A message describing this test.
  * @param {Array} elements An array of DOM elements.
@@ -71,7 +70,7 @@ gpii.test.webdriver.testElementSelected = function (message, element, selected) 
  * @param {Array} expectedValues An array of expected return values.
  *
  */
-gpii.test.webdriver.inspectElements = function (message, elements, elementFn, expectedValues) {
+fluid.test.webdriver.inspectElements = function (message, elements, elementFn, expectedValues) {
     var promises = [];
     fluid.each(elements, function (element) {
         promises.push(element[elementFn]());
@@ -91,7 +90,7 @@ gpii.test.webdriver.inspectElements = function (message, elements, elementFn, ex
  * @return {Object} The map in JSON form.
  *
  */
-gpii.test.webdriver.mapToObject = function (map) {
+fluid.test.webdriver.mapToObject = function (map) {
     var object = {};
     map.forEach(function (value, key) {
         object[key] = value;
@@ -107,7 +106,7 @@ gpii.test.webdriver.mapToObject = function (map) {
  * @param {Array} failures - An array of failure messages returned by an accessibility scanner (see below).
  * @param {Boolean} shouldHaveFailures - Whether the results should contain failures (`false` by default).
  */
-gpii.test.webdriver.checkAccessibilityScanResults = function (failures, shouldHaveFailures) {
+fluid.test.webdriver.checkAccessibilityScanResults = function (failures, shouldHaveFailures) {
     if (shouldHaveFailures) {
         jqUnit.assertTrue("There should be at least one accessibility check failure...", failures.length > 0);
     }
@@ -130,11 +129,11 @@ gpii.test.webdriver.checkAccessibilityScanResults = function (failures, shouldHa
  * @return {Any} The results of the function's execution.
  *
  */
-gpii.test.webdriver.invokeGlobal = function (functionPath, fnArgs, environment) {
+fluid.test.webdriver.invokeGlobal = function (functionPath, fnArgs, environment) {
     return fluid.invokeGlobalFunction(functionPath, fnArgs, environment);
 };
 
-fluid.registerNamespace("gpii.test.webdriver.axe");
+fluid.registerNamespace("fluid.test.webdriver.axe");
 
 /**
  *
@@ -145,7 +144,7 @@ fluid.registerNamespace("gpii.test.webdriver.axe");
  *
  * @param {Function} callback - The WebDriver API itself supplies a callback that we use to return the results of the scan.
  */
-gpii.test.webdriver.axe.runAxe = function () {
+fluid.test.webdriver.axe.runAxe = function () {
     /* globals axe */
     var callback = arguments[arguments.length - 1];
     var axeOptions = arguments.length > 1 ? arguments[0] : {};
@@ -167,11 +166,11 @@ gpii.test.webdriver.axe.runAxe = function () {
  * @param {Boolean} shouldHaveFailures - Whether there should be failures (set to `false` by default).
  *
  */
-gpii.test.webdriver.axe.checkResults = function (results, shouldHaveFailures) {
-    gpii.test.webdriver.checkAccessibilityScanResults(results.violations, shouldHaveFailures);
+fluid.test.webdriver.axe.checkResults = function (results, shouldHaveFailures) {
+    fluid.test.webdriver.checkAccessibilityScanResults(results.violations, shouldHaveFailures);
 };
 
-fluid.registerNamespace("gpii.test.webdriver.axs");
+fluid.registerNamespace("fluid.test.webdriver.axs");
 
 /**
  *
@@ -184,7 +183,7 @@ fluid.registerNamespace("gpii.test.webdriver.axs");
  */
 
 
-gpii.test.webdriver.axs.runAxs = function (axsOptions) {
+fluid.test.webdriver.axs.runAxs = function (axsOptions) {
     var axsConfig = new axs.AuditConfiguration(axsOptions || {});
     var results = axs.Audit.run(axsConfig);
     return results;
@@ -198,7 +197,7 @@ gpii.test.webdriver.axs.runAxs = function (axsOptions) {
  * @param {Boolean} shouldHaveFailures - Whether there should be failures (set to `false` by default).
  *
  */
-gpii.test.webdriver.axs.checkResults = function (results, shouldHaveFailures) {
+fluid.test.webdriver.axs.checkResults = function (results, shouldHaveFailures) {
     // Iterate through the raw results and extract just the errors (the accessibility developer toolkit includes all
     // passing checks and warnings as well).
     var failures = [];
@@ -208,7 +207,7 @@ gpii.test.webdriver.axs.checkResults = function (results, shouldHaveFailures) {
         }
     });
 
-    gpii.test.webdriver.checkAccessibilityScanResults(failures, shouldHaveFailures);
+    fluid.test.webdriver.checkAccessibilityScanResults(failures, shouldHaveFailures);
 };
 
 
@@ -219,9 +218,8 @@ gpii.test.webdriver.axs.checkResults = function (results, shouldHaveFailures) {
  * @param {String} data - The base64-encoded binary PNG data returned by `takeScreenshot`.
  *
  */
-gpii.test.webdriver.saveScreenshot = function (data) {
+fluid.test.webdriver.saveScreenshot = function (data) {
     var filePath = path.resolve(os.tmpdir(), "screenshot-" + Date.now() + ".png");
     fs.writeFileSync(filePath, new Buffer(data, "base64"));
-    console.log("Screenshot saved to '" + filePath + "'...");
+    fluid.log("Screenshot saved to '" + filePath + "'...");
 };
-

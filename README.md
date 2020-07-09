@@ -1,4 +1,4 @@
-# gpii-webdriver
+# fluid-webdriver
 
 This package provides a series of [Fluid components](http://docs.fluidproject.org/infusion/development/UnderstandingInfusionComponents.html)
 to assist in writing tests that use the [WebDriver API](https://www.w3.org/TR/2013/WD-webdriver-20130117/) to control a
@@ -11,7 +11,7 @@ The main goals of this package are to:
 3. Provide the ability to write tests that need to be aware of both the server and browser state.
 4. Do all of the above across a range of browsers.
 
-# Keyboard Navigation
+## Keyboard Navigation
 
 Many approaches to testing keyboard navigation send individual keystrokes directly to a single named component and
 examine the results.  While this does confirm the behavior of the component, it does not provide a good means of testing
@@ -29,7 +29,7 @@ navigation to focus on an element.  This allows for much more realistic user-foc
 
 Using this package, the above scenario can be tested even if javascript is completely disabled.
 
-# Browser Navigation
+## Browser Navigation
 
 This package provides the ability to change the browser's state in exactly the same manner as would happen if a user hit
 the "back", "next", and "refresh" buttons or shortcut keys.  You might use this to:
@@ -38,39 +38,39 @@ the "back", "next", and "refresh" buttons or shortcut keys.  You might use this 
 2. Confirm that the parts of your page that should reset their state on a refresh actually do so.
 3. Confirm that a warning is displayed when a user attempts to refresh or navigate away after entering form data.
 
-# Passing Code between the Server and Browser
+## Passing Code between the Server and Browser
 
 This package makes use of the IPC bridge built into WebDriverJS to send code to the browser, have that code be executed,
 and to receive the results of the code's execution.  Among many other things, this allows you to:
 
 1. Inspect the current browser DOM.
 2. Check the value of a named element.
-3. Pass in scripts to be executed in the browser before the tests are run, for example, scripts to report test or code coverage information.
+3. Pass in scripts to be executed in the browser before the tests are run, for example, scripts to report test or code
+   coverage information.
 
-# Running the Tests
+## Running the Tests
 
 To run the tests locally, you will need to [install the drivers for each browser](http://www.seleniumhq.org/download/)
 you want to test.  Once you have done this, you can use the command `npm test` to run the tests.
 
 You can also use the command `vagrant up` to provision a linux box and run the Chrome tests there.
 
-# Using this Package to Write Your Own Tests
+## Using this Package to Write Your Own Tests
 
 To make use of this package in your own tests, you will typically need to add code like the following:
 
-```
+```javascript
 var fluid = require("infusion");
-var gpii  = fluid.registerNamespace("gpii");
-require("gpii-webdriver");
-gpii.webdriver.loadTestingSupport();
+require("fluid-webdriver");
+fluid.webdriver.loadTestingSupport();
 ```
 
 Note that although the last line is not required to simply use the webdriver itself, you'll need it if you want to use
 the caseHolder, testEnvironment or cross-browser test runner including with this package.
 
-# Running Under Windows
+## Running Under Windows
 
-## Internet Explorer
+### Internet Explorer
 
 There is a known problem with [very slow text input](https://github.com/seleniumhq/selenium-google-code-issue-archive/issues/5116)
 when using the 64-bit IEDriverServer.  If you are on a 64-bit Windows machine and seeing extreme
@@ -85,7 +85,7 @@ Note that once you do this, the `BROWSERS` and `SELENIUM_BROWSER` variables will
 only run in Internet Explorer.  The fourth step above simply avoids running the IE tests multiple times (once expecting
 to run using Chrome, once expecting to run using Internet Explorer, etc.).
 
-## Edge
+### Edge
 
 Edge is currently not verified working with any combination of Selenium and the WebDriver server, but it should be
 possible to use it with instructions like the following:
@@ -97,12 +97,12 @@ possible to use it with instructions like the following:
 
 This will cause the tests to only be run in the Edge browser.  See above for more details.
 
-# Firefox
+## Firefox
 
 Firefox 47 and below will work with older versions of this package.  Firefox 48.0 and higher do not work for now.  For
-more information, see [GPII-1913](https://issues.gpii.net/browse/GPII-1913).
+more information, see [fluid-1913](https://issues.fluid.net/browse/fluid-1913).
 
-# More Information
+## More Information
 
 For more information, check out the individual docs for:
 
@@ -113,7 +113,7 @@ For more information, check out the individual docs for:
 * [The test fixtures included with this package](./docs/fixtures.md)
 * [The multi-browser test runner](./docs/allBrowsers.md)
 
-# Running Tests in "Headless" Mode
+## Running Tests in "Headless" Mode
 
 Several browsers now support a "headless" mode, in which no window is displayed onscreen as the tests are run.  This
 tends to run faster and require less resources.  If you set the `HEADLESS` environment variable to a non-empty value,

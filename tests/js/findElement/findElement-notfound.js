@@ -6,16 +6,15 @@
 /* eslint-env node */
 "use strict";
 var fluid = require("infusion");
-var gpii = fluid.registerNamespace("gpii");
 
-fluid.require("%gpii-webdriver");
-gpii.webdriver.loadTestingSupport();
+fluid.require("%fluid-webdriver");
+fluid.webdriver.loadTestingSupport();
 
 require("../lib/globalErrorHandler");
 
-fluid.defaults("gpii.tests.webdriver.findElement.notFound.caseHolder", {
-    gradeNames: ["gpii.test.webdriver.caseHolder"],
-    fileUrl: "%gpii-webdriver/tests/js/findElement/html/index.html",
+fluid.defaults("fluid.tests.webdriver.findElement.notFound.caseHolder", {
+    gradeNames: ["fluid.test.webdriver.caseHolder"],
+    fileUrl: "%fluid-webdriver/tests/js/findElement/html/index.html",
     rawModules: [{
         name: "Testing the driver's `findElement` function (single)...",
         tests: [
@@ -25,11 +24,11 @@ fluid.defaults("gpii.tests.webdriver.findElement.notFound.caseHolder", {
                 sequence: [
                     {
                         func: "{testEnvironment}.webdriver.get",
-                        args: ["@expand:gpii.test.webdriver.resolveFileUrl({that}.options.fileUrl)"]
+                        args: ["@expand:fluid.test.webdriver.resolveFileUrl({that}.options.fileUrl)"]
                     },
                     {
                         event:    "{testEnvironment}.webdriver.events.onGetComplete",
-                        listener: "gpii.test.webdriver.pushInstrumentedErrors"
+                        listener: "fluid.test.webdriver.pushInstrumentedErrors"
                     },
                     // This will result in a global error.
                     {
@@ -37,8 +36,8 @@ fluid.defaults("gpii.tests.webdriver.findElement.notFound.caseHolder", {
                         args: [{ id: "notfound"}]
                     },
                     {
-                        event: "{gpii.test.webdriver.globalFailureHandler}.events.onError",
-                        listener: "gpii.test.webdriver.awaitGlobalFailure"
+                        event: "{fluid.test.webdriver.globalFailureHandler}.events.onError",
+                        listener: "fluid.test.webdriver.awaitGlobalFailure"
                     },
                     {
                         funcName: "kettle.test.popInstrumentedErrors"
@@ -49,13 +48,13 @@ fluid.defaults("gpii.tests.webdriver.findElement.notFound.caseHolder", {
     }]
 });
 
-fluid.defaults("gpii.tests.webdriver.findElement.notFound.environment", {
-    gradeNames: ["gpii.test.webdriver.testEnvironment"],
+fluid.defaults("fluid.tests.webdriver.findElement.notFound.environment", {
+    gradeNames: ["fluid.test.webdriver.testEnvironment"],
     components: {
         caseHolder: {
-            type: "gpii.tests.webdriver.findElement.notFound.caseHolder"
+            type: "fluid.tests.webdriver.findElement.notFound.caseHolder"
         }
     }
 });
 
-gpii.test.webdriver.allBrowsers({ baseTestEnvironment: "gpii.tests.webdriver.findElement.notFound.environment" });
+fluid.test.webdriver.allBrowsers({ baseTestEnvironment: "fluid.tests.webdriver.findElement.notFound.environment" });

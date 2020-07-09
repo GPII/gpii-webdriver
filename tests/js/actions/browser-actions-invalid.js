@@ -1,6 +1,6 @@
 /*
 
-    Test the "sleep" function.
+    Test the invalid modes of the actions endpoint.
 
  */
 /* eslint-env node */
@@ -10,14 +10,14 @@ var fluid = require("infusion");
 fluid.require("%fluid-webdriver");
 fluid.webdriver.loadTestingSupport();
 
-fluid.defaults("fluid.tests.webdriver.sleep.caseHolder", {
+fluid.defaults("fluid.tests.webdriver.actions.invalid.caseHolder", {
     gradeNames: ["fluid.test.webdriver.caseHolder"],
-    fileUrl: "%fluid-webdriver/tests/js/executeScript/html/executeScript.html",
+    fileUrl: "%fluid-webdriver/tests/js/actions/html/tabs.html",
     rawModules: [{
-        name: "Testing the driver's `sleep` function...",
+        name: "Test the action helper with an invalid action...",
         tests: [
             {
-                name: "Go to sleep and confirm that the browser wakes correctly...",
+                name: "Attempt to execute a non-existent action...",
                 type: "test",
                 sequence: [
                     {
@@ -26,13 +26,13 @@ fluid.defaults("fluid.tests.webdriver.sleep.caseHolder", {
                     },
                     {
                         event:    "{testEnvironment}.webdriver.events.onGetComplete",
-                        listener: "{testEnvironment}.webdriver.sleep",
-                        args:     [250]
+                        listener: "{testEnvironment}.webdriver.actionsHelper",
+                        args:     [[{ fn: "bogus", args:[] }]]
                     },
                     {
-                        event:    "{testEnvironment}.webdriver.events.onSleepComplete",
+                        event: "{testEnvironment}.webdriver.events.onActionsHelperComplete",
                         listener: "jqUnit.assert",
-                        args:     ["The browser should wake up after sleeping."]
+                        args: ["Action completed."]
                     }
                 ]
             }
@@ -40,13 +40,13 @@ fluid.defaults("fluid.tests.webdriver.sleep.caseHolder", {
     }]
 });
 
-fluid.defaults("fluid.tests.webdriver.sleep.environment", {
+fluid.defaults("fluid.tests.webdriver.actions.invalid.environment", {
     gradeNames: ["fluid.test.webdriver.testEnvironment"],
     components: {
         caseHolder: {
-            type: "fluid.tests.webdriver.sleep.caseHolder"
+            type: "fluid.tests.webdriver.actions.invalid.caseHolder"
         }
     }
 });
 
-fluid.test.webdriver.allBrowsers({ baseTestEnvironment: "fluid.tests.webdriver.sleep.environment" });
+fluid.test.webdriver.allBrowsers({ baseTestEnvironment: "fluid.tests.webdriver.actions.invalid.environment" });
