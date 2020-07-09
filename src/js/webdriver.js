@@ -103,10 +103,7 @@ fluid.webdriver.navigateHelper = function (that, args) {
         return promise;
     }
     else {
-        var failurePromise = new Promise(fluid.identity, fluid.identity);
-        failurePromise["catch"](that.events.onError.fire);
-        failurePromise.reject("Navigation function `" + navFnName + "` does not exist...");
-        return failurePromise;
+        fluid.fail("Navigation function `" + navFnName + "` does not exist...");
     }
 };
 
