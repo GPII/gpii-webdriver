@@ -2,7 +2,7 @@
 
     A harness to capture all QUnit output.  See the documentation for details:
 
-    https://github.com/fluid-project/fluid-webdriver/blob/master/docs/qunit-harness.md
+    https://github.com/fluid-project/fluid-webdriver/blob/main/docs/qunit-harness.md
 
  */
 /* eslint-env node */
