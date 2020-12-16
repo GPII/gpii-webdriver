@@ -2,7 +2,7 @@
 
     A wrapper around the `selenium-webdriver` package.  See the documentation for details:
 
-    https://github.com/fluid-project/fluid-webdriver/blob/master/docs/webdriver.md
+    https://github.com/fluid-project/fluid-webdriver/blob/main/docs/webdriver.md
 
  */
 /* eslint-env node */

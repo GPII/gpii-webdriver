@@ -2,7 +2,7 @@
 
     A harness to run tests in a range of browsers.  See the documentation for details:
 
-    https://github.com/fluid-project/fluid-webdriver/blob/master/docs/allBrowsers.md
+    https://github.com/fluid-project/fluid-webdriver/blob/main/docs/allBrowsers.md
 
  */
 /* eslint-env node */

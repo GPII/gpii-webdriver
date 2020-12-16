@@ -2,7 +2,7 @@
 
  Fluid IoC test fixtures for use with `fluid.webdriver`.  See the documentation for details:
 
- https://github.com/fluid-project/fluid-webdriver/blob/master/docs/fixtures.md
+ https://github.com/fluid-project/fluid-webdriver/blob/main/docs/fixtures.md
 
  */
 /* eslint-env node */
