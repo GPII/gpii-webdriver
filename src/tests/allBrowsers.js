@@ -83,7 +83,7 @@ fluid.registerNamespace("fluid.test.webdriver.allBrowsers");
  *
  * Set the `SELENIUM_BROWSER` environment variable to implicitly force the webdriver instance to use the selected browser.
  *
- * @param {String} browser The browser to use.
+ * @param {String} browser - The browser to use.
  *
  */
 fluid.test.webdriver.allBrowsers.setBrowser = function (browser) {

@@ -1,5 +1,4 @@
 /* eslint no-undef: 0 */
-/* globals fluid */
 (function () {
     "use strict";
     fluid.registerNamespace("fluid.tests.webdriver.fluid");
