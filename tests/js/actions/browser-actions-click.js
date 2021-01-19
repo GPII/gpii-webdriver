@@ -13,7 +13,6 @@ fluid.webdriver.loadTestingSupport();
 
 fluid.registerNamespace("fluid.tests.webdriver.actions.text");
 
-/* globals document */
 fluid.tests.webdriver.actions.text.getRadioButtonValue = function () {
     return document.sampleForm.color.value;
 };

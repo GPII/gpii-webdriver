@@ -4,8 +4,9 @@
     "description": "A series of Fluid components that help write tests using the WebDriver API.",
     "main": "index.js",
     "scripts": {
-        "pretest": "node node_modules/rimraf/bin.js coverage/*",
-        "test": "node node_modules/istanbul/lib/cli.js cover tests/all-tests.js"
+        "lint": "fluid-lint-all",
+        "pretest": "npx rimraf coverage/*",
+        "test": "istanbul cover tests/all-tests.js"
     },
     "repository": {
         "type": "git",
@@ -16,20 +17,18 @@
     "homepage": "https://github.com/fluid-project/fluid-webdriver#readme",
     "dependencies": {
         "accessibility-developer-tools": "2.12.0",
-        "axe-core": "3.5.5",
-        "brace-expansion": "1.1.11",
-        "infusion": "3.0.0-dev.20200326T173810Z.24ddb2718",
+        "axe-core": "4.1.1",
+        "brace-expansion": "2.0.0",
+        "infusion": "3.0.0-dev.20201113T153152Z.32176dcbe.FLUID-6145",
         "selenium-webdriver": "3.6.0"
     },
     "devDependencies": {
-        "eslint": "7.4.0",
-        "eslint-config-fluid": "1.4.0",
-        "fluid-express": "1.0.16",
-        "fluid-grunt-lint-all": "1.0.8",
-        "grunt": "1.2.1",
+        "eslint": "7.17.0",
+        "eslint-config-fluid": "2.0.0",
+        "fluid-express": "1.0.17",
+        "fluid-lint-all": "1.0.0",
         "istanbul": "0.4.5",
-        "kettle": "1.12.0",
-        "node-jqunit": "1.1.8",
-        "rimraf": "3.0.2"
+        "kettle": "2.0.0",
+        "node-jqunit": "1.1.8"
     }
 }

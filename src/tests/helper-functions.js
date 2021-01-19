@@ -15,11 +15,12 @@ fluid.registerNamespace("fluid.test.webdriver");
  * A function to that calls `elementFn` against DOM element `element` and compares the result to `expectedValue` using
  * `jqUnitFn`.
  *
- * @param {String} message A message describing this test.
- * @param {Object} element The DOM element to inspect.
- * @param {String} elementFn The function name we expected to run against the DOM element.
- * @param {Object} expectedValue The expected return value.
- * @param {String} jqUnitFn The jqUnit function to use for the test.
+ * @param {String} message - A message describing this test.
+ * @param {Object} element - The DOM element to inspect.
+ * @param {String} elementFn - The function name we expected to run against the DOM element.
+ * @param {Object} expectedValue - The expected return value.
+ * @param {String} jqUnitFn - The jqUnit function to use for the test.
+ *
  */
 fluid.test.webdriver.inspectElement = function (message, element, elementFn, expectedValue, jqUnitFn) {
     jqUnitFn = jqUnitFn || "assertEquals";
@@ -32,10 +33,10 @@ fluid.test.webdriver.inspectElement = function (message, element, elementFn, exp
  *
  * Get an element's `value` attribute and compare it to an expected value using a particular jqUnit function.
  *
- * @param {String} message A message describing this test.
- * @param {Object} element The DOM element to inspect.
- * @param {Object} expectedValue The expected value of the element.
- * @param {String} jqUnitFn The jqUnit function to use for the comparison, typically `assertEquals` or `assertDeepEq`.
+ * @param {String} message - A message describing this test.
+ * @param {Object} element - The DOM element to inspect.
+ * @param {Object} expectedValue - The expected value of the element.
+ * @param {String} jqUnitFn - The jqUnit function to use for the comparison, typically `assertEquals` or `assertDeepEq`.
  *
  */
 fluid.test.webdriver.testElementValue = function (message, element, expectedValue, jqUnitFn) {
@@ -49,9 +50,9 @@ fluid.test.webdriver.testElementValue = function (message, element, expectedValu
  *
  * A function to verify whether an element is selected.
  *
- * @param {String} message A message describing this test.
- * @param {Object} element The DOM element to inspect.
- * @param {Boolean} selected True if the element should be selected, false otherwise.
+ * @param {String} message - A message describing this test.
+ * @param {Object} element - The DOM element to inspect.
+ * @param {Boolean} selected - True if the element should be selected, false otherwise.
  *
  */
 fluid.test.webdriver.testElementSelected = function (message, element, selected) {
@@ -64,10 +65,10 @@ fluid.test.webdriver.testElementSelected = function (message, element, selected)
  * A function to compare an array of elements with an array of expected values.  Ideal for use with
  * `{fluid.webdriver}.findElements`, which returns an array of elements.
  *
- * @param {String} message A message describing this test.
- * @param {Array} elements An array of DOM elements.
- * @param {String} elementFn The element function to call for each DOM element.
- * @param {Array} expectedValues An array of expected return values.
+ * @param {String} message - A message describing this test.
+ * @param {Array} elements - An array of DOM elements.
+ * @param {String} elementFn - The element function to call for each DOM element.
+ * @param {Array} expectedValues - An array of expected return values.
  *
  */
 fluid.test.webdriver.inspectElements = function (message, elements, elementFn, expectedValues) {
@@ -86,8 +87,8 @@ fluid.test.webdriver.inspectElements = function (message, elements, elementFn, e
  *
  * Some things, like Capabilities, are Map objects that we would like to be able to inspect as plain old Javascript objects.
  *
- * @param {Map} map A map to be converted.
- * @return {Object} The map in JSON form.
+ * @param {Map} map - A map to be converted.
+ * @return {Object} - The map in JSON form.
  *
  */
 fluid.test.webdriver.mapToObject = function (map) {
@@ -105,6 +106,7 @@ fluid.test.webdriver.mapToObject = function (map) {
  *
  * @param {Array} failures - An array of failure messages returned by an accessibility scanner (see below).
  * @param {Boolean} shouldHaveFailures - Whether the results should contain failures (`false` by default).
+ *
  */
 fluid.test.webdriver.checkAccessibilityScanResults = function (failures, shouldHaveFailures) {
     if (shouldHaveFailures) {
@@ -135,6 +137,7 @@ fluid.test.webdriver.invokeGlobal = function (functionPath, fnArgs, environment)
 
 fluid.registerNamespace("fluid.test.webdriver.axe");
 
+/* eslint-disable jsdoc/check-param-names */
 /**
  *
  * A function to run aXe in a browser and then return the results.  Should be used with `executeAsyncScript`.
@@ -144,6 +147,7 @@ fluid.registerNamespace("fluid.test.webdriver.axe");
  *
  * @param {Function} callback - The WebDriver API itself supplies a callback that we use to return the results of the scan.
  */
+/* eslint-enable jsdoc/check-param-names */
 fluid.test.webdriver.axe.runAxe = function () {
     /* globals axe */
     var callback = arguments[arguments.length - 1];
